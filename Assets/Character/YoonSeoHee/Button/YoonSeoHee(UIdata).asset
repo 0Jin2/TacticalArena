@@ -1,0 +1,28 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 74e4f115133833847a6c902b0b58f57f, type: 3}
+  m_Name: YoonSeoHee(UIdata)
+  m_EditorClassIdentifier: 
+  characterDataKey: SeoHee
+  characterName: YoonSeoHee
+  weaponImage: {fileID: 21300000, guid: 574fd4f5b8191c34aa27796476d2fbf1, type: 3}
+  weaponDescription: "\uCD1D\uAE30 \uC774\uB984 : VSS\n\uCD1D\uAE30 \uB370\uBBF8\uC9C0
+    : 20\n\uC5F0\uC0AC \uC18D\uB3C4 : 0.4bps\n\uC7A5\uD0C4 \uC218 : 15"
+  skillIcon: {fileID: 21300000, guid: 2cae1445469679d4a870da2b0272af4e, type: 3}
+  skillDescription: "\uC2A4\uD0AC \uBA85 : \uD790 \uC601\uC5ED\n\uC2A4\uD0AC \uB2A5\uB825
+    : \uC544\uAD70 \uD50C\uB808\uC774\uC5B4\uC5D0\uAC8C \uFF10.5\uCD08\uB9C8\uB2E4
+    15\uCCB4\uB825\uC744 \uD68C\uBCF5\uC2DC\uD0A4\uB294 \uC601\uC5ED\uC744 4\uCD08\uAC04
+    \uC18C\uD658\uD569\uB2C8\uB2E4."
+  moveSpeed: 7
+  maxHP: 150
+  goldPrice: 11100
+  gemPrice: 110

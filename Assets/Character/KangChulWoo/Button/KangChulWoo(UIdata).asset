@@ -1,0 +1,26 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 74e4f115133833847a6c902b0b58f57f, type: 3}
+  m_Name: KangChulWoo(UIdata)
+  m_EditorClassIdentifier: 
+  characterDataKey: ChulWoo
+  characterName: KangChulWoo
+  weaponImage: {fileID: 21300000, guid: aaa881d20bfc8ac4ab8eb23c10428b44, type: 3}
+  weaponDescription: "\uCD1D\uAE30 \uC774\uB984 : S686\n\uCD1D\uAE30 \uB370\uBBF8\uC9C0
+    : 13~65\n\uC5F0\uC0AC \uC18D\uB3C4 : 0.5bps\n\uC7A5\uD0C4 \uC218 : 2"
+  skillIcon: {fileID: 21300000, guid: 9f05753bfcf949d4caf47d2e76edf70b, type: 3}
+  skillDescription: "\uC2A4\uD0AC \uBA85 : \uCD08\uD68C\uBCF5\n\uC2A4\uD0AC \uB2A5\uB825
+    : 0.7\uCD08 \uB3D9\uC548 100\uC758 \uC0DD\uBA85\uD601\uC744 \uD68C\uBCF5\uD569\uB2C8\uB2E4."
+  moveSpeed: 7
+  maxHP: 260
+  goldPrice: 11100
+  gemPrice: 110

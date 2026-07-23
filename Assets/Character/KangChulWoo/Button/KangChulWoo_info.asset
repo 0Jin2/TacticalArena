@@ -1,0 +1,19 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: b2e08fc274e707a49a51461284bfc86d, type: 3}
+  m_Name: KangChulWoo_info
+  m_EditorClassIdentifier: 
+  characterId: ChulWoo
+  characterName: KangChulWoo
+  icon: {fileID: 21300000, guid: 5778bc17240c2c64f9f8059ba6ef7720, type: 3}
+  prefab: {fileID: 1309130029019266850, guid: b372d5a6fd762ca498462688b899b4c8, type: 3}
+  uiPrefab: {fileID: 7105695660428146269, guid: cabf0e376692fd846b1d1d082504692b, type: 3}

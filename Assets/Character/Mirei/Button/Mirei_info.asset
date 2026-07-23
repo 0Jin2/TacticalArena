@@ -1,0 +1,19 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: b2e08fc274e707a49a51461284bfc86d, type: 3}
+  m_Name: Mirei_info
+  m_EditorClassIdentifier: 
+  characterId: Mirei
+  characterName: Mirei
+  icon: {fileID: 21300000, guid: 4c49a79ef8dd9a244bf1e60681e5471b, type: 3}
+  prefab: {fileID: 8522898029353304891, guid: eb736e53dd96afb4fb352a48480b9237, type: 3}
+  uiPrefab: {fileID: 4689710005125360643, guid: f94d613e50a50884b886dfb5e948f2e0, type: 3}

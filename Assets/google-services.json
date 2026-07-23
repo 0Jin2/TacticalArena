@@ -1,0 +1,29 @@
+{
+  "project_info": {
+    "project_number": "859875564852",
+    "project_id": "tactical-arena-e7c49",
+    "storage_bucket": "tactical-arena-e7c49.firebasestorage.app"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:859875564852:android:792afb9c8d5b2824b89961",
+        "android_client_info": {
+          "package_name": "com.loopstudio.TacticalArena"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyD6JTCdLqRIYwzUzzD4iLw3aTgPox8Jwzw"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

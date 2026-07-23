@@ -1,0 +1,27 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 74e4f115133833847a6c902b0b58f57f, type: 3}
+  m_Name: Mirei(UIdata)
+  m_EditorClassIdentifier: 
+  characterDataKey: Mirei
+  characterName: Mirei
+  weaponImage: {fileID: 21300000, guid: 668a5a1c2614fba42aead86a5e2ef6ee, type: 3}
+  weaponDescription: "\uCD1D\uAE30 \uC774\uB984 : S1897\n\uCD1D\uAE30 \uB370\uBBF8\uC9C0
+    : 11~44\n\uC5F0\uC0AC \uC18D\uB3C4 : 0.8bps\n\uC7A5\uD0C4 \uC218 : 5"
+  skillIcon: {fileID: 21300000, guid: 64c1104cdac632647b521ecdd5524cfb, type: 3}
+  skillDescription: "\uC2A4\uD0AC \uBA85 : \uBC29\uBCBD \uC804\uAC1C\n\uC2A4\uD0AC
+    \uB2A5\uB825 : \uC804\uBC29\uC5D0 5\uCD08\uB3D9\uC548 250\uCCB4\uB825\uC744 \uAC00\uC9C4
+    \uBC29\uBCBD\uC6B8 \uC804\uAC1C\uD569\uB2C8\uB2E4."
+  moveSpeed: 7
+  maxHP: 200
+  goldPrice: 11100
+  gemPrice: 110

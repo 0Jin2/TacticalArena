@@ -1,0 +1,13 @@
+Thank you for purchasing this Icon Pack!
+Here you'll find 255 User Interface Button icons for your various needs. Those include social media, formatting, arrows, saving, uploading, download, playback, files, weather, battery, resizing, vehicles and much more!
+
+Icon Sheet Folder:
+Contains all of the icons together in a single file, each icon at 16x16 resolution. The folder also contains the icons upscaled to 32x32, 48x48 and 64x64.
+
+Separated Icons Folder:
+Contains four folders separating icons by resolution, with every icon in its specific file. The 16x folder contains the 16x16 version, the 32x contains the icons upscaled to 32x32 and so forth.
+
+If you are having problems using these assets to the game engine of your choice, just contact me.
+
+Good development,
+- Kazzter

@@ -1,0 +1,19 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: b2e08fc274e707a49a51461284bfc86d, type: 3}
+  m_Name: Jairo_info
+  m_EditorClassIdentifier: 
+  characterId: Jairo
+  characterName: Jairo
+  icon: {fileID: 21300000, guid: 89be681b2ba6e1141826e9ab454a0381, type: 3}
+  prefab: {fileID: 5524179330958424072, guid: 084f3d5fd6585ee4fadc36d47dcf7800, type: 3}
+  uiPrefab: {fileID: 7003382939353922604, guid: 61e47ef7313859143a320c6b62418eee, type: 3}
