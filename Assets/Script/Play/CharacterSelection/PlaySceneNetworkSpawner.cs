@@ -91,6 +91,10 @@ public class PlaySceneNetworkSpawner : SimulationBehaviour
             {
                 var data = CharacterSelectionNetworkData.Instance;
 
+                // 선택 전에 로비로 돌아가는 등 세션이 종료되면 대기 중단
+                if (data == null || runner == null || !runner.IsRunning)
+                    yield break;
+
                 bool hasSelected = data.SelectedCharacters.TryGet(runner.LocalPlayer, out var id) && !string.IsNullOrEmpty(id);
                 bool isReady = data.ReadyStates.TryGet(runner.LocalPlayer, out var r) && r;
 
@@ -149,39 +153,48 @@ public class PlaySceneNetworkSpawner : SimulationBehaviour
                 continue;
             }
 
-            if (!teams.Teams.TryGet(player, out TeamAssigner.Team team))
-            {
-                Debug.LogWarning($"⚠️ 팀 정보 없음: {player}");
-                continue;
-            }
-
-            int index = characterIds.IndexOf(charId);
-            if (index == -1 || index >= characterPrefabRefs.Count)
-            {
-                Debug.LogError($"❌ 캐릭터 ID '{charId}'에 해당하는 프리팹 없음");
-                continue;
-            }
-
-            var prefabRef = characterPrefabRefs[index];
-            var spawnPoint = GetSpawnPoint(team);
-            if (spawnPoint == null)
-            {
-                Debug.LogError($"❌ 스폰 위치 없음: {team}");
-                continue;
-            }
-
-            runner.Spawn(prefabRef, spawnPoint.position, spawnPoint.rotation, inputAuthority: player, (runner, obj) =>
-            {
-                if (runner.TryGetPlayerObject(player, out var existingObj))
-                {
-                    Debug.LogWarning($"⚠️ PlayerObject 중복 등록 시도 차단: {player}");
-                    return;
-                }
-
-                runner.SetPlayerObject(player, obj);
-                Debug.Log($"✅ 캐릭터 생성 및 등록 완료: {player}");
-            });
+            SpawnCharacterFor(player, charId);
         }
+    }
+
+    public IReadOnlyList<string> CharacterIds => characterIds;
+
+    /// <summary>플레이어 한 명의 캐릭터 생성 (position 지정 시 스폰 포인트 대신 그 위치)</summary>
+    public NetworkObject SpawnCharacterFor(PlayerRef player, string charId, Vector3? position = null)
+    {
+        var teams = TeamAssigner.Instance;
+        if (teams == null || !teams.Teams.TryGet(player, out TeamAssigner.Team team))
+        {
+            Debug.LogWarning($"⚠️ 팀 정보 없음: {player}");
+            return null;
+        }
+
+        int index = characterIds.IndexOf(charId);
+        if (index == -1 || index >= characterPrefabRefs.Count)
+        {
+            Debug.LogError($"❌ 캐릭터 ID '{charId}'에 해당하는 프리팹 없음");
+            return null;
+        }
+
+        var prefabRef = characterPrefabRefs[index];
+        var spawnPoint = GetSpawnPoint(team);
+        if (spawnPoint == null)
+        {
+            Debug.LogError($"❌ 스폰 위치 없음: {team}");
+            return null;
+        }
+
+        return runner.Spawn(prefabRef, position ?? spawnPoint.position, spawnPoint.rotation, inputAuthority: player, (runner, obj) =>
+        {
+            if (runner.TryGetPlayerObject(player, out var existingObj))
+            {
+                Debug.LogWarning($"⚠️ PlayerObject 중복 등록 시도 차단: {player}");
+                return;
+            }
+
+            runner.SetPlayerObject(player, obj);
+            Debug.Log($"✅ 캐릭터 생성 및 등록 완료: {player}");
+        });
     }
 
     public Transform GetSpawnPoint(TeamAssigner.Team team)
