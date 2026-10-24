@@ -8,7 +8,7 @@ ScriptedImporter:
   assetBundleName: 
   assetBundleVariant: 
   script: {fileID: 11500000, guid: 62a9f0aa5b59740cfbadc7e5f9823bb0, type: 3}
-  importerVersion: 1
+  importerVersion: 2
   textureImporterSettings:
     alphaSource: 1
     mipMapMode: 0
@@ -84,6 +84,8 @@ ScriptedImporter:
     generateAnimationClips: 1
     addSortingGroup: 1
     addShadowCasters: 0
+    generateIndividualEvents: 1
+    generateSpriteAtlas: 1
   asepriteImporterSettings:
     fileImportMode: 1
     importHiddenLayers: 0
@@ -97,15 +99,16 @@ ScriptedImporter:
     generateAnimationClips: 1
     addSortingGroup: 1
     addShadowCasters: 0
-  importFileNodeState: 1
+    generateIndividualEvents: 1
+    generateSpriteAtlas: 1
   platformSettingsDirtyTick: 0
-  textureAssetName: 
   singleSpriteImportData:
   - name: 
     originalName: 
     pivot: {x: 0, y: 0}
     alignment: 0
     border: {x: 0, y: 0, z: 0, w: 0}
+    customData: 
     rect:
       serializedVersion: 2
       x: 0
@@ -127,6 +130,7 @@ ScriptedImporter:
     pivot: {x: 0.46460178, y: 0.09375}
     alignment: 9
     border: {x: 0, y: 0, z: 0, w: 0}
+    customData: 
     rect:
       serializedVersion: 2
       x: 4
@@ -147,6 +151,7 @@ ScriptedImporter:
     pivot: {x: 0.46460178, y: 0.09375}
     alignment: 9
     border: {x: 0, y: 0, z: 0, w: 0}
+    customData: 
     rect:
       serializedVersion: 2
       x: 4
@@ -167,6 +172,7 @@ ScriptedImporter:
     pivot: {x: 0.46460178, y: 0.09375}
     alignment: 9
     border: {x: 0, y: 0, z: 0, w: 0}
+    customData: 
     rect:
       serializedVersion: 2
       x: 4
@@ -187,6 +193,7 @@ ScriptedImporter:
     pivot: {x: 0.46460178, y: 0.09375}
     alignment: 9
     border: {x: 0, y: 0, z: 0, w: 0}
+    customData: 
     rect:
       serializedVersion: 2
       x: 4
@@ -207,6 +214,7 @@ ScriptedImporter:
     pivot: {x: 0.46460178, y: 0.09375}
     alignment: 9
     border: {x: 0, y: 0, z: 0, w: 0}
+    customData: 
     rect:
       serializedVersion: 2
       x: 4
@@ -227,6 +235,7 @@ ScriptedImporter:
     pivot: {x: 0.46460178, y: 0.09375}
     alignment: 9
     border: {x: 0, y: 0, z: 0, w: 0}
+    customData: 
     rect:
       serializedVersion: 2
       x: 4
@@ -247,6 +256,7 @@ ScriptedImporter:
     pivot: {x: 0.46460178, y: 0.09375}
     alignment: 9
     border: {x: 0, y: 0, z: 0, w: 0}
+    customData: 
     rect:
       serializedVersion: 2
       x: 4
@@ -267,6 +277,7 @@ ScriptedImporter:
     pivot: {x: 0.46460178, y: 0.09375}
     alignment: 9
     border: {x: 0, y: 0, z: 0, w: 0}
+    customData: 
     rect:
       serializedVersion: 2
       x: 125
@@ -287,6 +298,7 @@ ScriptedImporter:
     pivot: {x: 0.46460178, y: 0.09375}
     alignment: 9
     border: {x: 0, y: 0, z: 0, w: 0}
+    customData: 
     rect:
       serializedVersion: 2
       x: 125
@@ -307,6 +319,7 @@ ScriptedImporter:
     pivot: {x: 0.46460178, y: 0.09375}
     alignment: 9
     border: {x: 0, y: 0, z: 0, w: 0}
+    customData: 
     rect:
       serializedVersion: 2
       x: 125
@@ -327,6 +340,7 @@ ScriptedImporter:
     pivot: {x: 0.46460178, y: 0.09375}
     alignment: 9
     border: {x: 0, y: 0, z: 0, w: 0}
+    customData: 
     rect:
       serializedVersion: 2
       x: 125
@@ -347,6 +361,7 @@ ScriptedImporter:
     pivot: {x: 0.46460178, y: 0.09375}
     alignment: 9
     border: {x: 0, y: 0, z: 0, w: 0}
+    customData: 
     rect:
       serializedVersion: 2
       x: 125
@@ -363,8 +378,14 @@ ScriptedImporter:
     tessellationDetail: 0
     uvTransform: {x: 125, y: 292}
   spriteSheetImportData: []
+  tileSetImportData: []
   asepriteLayers:
   - layerIndex: 0
+    uuid:
+      value0: 3257273455
+      value1: 0
+      value2: 0
+      value3: 0
     guid: -1037693841
     name: flame_11_pink
     layerFlags: 0
@@ -480,10 +501,12 @@ ScriptedImporter:
         height: 64
       spriteId: a64cf027274119c498f8fba5492dc71f
     linkedCells: []
+    tileCells: []
+    tileSetIndex: 0
     parentIndex: -1
+  tileSets: []
   platformSettings: []
   generatePhysicsShape: 0
   secondarySpriteTextures: []
-  spritePackingTag: 
-  canvasSize: {x: 17, y: 40}
   previousTextureSize: {x: 256, y: 512}
+  canvasSize: {x: 17, y: 40}

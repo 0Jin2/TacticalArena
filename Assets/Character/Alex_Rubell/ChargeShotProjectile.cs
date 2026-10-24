@@ -23,7 +23,7 @@ public class ChargeShotProjectile : NetworkBehaviour
     {
         var rb = GetComponent<Rigidbody2D>();
         if (rb != null)
-            rb.velocity = Vector2.right * direction * speed;
+            rb.linearVelocity = Vector2.right * direction * speed;
         Invoke(nameof(DestroySelf), lifeTime);
     }
 
@@ -138,7 +138,7 @@ public class ChargeShotProjectile : NetworkBehaviour
 
         if (rb != null)
         {
-            rb.velocity = Vector2.zero;
+            rb.linearVelocity = Vector2.zero;
             rb.angularVelocity = 0f;
             rb.isKinematic = true;
             rb.constraints = RigidbodyConstraints2D.FreezeAll;

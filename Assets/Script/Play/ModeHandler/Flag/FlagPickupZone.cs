@@ -11,7 +11,7 @@ public class FlagPickupZone : MonoBehaviour
     public float minStaySeconds = 0.05f;
     private float stayTimer = 0f;
 
-    private readonly Dictionary<int, float> _stayTimers = new Dictionary<int, float>();
+    private readonly Dictionary<EntityId, float> _stayTimers = new Dictionary<EntityId, float>();
 
     private void Reset()
     {
@@ -22,7 +22,7 @@ public class FlagPickupZone : MonoBehaviour
 
     private void OnTriggerStay2D(Collider2D other)
     {
-        int id = other.GetInstanceID();
+        var id = other.GetEntityId();
         if (_stayTimers.TryGetValue(id, out float t))
             _stayTimers[id] = t + Time.deltaTime;
         else
@@ -51,7 +51,7 @@ public class FlagPickupZone : MonoBehaviour
 
     private void OnTriggerExit2D(Collider2D other)
     {
-        int id = other.GetInstanceID();
+        var id = other.GetEntityId();
         if (_stayTimers.ContainsKey(id))
             _stayTimers.Remove(id);
     }

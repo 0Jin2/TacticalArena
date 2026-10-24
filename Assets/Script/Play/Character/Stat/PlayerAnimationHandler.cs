@@ -32,7 +32,7 @@ public class PlayerAnimationHandler : NetworkBehaviour
             netAnimator.Animator.SetBool("grounded", grounded);
 
             // Rigidbody2D의 y속도를 파라미터로 넘긴다
-            float verticalVel = rb != null ? rb.velocity.y : 0f;
+            float verticalVel = rb != null ? rb.linearVelocity.y : 0f;
             netAnimator.Animator.SetFloat("verticalVelocity", verticalVel);
         }
     }

@@ -24,13 +24,6 @@ public class GPGS_BACKEND : MonoBehaviour
 
     void Awake()
     {
-        if (Application.isEditor)
-        {
-            Debug.Log("[GPGS_BACKEND] Unity Editor 환경에서는 GPGS_BACKEND를 사용하지 않습니다.");
-            this.enabled = false;
-            return;
-        }
-
         if (Application.internetReachability == NetworkReachability.NotReachable)
         {
             Debug.LogError("인터넷 연결 상태를 확인하세요.");
@@ -55,6 +48,8 @@ public class GPGS_BACKEND : MonoBehaviour
             isBackendInitialized = true;
             Debug.Log("뒤끝 초기화 성공");
 
+#if !UNITY_EDITOR
+            // 에디터에서는 GPGS를 쓰지 않음 (EditorGuestLogin 참고)
             PlayGamesClientConfiguration config = new PlayGamesClientConfiguration
                 .Builder()
                 .RequestServerAuthCode(false)
@@ -62,13 +57,9 @@ public class GPGS_BACKEND : MonoBehaviour
                 .RequestIdToken()
                 .Build();
             PlayGamesPlatform.InitializeInstance(config);
-
-#if UNITY_EDITOR
-            PlayGamesPlatform.DebugLogEnabled = true;
-#else
             PlayGamesPlatform.DebugLogEnabled = false;
-#endif
             PlayGamesPlatform.Activate();
+#endif
         }
         else
         {
@@ -79,6 +70,9 @@ public class GPGS_BACKEND : MonoBehaviour
     public void GPGSLogin()
     {
         loginButton.SetActive(false);
+#if UNITY_EDITOR
+        EditorGuestLogin();
+#else
         if (Social.localUser.authenticated)
         {
             Debug.Log("이미 로그인된 사용자입니다.");
@@ -100,7 +94,72 @@ public class GPGS_BACKEND : MonoBehaviour
                 }
             });
         }
+#endif
     }
+
+#if UNITY_EDITOR
+    // 에디터 테스트용: 구글 로그인 없이 뒤끝 게스트 계정으로 로그인
+    private void EditorGuestLogin()
+    {
+        if (!isBackendInitialized)
+        {
+            Debug.LogError("[에디터] 뒤끝이 초기화되지 않아 로그인할 수 없습니다.");
+            loginButton.SetActive(true);
+            return;
+        }
+
+        BackendReturnObject BRO = Backend.BMember.GuestLogin("Unity Editor 테스트");
+        if (BRO.IsSuccess())
+        {
+            Debug.Log("[에디터] 뒤끝 게스트 로그인 성공");
+            OnBackendLoginSuccess();
+        }
+        else
+        {
+            Debug.LogError($"[에디터] 뒤끝 게스트 로그인 실패: {BRO.GetErrorCode()} - {BRO.GetMessage()}");
+            loginButton.SetActive(true); // 실패 시 버튼 재활성화
+        }
+    }
+
+    private const string LoginSceneName = "LoginPage";
+
+    // 에디터에서 로그인 씬을 거치지 않고 바로 Play할 때 뒤끝 초기화 + 게스트 로그인을 자동 처리
+    [RuntimeInitializeOnLoadMethod(RuntimeInitializeLoadType.BeforeSceneLoad)]
+    private static void EditorAutoLogin()
+    {
+        if (UnityEngine.SceneManagement.SceneManager.GetActiveScene().name == LoginSceneName) return;
+
+        var initBro = Backend.Initialize();
+        if (!initBro.IsSuccess())
+        {
+            Debug.LogError($"[에디터] 뒤끝 초기화 실패: {initBro.GetErrorCode()} - {initBro.GetMessage()}");
+            return;
+        }
+
+        var loginBro = Backend.BMember.GuestLogin("Unity Editor 테스트");
+        if (!loginBro.IsSuccess())
+        {
+            Debug.LogError($"[에디터] 뒤끝 게스트 로그인 실패: {loginBro.GetErrorCode()} - {loginBro.GetMessage()}");
+            return;
+        }
+
+        string nickname = Backend.BMember.GetUserInfo().GetReturnValuetoJSON()["row"]["nickname"]?.ToString();
+        if (string.IsNullOrEmpty(nickname))
+        {
+            // 게스트 계정에 닉네임이 없으면 테스트용 닉네임 자동 생성
+            nickname = "Test" + Random.Range(1000, 10000);
+            var nickBro = Backend.BMember.UpdateNickname(nickname);
+            if (!nickBro.IsSuccess())
+            {
+                Debug.LogWarning($"[에디터] 테스트 닉네임 설정 실패: {nickBro.GetErrorCode()} - {nickBro.GetMessage()}");
+                nickname = null;
+            }
+        }
+
+        MyNickname = nickname;
+        Debug.Log($"[에디터] 자동 게스트 로그인 완료 (닉네임: {nickname})");
+    }
+#endif
 
     private void HandleBackendLogin()
     {
@@ -108,25 +167,28 @@ public class GPGS_BACKEND : MonoBehaviour
         if (BRO.IsSuccess())
         {
             Debug.Log("뒤끝 로그인 성공");
-
-            string token = GetTokens();
-            string nickname = Backend.BMember.GetUserInfo().GetReturnValuetoJSON()["row"]["nickname"]?.ToString();
-
-            if (string.IsNullOrEmpty(nickname))
-            {
-                ActivateNicknameUI(); // 닉네임 설정 UI 활성화
-            }
-            else
-            {
-                Debug.Log($"이미 설정된 닉네임: {nickname}");
-                MyNickname = nickname;
-                ActivateTapToPlayUI(); // "Tap to Play" UI 활성화
-            }
+            OnBackendLoginSuccess();
         }
         else
         {
             Debug.LogError($"뒤끝 로그인 실패: {BRO.GetErrorCode()} - {BRO.GetMessage()}");
             loginButton.SetActive(true); // 실패 시 버튼 재활성화
+        }
+    }
+
+    private void OnBackendLoginSuccess()
+    {
+        string nickname = Backend.BMember.GetUserInfo().GetReturnValuetoJSON()["row"]["nickname"]?.ToString();
+
+        if (string.IsNullOrEmpty(nickname))
+        {
+            ActivateNicknameUI(); // 닉네임 설정 UI 활성화
+        }
+        else
+        {
+            Debug.Log($"이미 설정된 닉네임: {nickname}");
+            MyNickname = nickname;
+            ActivateTapToPlayUI(); // "Tap to Play" UI 활성화
         }
     }
 

@@ -33,7 +33,7 @@ public class Projectile : NetworkBehaviour
         myCol = GetComponent<Collider2D>();
         if (bulletSprite == null) bulletSprite = GetComponentInChildren<SpriteRenderer>(true);
 
-        rb.velocity = transform.right * speed;
+        rb.linearVelocity = transform.right * speed;
         Invoke(nameof(DestroySelf), lifeTime);
     }
 
@@ -152,7 +152,7 @@ public class Projectile : NetworkBehaviour
         // 물리 정지 + 충돌 비활성
         if (rb != null)
         {
-            rb.velocity = Vector2.zero;
+            rb.linearVelocity = Vector2.zero;
             rb.angularVelocity = 0f;
             rb.isKinematic = true;
             rb.constraints = RigidbodyConstraints2D.FreezeAll;

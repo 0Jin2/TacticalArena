@@ -8,7 +8,7 @@ ScriptedImporter:
   assetBundleName: 
   assetBundleVariant: 
   script: {fileID: 11500000, guid: 62a9f0aa5b59740cfbadc7e5f9823bb0, type: 3}
-  importerVersion: 1
+  importerVersion: 2
   textureImporterSettings:
     alphaSource: 1
     mipMapMode: 0
@@ -84,6 +84,8 @@ ScriptedImporter:
     generateAnimationClips: 1
     addSortingGroup: 1
     addShadowCasters: 0
+    generateIndividualEvents: 1
+    generateSpriteAtlas: 1
   asepriteImporterSettings:
     fileImportMode: 1
     importHiddenLayers: 0
@@ -97,15 +99,16 @@ ScriptedImporter:
     generateAnimationClips: 1
     addSortingGroup: 1
     addShadowCasters: 0
-  importFileNodeState: 1
+    generateIndividualEvents: 1
+    generateSpriteAtlas: 1
   platformSettingsDirtyTick: 0
-  textureAssetName: 
   singleSpriteImportData:
   - name: 
     originalName: 
     pivot: {x: 0, y: 0}
     alignment: 0
     border: {x: 0, y: 0, z: 0, w: 0}
+    customData: 
     rect:
       serializedVersion: 2
       x: 0
@@ -127,6 +130,7 @@ ScriptedImporter:
     pivot: {x: 2.6666667, y: -0.84615386}
     alignment: 9
     border: {x: 0, y: 0, z: 0, w: 0}
+    customData: 
     rect:
       serializedVersion: 2
       x: 23
@@ -147,6 +151,7 @@ ScriptedImporter:
     pivot: {x: 0.52, y: -0.2857143}
     alignment: 9
     border: {x: 0, y: 0, z: 0, w: 0}
+    customData: 
     rect:
       serializedVersion: 2
       x: 4
@@ -167,6 +172,7 @@ ScriptedImporter:
     pivot: {x: 0, y: -0.2631579}
     alignment: 9
     border: {x: 0, y: 0, z: 0, w: 0}
+    customData: 
     rect:
       serializedVersion: 2
       x: 4
@@ -187,6 +193,7 @@ ScriptedImporter:
     pivot: {x: -0.27272728, y: -0.47058824}
     alignment: 9
     border: {x: 0, y: 0, z: 0, w: 0}
+    customData: 
     rect:
       serializedVersion: 2
       x: 4
@@ -207,6 +214,7 @@ ScriptedImporter:
     pivot: {x: -0.15384616, y: -0.5294118}
     alignment: 9
     border: {x: 0, y: 0, z: 0, w: 0}
+    customData: 
     rect:
       serializedVersion: 2
       x: 4
@@ -227,6 +235,7 @@ ScriptedImporter:
     pivot: {x: -0.45454547, y: -1.1666667}
     alignment: 9
     border: {x: 0, y: 0, z: 0, w: 0}
+    customData: 
     rect:
       serializedVersion: 2
       x: 37
@@ -247,6 +256,7 @@ ScriptedImporter:
     pivot: {x: -0.23076925, y: -0.5714286}
     alignment: 9
     border: {x: 0, y: 0, z: 0, w: 0}
+    customData: 
     rect:
       serializedVersion: 2
       x: 4
@@ -267,6 +277,7 @@ ScriptedImporter:
     pivot: {x: -2.25, y: -3.5}
     alignment: 9
     border: {x: 0, y: 0, z: 0, w: 0}
+    customData: 
     rect:
       serializedVersion: 2
       x: 25
@@ -283,8 +294,14 @@ ScriptedImporter:
     tessellationDetail: 0
     uvTransform: {x: 25, y: 53}
   spriteSheetImportData: []
+  tileSetImportData: []
   asepriteLayers:
   - layerIndex: 0
+    uuid:
+      value0: 690941855
+      value1: 0
+      value2: 0
+      value3: 0
     guid: 690941855
     name: flame_04_pink
     layerFlags: 0
@@ -364,10 +381,12 @@ ScriptedImporter:
         height: 4
       spriteId: a426c259a765dd243a5c8f9518a59339
     linkedCells: []
+    tileCells: []
+    tileSetIndex: 0
     parentIndex: -1
+  tileSets: []
   platformSettings: []
   generatePhysicsShape: 0
   secondarySpriteTextures: []
-  spritePackingTag: 
-  canvasSize: {x: 32, y: 32}
   previousTextureSize: {x: 64, y: 128}
+  canvasSize: {x: 32, y: 32}

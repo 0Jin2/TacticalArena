@@ -33,14 +33,14 @@ namespace Fusion {
     protected virtual void OnEnable() {
 #if UNITY_EDITOR
       if (ShowHierarchyWindowOverlay) {
-        UnityEditor.EditorApplication.hierarchyWindowItemOnGUI += HierarchyWindowOverlay;
+        UnityEditor.EditorApplication.hierarchyWindowItemByEntityIdOnGUI += HierarchyWindowOverlay;
       }
 #endif
     }
 
     protected virtual void OnDisable() {
 #if UNITY_EDITOR
-      UnityEditor.EditorApplication.hierarchyWindowItemOnGUI -= HierarchyWindowOverlay;
+      UnityEditor.EditorApplication.hierarchyWindowItemByEntityIdOnGUI -= HierarchyWindowOverlay;
 #endif
     }
 
@@ -277,7 +277,7 @@ namespace Fusion {
       return result;
     });
 
-    private void HierarchyWindowOverlay(int instanceId, Rect position) {
+    private void HierarchyWindowOverlay(EntityId instanceId, Rect position) {
       if (!Runner) {
         return;
       }
@@ -286,7 +286,7 @@ namespace Fusion {
         return;
       }
 
-      if (Runner.MultiplePeerUnityScene.GetHashCode() == instanceId) {
+      if (Runner.MultiplePeerUnityScene.GetHashCode() == instanceId.GetHashCode()) {
 
         var rect = new Rect(position) {
           xMin = position.xMax - 56,

@@ -165,7 +165,7 @@ public class PlayerNetworkController : NetworkBehaviour
         float inputDir = Mathf.Sign(moveX);
         if (Mathf.Abs(moveX) < 0.2f) inputDir = 0f;
 
-        rb.velocity = new Vector2(inputDir * fixedSpeed, rb.velocity.y);
+        rb.linearVelocity = new Vector2(inputDir * fixedSpeed, rb.linearVelocity.y);
 
         if (inputDir != 0)
             NetFlipX = inputDir;
@@ -182,13 +182,13 @@ public class PlayerNetworkController : NetworkBehaviour
 
         if (IsGrounded())
         {
-            rb.velocity = new Vector2(rb.velocity.x, statData.jumpPower);
+            rb.linearVelocity = new Vector2(rb.linearVelocity.x, statData.jumpPower);
             canDoubleJump = statData.allowDoubleJump;
             RPC_PlayJumpSfx();
         }
         else if (canDoubleJump)
         {
-            rb.velocity = new Vector2(rb.velocity.x, statData.jumpPower);
+            rb.linearVelocity = new Vector2(rb.linearVelocity.x, statData.jumpPower);
             canDoubleJump = false;
             RPC_PlayJumpSfx();
         }
@@ -474,7 +474,7 @@ public class PlayerNetworkController : NetworkBehaviour
     private void RPC_SetMovementLock(bool locked)
     {
         isUsingSkill = locked;
-        if (locked) rb.velocity = Vector2.zero;
+        if (locked) rb.linearVelocity = Vector2.zero;
     }
 
     private static void OnFlipChanged(Changed<PlayerNetworkController> changed)
@@ -527,7 +527,7 @@ public class PlayerNetworkController : NetworkBehaviour
         isKnockBack = true;
 
         // ✨ 점프처럼 "툭" 튀게: 기존 속도 제거 후 즉시 속도 세팅
-        rb.velocity = Vector2.zero;
+        rb.linearVelocity = Vector2.zero;
 
         // fromBulletToTarget: (총알 → 타겟) 방향
         // opposite=true 면 총알 진행 반대(= 타겟 → 총알)로 넉백
@@ -535,7 +535,7 @@ public class PlayerNetworkController : NetworkBehaviour
         if (Mathf.Approximately(xSign, 0f)) xSign = 1f; // 수평 0이면 기본 우측
 
         // 수평은 고정량(hopX), 수직은 살짝 띄우기(hopY)
-        rb.velocity = new Vector2(xSign * hopX, hopY);
+        rb.linearVelocity = new Vector2(xSign * hopX, hopY);
 
         // 잠깐 락 후 해제
         StartCoroutine(Co_UnlockMovementAfter(lockSeconds));

@@ -29,7 +29,7 @@ public class KnockbackProjectile : NetworkBehaviour
     public override void Spawned()
     {
         rb = GetComponent<Rigidbody2D>();
-        rb.velocity = transform.right * speed;
+        rb.linearVelocity = transform.right * speed;
         Invoke(nameof(DestroySelf), lifeTime);
     }
 
@@ -133,7 +133,7 @@ public class KnockbackProjectile : NetworkBehaviour
 
         if (rb != null)
         {
-            rb.velocity = Vector2.zero;
+            rb.linearVelocity = Vector2.zero;
             rb.angularVelocity = 0f;
             rb.isKinematic = true;
             rb.constraints = RigidbodyConstraints2D.FreezeAll;
@@ -216,8 +216,8 @@ public class KnockbackProjectile : NetworkBehaviour
         if (controller == null) return;
 
         // 총알 진행 방향 그대로
-        Vector2 bulletDir = rb != null && rb.velocity.sqrMagnitude > 0.0001f
-            ? rb.velocity.normalized
+        Vector2 bulletDir = rb != null && rb.linearVelocity.sqrMagnitude > 0.0001f
+            ? rb.linearVelocity.normalized
             : ((Vector2)other.bounds.center - (Vector2)transform.position).normalized;
 
         controller.RPC_ApplyKnockback(bulletDir, knockbackForce, knockbackUpBias, 0.2f, /*opposite=*/false);

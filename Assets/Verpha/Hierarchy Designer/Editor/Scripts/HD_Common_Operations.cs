@@ -1230,7 +1230,7 @@ namespace Verpha.HierarchyDesigner
             {
                 foreach (GameObject selectedGameObject in selectedGameObjects)
                 {
-                    int instanceID = selectedGameObject.GetInstanceID();
+                    int instanceID = selectedGameObject.GetEntityId().GetHashCode();
                     if (HD_Manager_GameObject.gameObjectDataCache.TryGetValue(instanceID, out HD_Manager_GameObject.GameObjectData data))
                     {
                         data.MainIcon = HD_Manager_GameObject.GetGameObjectMainIcon(selectedGameObject);
@@ -1253,7 +1253,7 @@ namespace Verpha.HierarchyDesigner
             {
                 foreach (GameObject selectedGameObject in selectedGameObjects)
                 {
-                    int instanceID = selectedGameObject.GetInstanceID();
+                    int instanceID = selectedGameObject.GetEntityId().GetHashCode();
                     if (HD_Manager_GameObject.gameObjectDataCache.TryGetValue(instanceID, out HD_Manager_GameObject.GameObjectData data))
                     {
                         data.ComponentIcons = HD_Manager_GameObject.GetComponentIcons(selectedGameObject);
@@ -1276,7 +1276,7 @@ namespace Verpha.HierarchyDesigner
             {
                 foreach (GameObject selectedGameObject in selectedGameObjects)
                 {
-                    int instanceID = selectedGameObject.GetInstanceID();
+                    int instanceID = selectedGameObject.GetEntityId().GetHashCode();
                     if (HD_Manager_GameObject.gameObjectDataCache.TryGetValue(instanceID, out HD_Manager_GameObject.GameObjectData data))
                     {
                         data.HierarchyTreeIcon = HD_Manager_GameObject.GetOrCreateBranchIcon(selectedGameObject.transform);
@@ -1299,7 +1299,7 @@ namespace Verpha.HierarchyDesigner
             {
                 foreach (GameObject selectedGameObject in selectedGameObjects)
                 {
-                    int instanceID = selectedGameObject.GetInstanceID();
+                    int instanceID = selectedGameObject.GetEntityId().GetHashCode();
                     if (HD_Manager_GameObject.gameObjectDataCache.TryGetValue(instanceID, out HD_Manager_GameObject.GameObjectData data))
                     {
                         data.Tag = selectedGameObject.tag;
@@ -1322,7 +1322,7 @@ namespace Verpha.HierarchyDesigner
             {
                 foreach (GameObject selectedGameObject in selectedGameObjects)
                 {
-                    int instanceID = selectedGameObject.GetInstanceID();
+                    int instanceID = selectedGameObject.GetEntityId().GetHashCode();
                     if (HD_Manager_GameObject.gameObjectDataCache.TryGetValue(instanceID, out HD_Manager_GameObject.GameObjectData data))
                     {
                         data.Layer = LayerMask.LayerToName(selectedGameObject.layer);
@@ -1338,7 +1338,7 @@ namespace Verpha.HierarchyDesigner
 
         public static void RefreshGameObjectData(GameObject gameObject)
         {
-            int instanceID = gameObject.GetInstanceID();
+            int instanceID = gameObject.GetEntityId().GetHashCode();
             if (!HD_Manager_GameObject.gameObjectDataCache.TryGetValue(instanceID, out HD_Manager_GameObject.GameObjectData data))
             {
                 data = new HD_Manager_GameObject.GameObjectData();
@@ -1398,8 +1398,7 @@ namespace Verpha.HierarchyDesigner
 
         private static void CollapseRecursive(GameObject obj)
         {
-            int instanceID = obj.GetInstanceID();
-            SetExpanded(instanceID, false);
+            SetExpanded(obj.GetEntityId(), false);
 
             foreach (Transform child in obj.transform)
             {
@@ -1409,8 +1408,7 @@ namespace Verpha.HierarchyDesigner
 
         private static void ExpandRecursive(GameObject obj)
         {
-            int instanceID = obj.GetInstanceID();
-            SetExpanded(instanceID, true);
+            SetExpanded(obj.GetEntityId(), true);
 
             foreach (Transform child in obj.transform)
             {
@@ -1418,7 +1416,7 @@ namespace Verpha.HierarchyDesigner
             }
         }
 
-        private static void SetExpanded(int instanceID, bool expand)
+        private static void SetExpanded(EntityId entityId, bool expand)
         {
             EditorWindow hierarchyWindow = GetHierarchyWindow();
             if (hierarchyWindow == null) return;
@@ -1426,7 +1424,7 @@ namespace Verpha.HierarchyDesigner
             MethodInfo expandMethod = hierarchyWindow.GetType().GetMethod("SetExpanded", BindingFlags.Instance | BindingFlags.NonPublic);
             if (expandMethod != null)
             {
-                expandMethod.Invoke(hierarchyWindow, new object[] { instanceID, expand });
+                expandMethod.Invoke(hierarchyWindow, new object[] { entityId, expand });
             }
         }
 

@@ -190,6 +190,7 @@ namespace Verpha.HierarchyDesigner
             public string Layer { get; set; }
         }
         internal static Dictionary<int, GameObjectData> gameObjectDataCache = new();
+        private static readonly Dictionary<int, EntityId> entityIdLookup = new();
         #endregion
 
         #region Folder and Separator
@@ -210,8 +211,8 @@ namespace Verpha.HierarchyDesigner
 
         private static void SubscribeToEvents()
         {
-            EditorApplication.hierarchyWindowItemOnGUI -= OnHierarchyWindowItemGUI;
-            EditorApplication.hierarchyWindowItemOnGUI += OnHierarchyWindowItemGUI;
+            EditorApplication.hierarchyWindowItemByEntityIdOnGUI -= OnHierarchyWindowItemGUI;
+            EditorApplication.hierarchyWindowItemByEntityIdOnGUI += OnHierarchyWindowItemGUI;
             EditorApplication.hierarchyChanged -= OnHierarchyChanged;
             EditorApplication.hierarchyChanged += OnHierarchyChanged;
             Editor.finishedDefaultHeaderGUI -= OnPostHeaderGUI;
@@ -220,12 +221,14 @@ namespace Verpha.HierarchyDesigner
         #endregion
 
         #region Events
-        private static void OnHierarchyWindowItemGUI(int instanceID, Rect selectionRect)
+        private static void OnHierarchyWindowItemGUI(EntityId entityId, Rect selectionRect)
         {
             #region Header
             if (HD_Manager_Editor.IsPlaying && disableEditorDesignerMajorOperationsDuringPlayMode) { return; }
-            GameObject gameObject = EditorUtility.InstanceIDToObject(instanceID) as GameObject;
+            GameObject gameObject = EditorUtility.EntityIdToObject(entityId) as GameObject;
             if (gameObject == null) { return; }
+            int instanceID = entityId.GetHashCode();
+            entityIdLookup[instanceID] = entityId;
             #endregion
 
             #region Events
@@ -269,7 +272,7 @@ namespace Verpha.HierarchyDesigner
             #endregion
 
             #region Features
-            if (separatorCache.TryGetValue(gameObject.GetInstanceID(), out _) || (gameObject.CompareTag(HD_Common_Constants.SeparatorTag) && gameObject.name.StartsWith(HD_Common_Constants.SeparatorPrefix))) { DrawSeparator(gameObject, selectionRect, instanceID); return; }
+            if (separatorCache.TryGetValue(gameObject.GetEntityId().GetHashCode(), out _) || (gameObject.CompareTag(HD_Common_Constants.SeparatorTag) && gameObject.name.StartsWith(HD_Common_Constants.SeparatorPrefix))) { DrawSeparator(gameObject, selectionRect, instanceID); return; }
             if (enableHierarchyRows) { DrawHierarchyRows(selectionRect); }
             if (enableGameObjectMainIcon) { DrawGameObjectMainIcon(gameObject, selectionRect, instanceID); }
             bool isFolder = folderCache.TryGetValue(instanceID, out _) || gameObject.GetComponent<HierarchyDesignerFolder>();
@@ -302,7 +305,7 @@ namespace Verpha.HierarchyDesigner
                     List<int> keysToRemove = new();
                     foreach (int key in gameObjectDataCache.Keys)
                     {
-                        if (EditorUtility.InstanceIDToObject(key) == null)
+                        if (!entityIdLookup.TryGetValue(key, out EntityId keyEntityId) || EditorUtility.EntityIdToObject(keyEntityId) == null)
                         {
                             keysToRemove.Add(key);
                         }
@@ -310,6 +313,7 @@ namespace Verpha.HierarchyDesigner
                     foreach (int key in keysToRemove)
                     {
                         gameObjectDataCache.Remove(key);
+                        entityIdLookup.Remove(key);
                     }
                     #endregion
                 }
@@ -325,7 +329,7 @@ namespace Verpha.HierarchyDesigner
 
             #region Features
             if ((gameObject.hideFlags & HideFlags.NotEditable) != HideFlags.NotEditable) return;
-            if (separatorCache.TryGetValue(gameObject.GetInstanceID(), out _) || (gameObject.CompareTag(HD_Common_Constants.SeparatorTag) && gameObject.name.StartsWith(HD_Common_Constants.SeparatorPrefix))) { EditorGUILayout.HelpBox(separatorMessage, MessageType.Info, true); }
+            if (separatorCache.TryGetValue(gameObject.GetEntityId().GetHashCode(), out _) || (gameObject.CompareTag(HD_Common_Constants.SeparatorTag) && gameObject.name.StartsWith(HD_Common_Constants.SeparatorPrefix))) { EditorGUILayout.HelpBox(separatorMessage, MessageType.Info, true); }
             else { EditorGUILayout.HelpBox(lockedGameObjectMessage, MessageType.Info, true); }
             #endregion
         }
@@ -361,7 +365,7 @@ namespace Verpha.HierarchyDesigner
                 }
 
                 bool isHovering = finalSelectionRect.Contains(Event.current.mousePosition);
-                bool isSelected = Array.IndexOf(Selection.instanceIDs, instanceID) >= 0;
+                bool isSelected = Array.Exists(Selection.entityIds, id => id.GetHashCode() == instanceID);
                 bool isHierarchyFocused = EditorWindow.focusedWindow != null && EditorWindow.focusedWindow.titleContent.text == HD_Common_Constants.HierarchyWindow;
 
                 if (isSelected && !isHierarchyFocused)
@@ -1058,7 +1062,7 @@ namespace Verpha.HierarchyDesigner
                     float offsetX = selectionRect.x + 8f;
                     GUIContent gameObjectNameContent = new(gameObject.name);
                     float nameWidth = GUI.skin.label.CalcSize(gameObjectNameContent).x;
-                    if (folderCache.TryGetValue(gameObject.GetInstanceID(), out (Color textColor, int fontSize, FontStyle fontStyle, Color folderColor, HD_Settings_Folders.FolderImageType folderImageType) folderInfo))
+                    if (folderCache.TryGetValue(gameObject.GetEntityId().GetHashCode(), out (Color textColor, int fontSize, FontStyle fontStyle, Color folderColor, HD_Settings_Folders.FolderImageType folderImageType) folderInfo))
                     {
                         GUIStyle folderLabelStyle = FolderStyle;
                         folderLabelStyle.fontSize = folderInfo.fontSize;
@@ -1072,7 +1076,7 @@ namespace Verpha.HierarchyDesigner
                         float lockLabelWidth = lockStyle.CalcSize(new(lockedLabel)).x;
                         return offsetX + layoutBaseOffset + lockLabelWidth + defaultXOffset;
                     }
-                    if ((folderCache.TryGetValue(gameObject.GetInstanceID(), out _) || gameObject.GetComponent<HierarchyDesignerFolder>()) && excludeFolderProperties) return offsetX += layoutBaseOffset;
+                    if ((folderCache.TryGetValue(gameObject.GetEntityId().GetHashCode(), out _) || gameObject.GetComponent<HierarchyDesignerFolder>()) && excludeFolderProperties) return offsetX += layoutBaseOffset;
 
                     if (enableGameObjectComponentIcons)
                     {
@@ -1087,7 +1091,7 @@ namespace Verpha.HierarchyDesigner
                         }
                         if (!(disableComponentIconsForInactiveGameObjects && !gameObject.activeInHierarchy))
                         {
-                            if (gameObjectDataCache.TryGetValue(gameObject.GetInstanceID(), out GameObjectData data) && data.ComponentIcons != null)
+                            if (gameObjectDataCache.TryGetValue(gameObject.GetEntityId().GetHashCode(), out GameObjectData data) && data.ComponentIcons != null)
                             {
                                 foreach ((Component, Texture2D) component in data.ComponentIcons)
                                 {
@@ -1099,11 +1103,11 @@ namespace Verpha.HierarchyDesigner
                         else offsetX += defaultComponentIconsOffset;
                     }
                     else offsetX += 18f;
-                    if (enableGameObjectTag && gameObjectDataCache.TryGetValue(gameObject.GetInstanceID(), out GameObjectData tagData) && !excludedTags.Contains(tagData.Tag))
+                    if (enableGameObjectTag && gameObjectDataCache.TryGetValue(gameObject.GetEntityId().GetHashCode(), out GameObjectData tagData) && !excludedTags.Contains(tagData.Tag))
                     {
                         offsetX += TagStyle.CalcSize(new GUIContent(tagData.Tag)).x + tagLayerOffset;
                     }
-                    if (enableGameObjectLayer && gameObjectDataCache.TryGetValue(gameObject.GetInstanceID(), out GameObjectData layerData) && !excludedLayers.Contains(layerData.Layer))
+                    if (enableGameObjectLayer && gameObjectDataCache.TryGetValue(gameObject.GetEntityId().GetHashCode(), out GameObjectData layerData) && !excludedLayers.Contains(layerData.Layer))
                     {
                         offsetX += LayerStyle.CalcSize(new GUIContent(layerData.Layer)).x + tagLayerSpacing;
                     }
@@ -1247,7 +1251,7 @@ namespace Verpha.HierarchyDesigner
                 default:
                     GUIContent nameContent = new(gameObject.name);
                     float nameWidth = GUI.skin.label.CalcSize(nameContent).x;
-                    if (folderCache.TryGetValue(gameObject.GetInstanceID(), out (Color textColor, int fontSize, FontStyle fontStyle, Color folderColor, HD_Settings_Folders.FolderImageType folderImageType) folderInfo))
+                    if (folderCache.TryGetValue(gameObject.GetEntityId().GetHashCode(), out (Color textColor, int fontSize, FontStyle fontStyle, Color folderColor, HD_Settings_Folders.FolderImageType folderImageType) folderInfo))
                     {
                         GUIStyle folderLabelStyle = FolderStyle;
                         folderLabelStyle.fontSize = folderInfo.fontSize;

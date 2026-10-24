@@ -7432,19 +7432,19 @@ namespace Fusion.Editor {
     }
 
     private static Action<object> SetDirty = x => EditorUtility.SetDirty((UnityEngine.Object)x);
-    private static Dictionary<NetworkObjectGuid, int> SceneObjectIds = new Dictionary<NetworkObjectGuid, int>();
+    private static Dictionary<NetworkObjectGuid, EntityId> SceneObjectIds = new Dictionary<NetworkObjectGuid, EntityId>();
 
     private static Func<NetworkObject, NetworkObjectGuid> GuidProvider = obj => {
-      var instanceId = obj.GetInstanceID();
+      var instanceId = obj.GetEntityId();
       var guid = obj.NetworkGuid;
 
       if (guid.IsValid) {
         if (SceneObjectIds.TryGetValue(guid, out var otherInstanceId)) {
-          if (otherInstanceId == instanceId) {
+          if (otherInstanceId.Equals(instanceId)) {
             // can keep the guid
             return guid;
           } else {
-            var otherInstance = EditorUtility.InstanceIDToObject(otherInstanceId);
+            var otherInstance = EditorUtility.EntityIdToObject(otherInstanceId);
             if (otherInstance == null || otherInstance == obj) {
               // fine, can reuse
               SceneObjectIds[guid] = instanceId;
@@ -11049,7 +11049,7 @@ namespace Fusion.Editor {
 
       return
         property.propertyType == SerializedPropertyType.Boolean ? (property.boolValue ? 1 : 0) :
-        property.propertyType == SerializedPropertyType.ObjectReference ? (property.objectReferenceValue == null ? 0 : property.objectReferenceValue.GetInstanceID()) :
+        property.propertyType == SerializedPropertyType.ObjectReference ? (property.objectReferenceValue == null ? 0 : (double)EntityId.ToULong(property.objectReferenceValue.GetEntityId())) :
         property.propertyType == SerializedPropertyType.Float ? (double)property.floatValue :
         property.longValue;
     }
@@ -11110,7 +11110,7 @@ namespace Fusion.Editor {
       if (type.IsByRef) {
         var objObj = valueObj as UnityEngine.Object;
         if (objObj != null)
-          return objObj.GetInstanceID();
+          return EntityId.ToULong(objObj.GetEntityId());
 
       } else {
 
@@ -11177,7 +11177,7 @@ namespace Fusion.Editor {
             case SerializedPropertyType.Float: hashCode            = HashCodeUtilities.CombineHashCodes(hashCode, p.floatValue.GetHashCode()); break;
             case SerializedPropertyType.String: hashCode           = HashCodeUtilities.CombineHashCodes(hashCode, p.stringValue.GetHashCode()); break;
             case SerializedPropertyType.Color: hashCode            = HashCodeUtilities.CombineHashCodes(hashCode, p.colorValue.GetHashCode()); break;
-            case SerializedPropertyType.ObjectReference: hashCode  = HashCodeUtilities.CombineHashCodes(hashCode, p.objectReferenceInstanceIDValue); break;
+            case SerializedPropertyType.ObjectReference: hashCode  = HashCodeUtilities.CombineHashCodes(hashCode, p.objectReferenceEntityIdValue.GetHashCode()); break;
             case SerializedPropertyType.LayerMask: hashCode        = HashCodeUtilities.CombineHashCodes(hashCode, p.intValue); break;
             case SerializedPropertyType.Enum: hashCode             = HashCodeUtilities.CombineHashCodes(hashCode, p.intValue); break;
             case SerializedPropertyType.Vector2: hashCode          = HashCodeUtilities.CombineHashCodes(hashCode, p.vector2Value.GetHashCode()); break;

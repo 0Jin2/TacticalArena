@@ -311,7 +311,7 @@ public class Health : NetworkBehaviour
         if (rb != null)
         {
             rb.simulated = true;
-            rb.velocity = Vector2.zero;
+            rb.linearVelocity = Vector2.zero;
             rb.angularVelocity = 0f;
         }
         foreach (var col in GetComponents<Collider2D>()) col.enabled = true;
