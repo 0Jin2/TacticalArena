@@ -90,6 +90,22 @@ public class TestModeManager : MonoBehaviour
 
     public static string MapName(string path) => System.IO.Path.GetFileNameWithoutExtension(path);
 
+    /// <summary>현재 맵에서 고를 수 있는 캐릭터 (선택 화면 버튼에 있는 것만. 예: FD 맵은 일부만)</summary>
+    public static List<string> AvailableCharacterIds()
+    {
+        var spawnerIds = PlaySceneNetworkSpawner.Instance != null ? PlaySceneNetworkSpawner.Instance.CharacterIds : null;
+        if (spawnerIds == null) return new List<string>();
+
+        var buttons = CharacterSelectionManager.Instance != null ? CharacterSelectionManager.Instance.characterButtons : null;
+        if (buttons == null) return spawnerIds.ToList();
+
+        var selectable = buttons
+            .Where(b => b != null && b.characterInfo != null)
+            .Select(b => b.characterInfo.characterId)
+            .ToHashSet();
+        return spawnerIds.Where(selectable.Contains).ToList();
+    }
+
     // ───────── 세션 시작/전환 ─────────
 
     /// <summary>방 코드로 세션 생성 또는 참가 후 맵 로드. 이미 있는 방이면 그 방의 맵을 따른다.</summary>
@@ -286,12 +302,11 @@ public class TestModeManager : MonoBehaviour
     private void AutoSelectCharacter()
     {
         var data = CharacterSelectionNetworkData.Instance;
-        var spawner = PlaySceneNetworkSpawner.Instance;
-        if (data == null || spawner == null || !runner.LocalPlayer.IsValid) return;
+        if (data == null || CharacterSelectionManager.Instance == null || !runner.LocalPlayer.IsValid) return;
         if (data.SelectedCharacters.ContainsKey(runner.LocalPlayer)) return;
 
-        var ids = spawner.CharacterIds;
-        if (ids == null || ids.Count == 0) return;
+        var ids = AvailableCharacterIds();
+        if (ids.Count == 0) return;
         if (string.IsNullOrEmpty(CharacterId) || !ids.Contains(CharacterId))
             CharacterId = ids[0];
 

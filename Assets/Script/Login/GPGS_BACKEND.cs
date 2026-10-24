@@ -108,7 +108,7 @@ public class GPGS_BACKEND : MonoBehaviour
             return;
         }
 
-        BackendReturnObject BRO = Backend.BMember.GuestLogin("Unity Editor 테스트");
+        BackendReturnObject BRO = EditorLogin();
         if (BRO.IsSuccess())
         {
             Debug.Log("[에디터] 뒤끝 게스트 로그인 성공");
@@ -122,6 +122,35 @@ public class GPGS_BACKEND : MonoBehaviour
     }
 
     private const string LoginSceneName = "LoginPage";
+
+    // MPPM 추가 에디터면 "mppm978fa806" 같은 인스턴스 폴더 이름, 메인 에디터면 null
+    public static string AdditionalEditorId
+    {
+        get
+        {
+            const string marker = "/Library/VP/";
+            string path = Application.dataPath.Replace('\\', '/');
+            int index = path.IndexOf(marker);
+            if (index < 0) return null;
+
+            string rest = path.Substring(index + marker.Length);
+            int slash = rest.IndexOf('/');
+            return slash > 0 ? rest.Substring(0, slash) : rest;
+        }
+    }
+
+    // 메인 에디터는 게스트 계정, MPPM 추가 에디터는 창마다 별도 테스트 계정
+    // (같은 게스트 계정으로 여러 창이 로그인하면 먼저 로그인한 창의 토큰이 끊김)
+    private static BackendReturnObject EditorLogin()
+    {
+        string editorId = AdditionalEditorId;
+        if (editorId == null)
+            return Backend.BMember.GuestLogin("Unity Editor 테스트");
+
+        string id = $"editor_{editorId}";
+        var bro = Backend.BMember.CustomLogin(id, id);
+        return bro.IsSuccess() ? bro : Backend.BMember.CustomSignUp(id, id);
+    }
 
     // 테스트 모드에서 게임 내 표시 닉네임 지정 (뒤끝 닉네임은 변경하지 않음)
     public static void SetTestNickname(string nickname) => MyNickname = nickname;
@@ -139,7 +168,7 @@ public class GPGS_BACKEND : MonoBehaviour
             return;
         }
 
-        var loginBro = Backend.BMember.GuestLogin("Unity Editor 테스트");
+        var loginBro = EditorLogin();
         if (!loginBro.IsSuccess())
         {
             Debug.LogError($"[에디터] 뒤끝 게스트 로그인 실패: {loginBro.GetErrorCode()} - {loginBro.GetMessage()}");

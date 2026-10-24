@@ -22,21 +22,12 @@ public class TestLobbyUI : MonoBehaviour
     {
         mapPaths = TestModeManager.FindMapPaths();
         characterIds = TestModeManager.FindCharacterIds();
-        // MPPM 추가 에디터는 같은 게스트 계정이라 닉네임이 겹치지 않게 따로 생성
-        nickname = IsAdditionalEditor() || string.IsNullOrEmpty(GPGS_BACKEND.MyNickname)
+        // MPPM 추가 에디터는 닉네임이 겹치지 않게 따로 생성
+        nickname = GPGS_BACKEND.AdditionalEditorId != null || string.IsNullOrEmpty(GPGS_BACKEND.MyNickname)
             ? $"Tester{Random.Range(100, 1000)}"
             : GPGS_BACKEND.MyNickname;
         roomCode = DefaultRoomCode();
         TestModeManager.Ensure();
-    }
-
-    // MPPM 추가 에디터: Library/VP 아래에서 실행되고 -name Player2~4 인자를 받음
-    private static bool IsAdditionalEditor()
-    {
-        if (Application.dataPath.Replace('\\', '/').Contains("/Library/VP/")) return true;
-        var args = System.Environment.GetCommandLineArgs();
-        int i = System.Array.IndexOf(args, "-name");
-        return i >= 0 && i + 1 < args.Length && args[i + 1] != "Player1";
     }
 
     // 같은 PC(에디터 창 + MPPM 가상 플레이어)는 같은 코드 → 그냥 둘 다 "같이 플레이"만 누르면 합류

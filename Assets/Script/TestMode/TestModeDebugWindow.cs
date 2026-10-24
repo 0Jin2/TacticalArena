@@ -78,16 +78,16 @@ public class TestModeDebugWindow : MonoBehaviour
 
     private void DrawCharacterChange(TestModeManager manager)
     {
-        GUILayout.Label("내 캐릭터 변경");
-        var spawner = PlaySceneNetworkSpawner.Instance;
-        if (spawner == null || spawner.CharacterIds == null)
+        GUILayout.Label("내 캐릭터 변경 (이 맵에서 고를 수 있는 캐릭터)");
+        var ids = TestModeManager.AvailableCharacterIds();
+        if (ids.Count == 0)
         {
-            GUILayout.Label("(스포너 준비 중)");
+            GUILayout.Label("(캐릭터 목록 준비 중)");
             return;
         }
 
         GUI.enabled = !manager.IsBusy && CharacterSelectionNetworkData.Instance != null;
-        foreach (var id in spawner.CharacterIds)
+        foreach (var id in ids)
         {
             bool current = id == manager.CharacterId;
             if (GUILayout.Button(current ? $"▶ {id}" : id) && !current)
