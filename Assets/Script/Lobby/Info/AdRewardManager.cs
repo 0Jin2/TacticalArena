@@ -145,7 +145,7 @@ public class AdRewardManager : MonoBehaviour
     private void LoadAndShowGoldRewardAd()
     {
         if (rewardedAdGold != null) rewardedAdGold = null;
-        AdRequest request = new AdRequest.Builder().Build();
+        AdRequest request = new AdRequest();
 
         RewardedAd.Load(adUnitIdGold, request, (RewardedAd ad, LoadAdError error) =>
         {
@@ -187,7 +187,7 @@ public class AdRewardManager : MonoBehaviour
     private void LoadAndShowJemRewardAd()
     {
         if (rewardedAdJem != null) rewardedAdJem = null;
-        AdRequest request = new AdRequest.Builder().Build();
+        AdRequest request = new AdRequest();
 
         RewardedAd.Load(adUnitIdJem, request, (RewardedAd ad, LoadAdError error) =>
         {
