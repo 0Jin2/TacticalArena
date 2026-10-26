@@ -20,6 +20,7 @@ public class GPGS_BACKEND : MonoBehaviour
     [SerializeField] private Transform popupParent;  // infoPrefab을 붙일 부모(예: Canvas)
 
     private bool isBackendInitialized = false;
+    private bool isLoginRequested = false; // loginButton 클릭으로 시작된 로그인만 진행하기 위한 플래그
     public static string MyNickname { get; private set; }
 
     void Awake()
@@ -49,14 +50,8 @@ public class GPGS_BACKEND : MonoBehaviour
             Debug.Log("뒤끝 초기화 성공");
 
 #if !UNITY_EDITOR
-            // 에디터에서는 GPGS를 쓰지 않음 (EditorGuestLogin 참고)
-            PlayGamesClientConfiguration config = new PlayGamesClientConfiguration
-                .Builder()
-                .RequestServerAuthCode(false)
-                .RequestEmail()
-                .RequestIdToken()
-                .Build();
-            PlayGamesPlatform.InitializeInstance(config);
+            // GPGS V2 (플러그인 v11): PlayGamesClientConfiguration / InitializeInstance 는 제거됨.
+            // 설정(Web Client ID 등)은 Window > Google Play Games > Setup 에서 처리.
             PlayGamesPlatform.DebugLogEnabled = false;
             PlayGamesPlatform.Activate();
 #endif
@@ -69,28 +64,43 @@ public class GPGS_BACKEND : MonoBehaviour
 
     public void GPGSLogin()
     {
+        if (isLoginRequested) return; // 이미 로그인 진행 중
+        isLoginRequested = true;
         loginButton.SetActive(false);
 #if UNITY_EDITOR
         EditorGuestLogin();
 #else
-        if (Social.localUser.authenticated)
+        if (PlayGamesPlatform.Instance.IsAuthenticated())
         {
             Debug.Log("이미 로그인된 사용자입니다.");
             HandleBackendLogin();
         }
         else
         {
-            Social.localUser.Authenticate(success =>
+            // 1차: 자동(silent) 로그인 시도
+            PlayGamesPlatform.Instance.Authenticate(status =>
             {
-                if (success)
+                if (status == SignInStatus.Success)
                 {
                     Debug.Log("GPGS 로그인 성공");
                     HandleBackendLogin();
                 }
                 else
                 {
-                    Debug.LogError("GPGS 로그인 실패: 사용자 인증 실패");
-                    loginButton.SetActive(true); // 실패 시 버튼 재활성화
+                    // 2차: 사용자에게 로그인 창을 띄우는 수동 로그인
+                    PlayGamesPlatform.Instance.ManuallyAuthenticate(manualStatus =>
+                    {
+                        if (manualStatus == SignInStatus.Success)
+                        {
+                            Debug.Log("GPGS 로그인 성공");
+                            HandleBackendLogin();
+                        }
+                        else
+                        {
+                            Debug.LogError($"GPGS 로그인 실패: 사용자 인증 실패 ({manualStatus})");
+                            ResetLoginButton(); // 실패 시 버튼 재활성화
+                        }
+                    });
                 }
             });
         }
@@ -104,7 +114,7 @@ public class GPGS_BACKEND : MonoBehaviour
         if (!isBackendInitialized)
         {
             Debug.LogError("[에디터] 뒤끝이 초기화되지 않아 로그인할 수 없습니다.");
-            loginButton.SetActive(true);
+            ResetLoginButton();
             return;
         }
 
@@ -117,11 +127,12 @@ public class GPGS_BACKEND : MonoBehaviour
         else
         {
             Debug.LogError($"[에디터] 뒤끝 게스트 로그인 실패: {BRO.GetErrorCode()} - {BRO.GetMessage()}");
-            loginButton.SetActive(true); // 실패 시 버튼 재활성화
+            ResetLoginButton(); // 실패 시 버튼 재활성화
         }
     }
 
     private const string LoginSceneName = "LoginPage";
+    private const string EditorGuestEtc = "Unity Editor 테스트";
 
     // MPPM 추가 에디터면 "mppm978fa806" 같은 인스턴스 폴더 이름, 메인 에디터면 null
     public static string AdditionalEditorId
@@ -145,11 +156,48 @@ public class GPGS_BACKEND : MonoBehaviour
     {
         string editorId = AdditionalEditorId;
         if (editorId == null)
-            return Backend.BMember.GuestLogin("Unity Editor 테스트");
+            return GuestLoginWithRecovery();
 
         string id = $"editor_{editorId}";
         var bro = Backend.BMember.CustomLogin(id, id);
         return bro.IsSuccess() ? bro : Backend.BMember.CustomSignUp(id, id);
+    }
+
+    // 게스트 로그인 + 자동 복구
+    // 뒤끝 콘솔에서 유저를 삭제하면 로컬에 저장된 게스트 정보만 남아
+    // GuestLogin 이 401(bad customId)로 계속 실패한다.
+    // 이 경우 로컬 게스트 정보를 지우고 다시 GuestLogin 하면 신규 가입이 진행된다.
+    private static BackendReturnObject GuestLoginWithRecovery()
+    {
+        var bro = Backend.BMember.GuestLogin(EditorGuestEtc);
+
+        if (bro.IsSuccess())
+        {
+            // 로그인은 됐지만 유저 정보 조회가 안 되면 서버에 없는 계정으로 판단
+            if (Backend.BMember.GetUserInfo().IsSuccess())
+                return bro;
+
+            Debug.LogWarning("[에디터] 유저 정보 조회 실패 → 로컬 게스트 정보 삭제 후 재가입");
+        }
+        else if (IsStaleGuestError(bro))
+        {
+            Debug.LogWarning($"[에디터] 서버에 없는 게스트 계정({bro.GetErrorCode()}) → 로컬 게스트 정보 삭제 후 재가입");
+        }
+        else
+        {
+            // 차단/네트워크 오류 등은 로컬 계정을 지우지 않고 그대로 반환
+            return bro;
+        }
+
+        Backend.BMember.DeleteGuestInfo();
+        return Backend.BMember.GuestLogin(EditorGuestEtc);
+    }
+
+    // 서버에서 삭제됐거나 탈퇴 처리된 게스트 계정인지 판별
+    private static bool IsStaleGuestError(BackendReturnObject bro)
+    {
+        string code = bro.GetErrorCode();
+        return code == "BadUnauthorizedException" || code == "GoneResourceException";
     }
 
     // 테스트 모드에서 게임 내 표시 닉네임 지정 (뒤끝 닉네임은 변경하지 않음)
@@ -193,19 +241,42 @@ public class GPGS_BACKEND : MonoBehaviour
     }
 #endif
 
+    // GPGS V2: 인증 코드 → 뒤끝 액세스 토큰 → 페더레이션 로그인
     private void HandleBackendLogin()
     {
-        BackendReturnObject BRO = Backend.BMember.AuthorizeFederation(GetTokens(), FederationType.Google, "gpgs");
-        if (BRO.IsSuccess())
+        if (!isLoginRequested) return; // 버튼을 누르지 않았다면 뒤끝 로그인 진행 안 함
+
+        PlayGamesPlatform.Instance.RequestServerSideAccess(false, authCode =>
         {
-            Debug.Log("뒤끝 로그인 성공");
-            OnBackendLoginSuccess();
-        }
-        else
-        {
-            Debug.LogError($"뒤끝 로그인 실패: {BRO.GetErrorCode()} - {BRO.GetMessage()}");
-            loginButton.SetActive(true); // 실패 시 버튼 재활성화
-        }
+            if (string.IsNullOrEmpty(authCode))
+            {
+                Debug.LogError("GPGS 인증 코드(Server Auth Code)를 가져오지 못했습니다. (Web Client ID 설정 확인)");
+                ResetLoginButton();
+                return;
+            }
+
+            BackendReturnObject tokenBro = Backend.BMember.GetGPGS2AccessToken(authCode);
+            if (!tokenBro.IsSuccess())
+            {
+                Debug.LogError($"GPGS2 액세스 토큰 발급 실패: {tokenBro.GetErrorCode()} - {tokenBro.GetMessage()}");
+                ResetLoginButton(); // 실패 시 버튼 재활성화
+                return;
+            }
+
+            string accessToken = tokenBro.GetReturnValuetoJSON()["access_token"].ToString();
+
+            BackendReturnObject BRO = Backend.BMember.AuthorizeFederation(accessToken, FederationType.GPGS2, "gpgs");
+            if (BRO.IsSuccess())
+            {
+                Debug.Log("뒤끝 로그인 성공");
+                OnBackendLoginSuccess();
+            }
+            else
+            {
+                Debug.LogError($"뒤끝 로그인 실패: {BRO.GetErrorCode()} - {BRO.GetMessage()}");
+                ResetLoginButton(); // 실패 시 버튼 재활성화
+            }
+        });
     }
 
     private void OnBackendLoginSuccess()
@@ -278,23 +349,15 @@ public class GPGS_BACKEND : MonoBehaviour
         }
     }
 
+    // 로그인 실패 시: 플래그 초기화 + 로그인 버튼 재활성화
+    private void ResetLoginButton()
+    {
+        isLoginRequested = false;
+        loginButton.SetActive(true);
+    }
+
     private void ActivateTapToPlayUI()
     {
         tapToPlayUI.SetActive(true); // "Tap to Play" UI 활성화
-    }
-
-    public string GetTokens()
-    {
-        if (PlayGamesPlatform.Instance.localUser.authenticated)
-        {
-            string token = PlayGamesPlatform.Instance.GetIdToken();
-            Debug.Log("ID 토큰을 성공적으로 가져왔습니다.");
-            return token;
-        }
-        else
-        {
-            Debug.LogError("토큰 가져오기 실패: 사용자가 인증되지 않았습니다.");
-            return null;
-        }
     }
 }
