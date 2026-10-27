@@ -32,11 +32,14 @@ namespace GooglePlayGames.BasicApi
         ReadCacheOrNetwork,
 
         /// <summary>
-        /// Only allow reads from network.
+        /// Primarily attempts to read data from the network.
         /// </summary>
-        /// <remarks> This guarantees any returned values were current at the time
-        /// the read succeeded, but prevents reads from succeeding if the network is unavailable for
-        /// any reason.
+        /// <remarks>
+        /// This option prioritizes fetching the latest data from the network. However, if the network is
+        /// unavailable, it may fall back to reading from the local cache to ensure the operation
+        /// can complete. As a result, the data returned might not be the most up-to-date version
+        /// from the server, and a successful call does not guarantee that the network was accessible
+        /// at that moment.
         /// </remarks>
         ReadNetworkOnly
     }
@@ -68,10 +71,10 @@ namespace GooglePlayGames.BasicApi
         /// <summary>Timed out while awaiting the result.</summary>
         Timeout = -5,
 
-        ///< summary>
+        /// <summary>
         /// Constant indicating that the developer does not have access to the friends list, but can
         /// call the AskForLoadFriendsResolution API to show a consent dialog.
-        ///</summary>
+        /// </summary>
         ResolutionRequired = -6,
     }
 
@@ -136,30 +139,31 @@ namespace GooglePlayGames.BasicApi
         Social = 2,
     }
 
+    /// <summary>Values specifying the visibility status of the friends list.</summary>
     public enum FriendsListVisibilityStatus
     {
-        ///< summary>
+        /// <summary>
         /// Constant indicating that currently it's unknown if the friends list is visible to the
         /// game, game can ask for permission from user.
-        ///</summary>
+        /// </summary>
         Unknown = 0,
 
         /// Constant indicating that the friends list is currently visible to the game.
         Visible = 1,
 
-        ///< summary>
+        /// <summary>
         /// Constant indicating that the developer does not have access to the friends list, but can
         /// call the AskForLoadFriendsResolution API to show a consent dialog.
-        ///</summary>
+        /// </summary>
         ResolutionRequired = 2,
 
-        ///< summary>
+        /// <summary>
         /// Constant indicating that the friends list is currently unavailable for this user, and it
         /// is not possible to request access at this time, either because the user has permanently
         /// declined or the friends feature is not available to them. In this state, any attempts to
         /// request
         /// access to the friends list will be unsuccessful.
-        ///</summary>
+        /// </summary>
         Unavailable = 3,
 
         /// <summary>An network error occurred.</summary>
@@ -169,6 +173,7 @@ namespace GooglePlayGames.BasicApi
         NotAuthorized = -5,
     }
 
+    /// <summary>Values specifying the status of the friends list.</summary>
     public enum LoadFriendsStatus
     {
         /// <summary>An unknown value to return when loadFriends is not available.</summary>
@@ -195,8 +200,17 @@ namespace GooglePlayGames.BasicApi
         NetworkError = -6,
     }
 
+    /// <summary>
+    /// Utility class for common types.
+    /// This class checks if a response status is a success or not.
+    /// </summary>
+ ////// <param name="status">The response status to check.</param>
+    /// <returns>True if the status is a success, false otherwise.</returns>
     public class CommonTypesUtil
     {
+        /// <summary>
+        /// Checks if a response status is a success or not.
+        /// </summary>
         public static bool StatusIsSuccess(ResponseStatus status)
         {
             return ((int) status) > 0;

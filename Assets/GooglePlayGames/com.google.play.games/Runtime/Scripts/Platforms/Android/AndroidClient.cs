@@ -11,7 +11,7 @@
 //  distributed under the License is distributed on an "AS IS" BASIS,
 //  WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 //  See the License for the specific language governing permissions and
-//    limitations under the License.
+//  limitations under the License.
 // </copyright>
 
 #if UNITY_ANDROID
@@ -24,6 +24,8 @@ namespace GooglePlayGames.Android
     using GooglePlayGames.BasicApi.SavedGame;
     using GooglePlayGames.OurUtils;
     using System;
+    using System.Collections.Generic;
+    using System.Linq;
     using UnityEngine;
     using UnityEngine.SocialPlatforms;
 
@@ -47,7 +49,7 @@ namespace GooglePlayGames.Android
         private IUserProfile[] mFriends = new IUserProfile[0];
         private LoadFriendsStatus mLastLoadFriendsStatus = LoadFriendsStatus.Unknown;
 
-        AndroidJavaClass mGamesClass = new AndroidJavaClass("com.google.android.gms.games.PlayGames");
+        AndroidJavaClass mGamesClass;
         private static string TasksClassName = "com.google.android.gms.tasks.Tasks";
 
         private AndroidJavaObject mFriendsResolutionException = null;
@@ -58,12 +60,15 @@ namespace GooglePlayGames.Android
 
         internal AndroidClient()
         {
+            mGamesClass = new AndroidJavaClass("com.google.android.gms.games.PlayGames");
             PlayGamesHelperObject.CreateObject();
             InitializeSdk();
         }
 
-        private static void InitializeSdk() {
-            using (var playGamesSdkClass = new AndroidJavaClass(PlayGamesSdkClassName)) {
+        private static void InitializeSdk()
+        {
+            using (var playGamesSdkClass = new AndroidJavaClass(PlayGamesSdkClassName))
+            {
                 playGamesSdkClass.CallStatic("initialize", AndroidHelperFragment.GetActivity());
             }
         }
@@ -183,7 +188,8 @@ namespace GooglePlayGames.Android
         {
             callback = AsOnGameThreadCallback(callback);
 
-            if (!GameInfo.WebClientIdInitialized())
+            var settings = PlayGamesSettings.LoadInstance();
+            if (settings == null || string.IsNullOrEmpty(settings.WebClientId))
             {
                 throw new InvalidOperationException("Requesting server side access requires web " +
                                                     "client id to be configured.");
@@ -191,7 +197,7 @@ namespace GooglePlayGames.Android
 
             using (var client = getGamesSignInClient())
             using (var task = client.Call<AndroidJavaObject>("requestServerSideAccess",
-                GameInfo.WebClientId, forceRefreshToken))
+                settings.WebClientId, forceRefreshToken))
             {
                 AndroidTaskUtils.AddOnSuccessListener<string>(
                     task,
@@ -201,6 +207,104 @@ namespace GooglePlayGames.Android
                 AndroidTaskUtils.AddOnFailureListener(task, exception =>
                 {
                     OurUtils.Logger.e("Requesting server side access task failed - " +
+                                      exception.Call<string>("toString"));
+                    callback(null);
+                });
+            }
+        }
+
+        public void RequestServerSideAccess(bool forceRefreshToken, List<AuthScope> scopes, Action<AuthResponse> callback)
+        {
+            callback = AsOnGameThreadCallback(callback);
+
+            var settings = PlayGamesSettings.LoadInstance();
+            if (settings == null || string.IsNullOrEmpty(settings.WebClientId))
+            {
+                throw new InvalidOperationException("Requesting server-side access requires a web client ID to be configured.");
+            }
+
+            if (scopes == null)
+            {
+                throw new ArgumentException("At least one scope must be provided.");
+            }
+
+            var javaScopesList = new AndroidJavaObject("java.util.ArrayList");
+
+            foreach (var scope in scopes)
+            {
+                javaScopesList.Call<bool>("add", getJavaScopeEnum(scope));
+            }
+
+            using (var client = getGamesSignInClient())
+            using (var task = client.Call<AndroidJavaObject>(
+                "requestServerSideAccess",
+                settings.WebClientId,
+                forceRefreshToken,
+                javaScopesList))
+            {
+                AndroidTaskUtils.AddOnSuccessListener<AndroidJavaObject>(task, result => callback(ToAuthResponse(result)));
+
+                AndroidTaskUtils.AddOnFailureListener(task, exception =>
+                {
+                    OurUtils.Logger.e("Requesting server-side access with scopes task failed - " + exception.Call<string>("toString"));
+                    callback(new AuthResponse(null, new List<AuthScope>())); // Return empty response on failure
+                });
+            }
+        }
+
+        private AuthResponse ToAuthResponse(AndroidJavaObject result)
+        {
+            string authCode = result.Call<string>("getAuthCode");
+            var grantedScopesObject = result.Call<AndroidJavaObject>("getGrantedScopes");
+
+            var grantedScopesList = new List<AuthScope>();
+            if (grantedScopesObject != null)
+            {
+                int size = grantedScopesObject.Call<int>("size");
+                for (int i = 0; i < size; i++)
+                {
+                    var javaScopeEnum = grantedScopesObject.Call<AndroidJavaObject>("get", i);
+                    string javaScopeName = javaScopeEnum.Call<string>("name");
+                    if (Enum.TryParse(javaScopeName, out AuthScope grantedScope))
+                    {
+                        grantedScopesList.Add(grantedScope);
+                    }
+                    else
+                    {
+                        OurUtils.Logger.w($"Unrecognized scope {javaScopeName} returned from java side.");
+                    }
+                }
+            }
+            AuthResponse authResponse = new AuthResponse(authCode, grantedScopesList);
+            return authResponse;
+        }
+
+        private AndroidJavaObject getJavaScopeEnum(AuthScope scope)
+        {
+            String AuthScopeClassName = "com.google.android.gms.games.gamessignin.AuthScope";
+            var javaAuthScopeClass = new AndroidJavaClass(AuthScopeClassName);
+            return javaAuthScopeClass.CallStatic<AndroidJavaObject>("valueOf", scope.GetValue());
+        }
+
+
+        public void RequestRecallAccessToken(Action<RecallAccess> callback)
+        {
+            callback = AsOnGameThreadCallback(callback);
+            using (var client = getRecallClient())
+            using (var task = client.Call<AndroidJavaObject>("requestRecallAccess"))
+            {
+                AndroidTaskUtils.AddOnSuccessListener<AndroidJavaObject>(
+                    task,
+                    recallAccess =>
+                    {
+                        var sessionId = recallAccess.Call<string>("getSessionId");
+                        callback(new RecallAccess(sessionId));
+                    }
+                );
+
+                AndroidTaskUtils.AddOnFailureListener(task, exception =>
+                {
+                    OurUtils.Logger.e("Requesting Recall access task failed - " +
                                       exception.Call<string>("toString"));
                     callback(null);
                 });
@@ -380,7 +484,8 @@ namespace GooglePlayGames.Android
             }
         }
 
-        private static bool IsApiException(AndroidJavaObject exception) {
+        private static bool IsApiException(AndroidJavaObject exception)
+        {
             var exceptionClassName = exception.Call<AndroidJavaObject>("getClass")
                 .Call<String>("getName");
             return exceptionClassName == "com.google.android.gms.common.api.ApiException";
@@ -663,7 +768,7 @@ namespace GooglePlayGames.Android
 
                                     int state = javaAchievement.Call<int>("getState");
                                     achievement.IsUnlocked = state == 0 /* STATE_UNLOCKED */;
-                                    achievement.IsRevealed = state == 1 /* STATE_REVEALED */;
+                                    achievement.IsRevealed = state == 1 /* STATE_REVEALALED */;
                                 }
 
                                 result[i] = achievement;
@@ -905,14 +1010,14 @@ namespace GooglePlayGames.Android
                     long timestamp = leaderboardScore.Call<long>("getTimestampMillis");
                     System.DateTime date = AndroidJavaConverter.ToDateTime(timestamp);
 
-                    ulong rank = (ulong) leaderboardScore.Call<long>("getRank");
+                    ulong rank = (ulong)leaderboardScore.Call<long>("getRank");
                     string scoreHolderId = "";
                     using (var scoreHolder = leaderboardScore.Call<AndroidJavaObject>("getScoreHolder"))
                     {
                         scoreHolderId = scoreHolder.Call<string>("getPlayerId");
                     }
 
-                    ulong score = (ulong) leaderboardScore.Call<long>("getRawScore");
+                    ulong score = (ulong)leaderboardScore.Call<long>("getRawScore");
                     string metadata = leaderboardScore.Call<string>("getScoreTag");
 
                     leaderboardScoreData.AddScore(new PlayGamesScore(date, leaderboardId,
@@ -933,14 +1038,14 @@ namespace GooglePlayGames.Android
                 if (variant.Call<bool>("hasPlayerInfo"))
                 {
                     System.DateTime date = AndroidJavaConverter.ToDateTime(0);
-                    ulong rank = (ulong) variant.Call<long>("getPlayerRank");
-                    ulong score = (ulong) variant.Call<long>("getRawPlayerScore");
+                    ulong rank = (ulong)variant.Call<long>("getPlayerRank");
+                    ulong score = (ulong)variant.Call<long>("getRawPlayerScore");
                     string metadata = variant.Call<string>("getPlayerScoreTag");
                     leaderboardScoreData.PlayerScore = new PlayGamesScore(date, leaderboardId,
                         rank, mUser.id, score, metadata);
                 }
 
-                leaderboardScoreData.ApproximateCount = (ulong) variant.Call<long>("getNumScores");
+                leaderboardScoreData.ApproximateCount = (ulong)variant.Call<long>("getNumScores");
             }
 
             return leaderboardScoreData;
@@ -1018,6 +1123,128 @@ namespace GooglePlayGames.Android
         {
             return mGamesClass.CallStatic<AndroidJavaObject>("getGamesSignInClient",
                 AndroidHelperFragment.GetActivity());
+        }
+
+        private AndroidJavaObject getRecallClient()
+        {
+            return mGamesClass.CallStatic<AndroidJavaObject>("getRecallClient",
+                AndroidHelperFragment.GetActivity());
+        }
+
+        private AndroidJavaObject getGameStatsClient()
+        {
+            return mGamesClass.CallStatic<AndroidJavaObject>("getGameStatsClient",
+                AndroidHelperFragment.GetActivity());
+        }
+
+        private AndroidJavaObject ToJavaPlayerGameEvent(PlayerGameEvent playerGameEvent)
+        {
+            // The Builder class name
+            string builderClassName = "com.google.android.gms.games.playergameevent.PlayerGameEvent$Builder";
+
+            // Instantiate the Builder using its constructor, passing the event name
+            using (var eventBuilder = new AndroidJavaObject(builderClassName, playerGameEvent.EventName))
+            {
+                foreach (var property in playerGameEvent.EventProperties)
+                {
+                    string key = property.Key;
+                    object value = property.Value;
+                    AndroidJavaObject chainedResult = null;
+
+                    // Property addition calls remain the same
+                    if (value is long longValue)
+                    {
+                        chainedResult = eventBuilder.Call<AndroidJavaObject>("addProperty", key, longValue);
+                    }
+                    else if (value is double doubleValue)
+                    {
+                        chainedResult = eventBuilder.Call<AndroidJavaObject>("addProperty", key, doubleValue);
+                    }
+                    else if (value is string stringValue)
+                    {
+                        chainedResult = eventBuilder.Call<AndroidJavaObject>("addProperty", key, stringValue);
+                    }
+                    else if (value is bool boolValue)
+                    {
+                        chainedResult = eventBuilder.Call<AndroidJavaObject>("addProperty", key, boolValue);
+                    }
+                    else
+                    {
+                        OurUtils.Logger.w("Unsupported property type in PlayerGameEvent: " + value.GetType());
+                    }
+
+                    if (chainedResult != null)
+                    {
+                        chainedResult.Dispose();
+                    }
+                }
+
+                // The EventTimeMillis is set on the Android side when built
+                return eventBuilder.Call<AndroidJavaObject>("build");
+            }
+        }
+
+        private AndroidJavaObject ToJavaPlayerGameEventList(List<PlayerGameEvent> events)
+        {
+            var javaList = new AndroidJavaObject("java.util.ArrayList");
+            foreach (var playerGameEvent in events)
+            {
+                using (var javaEvent = ToJavaPlayerGameEvent(playerGameEvent))
+                {
+                    javaList.Call<bool>("add", javaEvent);
+                }
+            }
+            return javaList;
+        }
+
+        public void RecordEvent(PlayerGameEvent playerGameEvent)
+        {
+            if (!IsAuthenticated())
+            {
+                OurUtils.Logger.w("Not authenticated, skipping RecordEvent");
+                return;
+            }
+
+            using (var client = getGameStatsClient())
+            using (var javaEvent = ToJavaPlayerGameEvent(playerGameEvent))
+            {
+                if (javaEvent != null)
+                {
+                    client.Call("recordEvent", javaEvent);
+                }
+            }
+        }
+
+        public void RecordEvents(List<PlayerGameEvent> events)
+        {
+            if (!IsAuthenticated())
+            {
+                OurUtils.Logger.w("Not authenticated, skipping RecordEvents");
+                return;
+            }
+
+            using (var client = getGameStatsClient())
+            using (var javaEvents = ToJavaPlayerGameEventList(events))
+            {
+                if (javaEvents != null)
+                {
+                    client.Call("recordEvents", javaEvents);
+                }
+            }
+        }
+
+        public void RequestEventsUpload()
+        {
+            if (!IsAuthenticated())
+            {
+                OurUtils.Logger.w("Not authenticated, skipping RequestEventsUpload");
+                return;
+            }
+
+            using (var client = getGameStatsClient())
+            {
+                client.Call("requestEventsUpload");
+            }
         }
     }
 }

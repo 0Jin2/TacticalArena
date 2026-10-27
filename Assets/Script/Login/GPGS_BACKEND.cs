@@ -19,8 +19,12 @@ public class GPGS_BACKEND : MonoBehaviour
     [SerializeField] private GameObject infoPrefab;  // infoPrefab 연결 (추가)
     [SerializeField] private Transform popupParent;  // infoPrefab을 붙일 부모(예: Canvas)
 
+    // loginButton으로 로그인에 성공한 이력(기기 로컬 저장). 있으면 다음 실행부터 자동 로그인.
+    private const string LoginHistoryKey = "GPGS_LOGIN_HISTORY";
+
     private bool isBackendInitialized = false;
-    private bool isLoginRequested = false; // loginButton 클릭으로 시작된 로그인만 진행하기 위한 플래그
+    private bool isPlatformActivated = false;
+    private bool isLoginRequested = false; // 로그인 진행 중 플래그 (버튼 클릭 또는 자동 로그인)
     public static string MyNickname { get; private set; }
 
     void Awake()
@@ -37,36 +41,75 @@ public class GPGS_BACKEND : MonoBehaviour
 
     void Start()
     {
-        // Google Mobile Ads 초기화
+        // Google Mobile Ads 초기화 (구글 로그인과 무관)
         MobileAds.Initialize((InitializationStatus initStatus) =>
         {
             Debug.Log("구글 애드몹 초기화 완료");
         });
 
-        var bro = Backend.Initialize();
-        if (bro.IsSuccess())
+#if UNITY_EDITOR
+        // 에디터: 구글 로그인이 없으므로 뒤끝만 미리 초기화 (버튼 → 게스트 로그인)
+        EnsureInitialized();
+#else
+        // ★ 핵심: 여기서 뒤끝 초기화 / PlayGamesPlatform.Activate() 를 하지 않는다.
+        //   - 첫 실행(로그인 이력 없음): 아무것도 하지 않고 loginButton 클릭을 기다린다.
+        //   - 재실행(로그인 이력 있음): 자동 로그인 시작.
+        if (PlayerPrefs.GetInt(LoginHistoryKey, 0) == 1)
         {
+            Debug.Log("로그인 이력 확인 → 자동 로그인 시작");
+            StartLogin(allowManual: false);
+        }
+#endif
+    }
+
+    // loginButton 의 OnClick 에 연결 (첫 실행 / 자동 로그인 실패 시)
+    public void GPGSLogin()
+    {
+        StartLogin(allowManual: true);
+    }
+
+    // 뒤끝 초기화 + GPGS 활성화를 최초 1회만 수행
+    private bool EnsureInitialized()
+    {
+        if (!isBackendInitialized)
+        {
+            var bro = Backend.Initialize();
+            if (!bro.IsSuccess())
+            {
+                Debug.LogError($"뒤끝 초기화 실패: {bro.GetErrorCode()} - {bro.GetMessage()}");
+                return false;
+            }
             isBackendInitialized = true;
             Debug.Log("뒤끝 초기화 성공");
+        }
 
 #if !UNITY_EDITOR
+        if (!isPlatformActivated)
+        {
             // GPGS V2 (플러그인 v11): PlayGamesClientConfiguration / InitializeInstance 는 제거됨.
             // 설정(Web Client ID 등)은 Window > Google Play Games > Setup 에서 처리.
             PlayGamesPlatform.DebugLogEnabled = false;
             PlayGamesPlatform.Activate();
+            isPlatformActivated = true;
+        }
 #endif
-        }
-        else
-        {
-            Debug.LogError($"뒤끝 초기화 실패: {bro.GetErrorCode()} - {bro.GetMessage()}");
-        }
+        return true;
     }
 
-    public void GPGSLogin()
+    // allowManual = true  : 버튼 클릭 → silent 실패 시 로그인 선택 창(ManuallyAuthenticate)까지 진행
+    // allowManual = false : 자동 로그인 → silent 실패 시 팝업 없이 loginButton 만 다시 보여줌
+    private void StartLogin(bool allowManual)
     {
         if (isLoginRequested) return; // 이미 로그인 진행 중
         isLoginRequested = true;
         loginButton.SetActive(false);
+
+        if (!EnsureInitialized())
+        {
+            ResetLoginButton();
+            return;
+        }
+
 #if UNITY_EDITOR
         EditorGuestLogin();
 #else
@@ -74,36 +117,40 @@ public class GPGS_BACKEND : MonoBehaviour
         {
             Debug.Log("이미 로그인된 사용자입니다.");
             HandleBackendLogin();
+            return;
         }
-        else
+
+        // 1차: 자동(silent) 로그인 시도
+        PlayGamesPlatform.Instance.Authenticate(status =>
         {
-            // 1차: 자동(silent) 로그인 시도
-            PlayGamesPlatform.Instance.Authenticate(status =>
+            if (status == SignInStatus.Success)
             {
-                if (status == SignInStatus.Success)
+                Debug.Log("GPGS 로그인 성공");
+                HandleBackendLogin();
+            }
+            else if (allowManual)
+            {
+                // 2차: 사용자에게 로그인 창을 띄우는 수동 로그인 (버튼 클릭한 경우에만)
+                PlayGamesPlatform.Instance.ManuallyAuthenticate(manualStatus =>
                 {
-                    Debug.Log("GPGS 로그인 성공");
-                    HandleBackendLogin();
-                }
-                else
-                {
-                    // 2차: 사용자에게 로그인 창을 띄우는 수동 로그인
-                    PlayGamesPlatform.Instance.ManuallyAuthenticate(manualStatus =>
+                    if (manualStatus == SignInStatus.Success)
                     {
-                        if (manualStatus == SignInStatus.Success)
-                        {
-                            Debug.Log("GPGS 로그인 성공");
-                            HandleBackendLogin();
-                        }
-                        else
-                        {
-                            Debug.LogError($"GPGS 로그인 실패: 사용자 인증 실패 ({manualStatus})");
-                            ResetLoginButton(); // 실패 시 버튼 재활성화
-                        }
-                    });
-                }
-            });
-        }
+                        Debug.Log("GPGS 로그인 성공");
+                        HandleBackendLogin();
+                    }
+                    else
+                    {
+                        Debug.LogError($"GPGS 로그인 실패: 사용자 인증 실패 ({manualStatus})");
+                        ResetLoginButton(); // 실패 시 버튼 재활성화
+                    }
+                });
+            }
+            else
+            {
+                Debug.LogWarning($"GPGS 자동 로그인 실패({status}) → 로그인 버튼 표시");
+                ResetLoginButton();
+            }
+        });
 #endif
     }
 
@@ -244,7 +291,7 @@ public class GPGS_BACKEND : MonoBehaviour
     // GPGS V2: 인증 코드 → 뒤끝 액세스 토큰 → 페더레이션 로그인
     private void HandleBackendLogin()
     {
-        if (!isLoginRequested) return; // 버튼을 누르지 않았다면 뒤끝 로그인 진행 안 함
+        if (!isLoginRequested) return; // 로그인 흐름이 시작되지 않았다면 뒤끝 로그인 진행 안 함
 
         PlayGamesPlatform.Instance.RequestServerSideAccess(false, authCode =>
         {
@@ -269,6 +316,11 @@ public class GPGS_BACKEND : MonoBehaviour
             if (BRO.IsSuccess())
             {
                 Debug.Log("뒤끝 로그인 성공");
+
+                // 로그인 이력 저장 → 다음 실행부터 자동 로그인
+                PlayerPrefs.SetInt(LoginHistoryKey, 1);
+                PlayerPrefs.Save();
+
                 OnBackendLoginSuccess();
             }
             else
@@ -298,6 +350,7 @@ public class GPGS_BACKEND : MonoBehaviour
     private void ActivateNicknameUI()
     {
         nicknameUI.SetActive(true); // 닉네임 설정 UI 활성화
+        setNicknameButton.onClick.RemoveListener(SetNickname); // 중복 등록 방지
         setNicknameButton.onClick.AddListener(SetNickname);
     }
 

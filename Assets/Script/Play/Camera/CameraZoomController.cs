@@ -1,5 +1,5 @@
 ﻿using UnityEngine;
-using Cinemachine;
+using Unity.Cinemachine;
 using System.Collections;
 using Fusion;
 using System.Linq;
@@ -10,7 +10,7 @@ public class CameraZoomController : MonoBehaviour
     public static CameraZoomController Instance;
 
     [Header("Cinemachine 설정")]
-    [SerializeField] private CinemachineVirtualCamera virtualCamera;
+    [SerializeField] private CinemachineCamera virtualCamera;
     [SerializeField] private float zoomSpeed = 1.5f;
     [SerializeField] private float zoomTargetSize = 6f;
 
@@ -26,20 +26,20 @@ public class CameraZoomController : MonoBehaviour
         else Destroy(gameObject);
 
         if (virtualCamera == null)
-            virtualCamera = FindObjectOfType<CinemachineVirtualCamera>();
+            virtualCamera = FindObjectOfType<CinemachineCamera>();
 
         if (confiner == null)
             confiner = virtualCamera.GetComponent<CinemachineConfiner2D>();
 
         if (confiner != null && confinerBounds != null)
         {
-            confiner.m_BoundingShape2D = confinerBounds;
+            confiner.BoundingShape2D = confinerBounds;
 
             confiner.enabled = false;
             confiner.enabled = true;
         }
 
-        originalSize = virtualCamera.m_Lens.OrthographicSize;
+        originalSize = virtualCamera.Lens.OrthographicSize;
     }
 
     public void ZoomInToTarget(Transform target)
@@ -63,10 +63,10 @@ public class CameraZoomController : MonoBehaviour
 
     private IEnumerator ZoomCoroutine(float targetSize)
     {
-        while (!Mathf.Approximately(virtualCamera.m_Lens.OrthographicSize, targetSize))
+        while (!Mathf.Approximately(virtualCamera.Lens.OrthographicSize, targetSize))
         {
-            virtualCamera.m_Lens.OrthographicSize = Mathf.MoveTowards(
-                virtualCamera.m_Lens.OrthographicSize,
+            virtualCamera.Lens.OrthographicSize = Mathf.MoveTowards(
+                virtualCamera.Lens.OrthographicSize,
                 targetSize,
                 zoomSpeed * Time.deltaTime
             );
