@@ -1,5 +1,3 @@
 # ninja log v5
-1	171	8147256061926122	FramePacing/CMakeFiles/swappywrapper.dir/UnitySwappyWrapper.cpp.o	19633f9c851a4fa5
-173	455	8147256064617300	D:/Jin/Github/TacticalArena/Library/Bee/Android/Prj/IL2CPP/Gradle/unityLibrary/build/intermediates/cxx/RelWithDebInfo/2r6l23i2/obj/arm64-v8a/libswappywrapper.so	1684a3b519ae12b7
-5	171	8147265407726182	FramePacing/CMakeFiles/swappywrapper.dir/UnitySwappyWrapper.cpp.o	19633f9c851a4fa5
-172	427	8147265410199981	D:/Jin/Github/TacticalArena/Library/Bee/Android/Prj/IL2CPP/Gradle/unityLibrary/build/intermediates/cxx/RelWithDebInfo/2r6l23i2/obj/arm64-v8a/libswappywrapper.so	1684a3b519ae12b7
+0	164	8147949463227810	FramePacing/CMakeFiles/swappywrapper.dir/UnitySwappyWrapper.cpp.o	19633f9c851a4fa5
+166	400	8147949465442650	D:/Jin/Github/TacticalArena/Library/Bee/Android/Prj/IL2CPP/Gradle/unityLibrary/build/intermediates/cxx/RelWithDebInfo/2r6l23i2/obj/arm64-v8a/libswappywrapper.so	1684a3b519ae12b7
