@@ -201,9 +201,6 @@ public class GPGS_BACKEND : MonoBehaviour
         return code == "BadUnauthorizedException" || code == "GoneResourceException";
     }
 
-    // 테스트 모드에서 게임 내 표시 닉네임 지정 (뒤끝 닉네임은 변경하지 않음)
-    public static void SetTestNickname(string nickname) => MyNickname = nickname;
-
     // 에디터에서 로그인 씬을 거치지 않고 바로 Play할 때 뒤끝 초기화 + 게스트 로그인을 자동 처리
     [RuntimeInitializeOnLoadMethod(RuntimeInitializeLoadType.BeforeSceneLoad)]
     private static void EditorAutoLogin()
