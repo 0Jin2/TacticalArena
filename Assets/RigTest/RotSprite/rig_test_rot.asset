@@ -1,0 +1,1478 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 93a8e2b86a76ffb49ba70bab8783ae8d, type: 3}
+  m_Name: rig_test_rot
+  m_EditorClassIdentifier: Assembly-CSharp::RotSpriteSet
+  atlas: {fileID: 2800000, guid: f263fb4bbe866644a8f83ecd3026ab90, type: 3}
+  pixelsPerUnit: 64
+  angleStep: 15
+  parts:
+  - name: torso
+    frames:
+    - rect:
+        x: 1
+        y: 1
+        width: 5
+        height: 12
+      pivotPx: {x: 2, y: 2}
+    - rect:
+        x: 7
+        y: 1
+        width: 7
+        height: 12
+      pivotPx: {x: 4, y: 2}
+    - rect:
+        x: 15
+        y: 1
+        width: 10
+        height: 10
+      pivotPx: {x: 7, y: 1}
+    - rect:
+        x: 26
+        y: 1
+        width: 11
+        height: 9
+      pivotPx: {x: 8, y: 1}
+    - rect:
+        x: 38
+        y: 1
+        width: 13
+        height: 6
+      pivotPx: {x: 10, y: 1}
+    - rect:
+        x: 52
+        y: 1
+        width: 12
+        height: 5
+      pivotPx: {x: 10, y: 1}
+    - rect:
+        x: 65
+        y: 1
+        width: 12
+        height: 5
+      pivotPx: {x: 10, y: 2}
+    - rect:
+        x: 78
+        y: 1
+        width: 12
+        height: 7
+      pivotPx: {x: 10, y: 4}
+    - rect:
+        x: 91
+        y: 1
+        width: 10
+        height: 10
+      pivotPx: {x: 9, y: 7}
+    - rect:
+        x: 102
+        y: 1
+        width: 9
+        height: 11
+      pivotPx: {x: 8, y: 8}
+    - rect:
+        x: 112
+        y: 1
+        width: 6
+        height: 13
+      pivotPx: {x: 5, y: 10}
+    - rect:
+        x: 119
+        y: 1
+        width: 5
+        height: 12
+      pivotPx: {x: 4, y: 10}
+    - rect:
+        x: 125
+        y: 1
+        width: 5
+        height: 12
+      pivotPx: {x: 3, y: 10}
+    - rect:
+        x: 131
+        y: 1
+        width: 7
+        height: 12
+      pivotPx: {x: 3, y: 10}
+    - rect:
+        x: 139
+        y: 1
+        width: 10
+        height: 10
+      pivotPx: {x: 3, y: 9}
+    - rect:
+        x: 150
+        y: 1
+        width: 11
+        height: 9
+      pivotPx: {x: 3, y: 8}
+    - rect:
+        x: 162
+        y: 1
+        width: 13
+        height: 6
+      pivotPx: {x: 3, y: 5}
+    - rect:
+        x: 176
+        y: 1
+        width: 12
+        height: 5
+      pivotPx: {x: 2, y: 4}
+    - rect:
+        x: 189
+        y: 1
+        width: 12
+        height: 5
+      pivotPx: {x: 2, y: 3}
+    - rect:
+        x: 202
+        y: 1
+        width: 12
+        height: 7
+      pivotPx: {x: 2, y: 3}
+    - rect:
+        x: 215
+        y: 1
+        width: 10
+        height: 10
+      pivotPx: {x: 1, y: 3}
+    - rect:
+        x: 226
+        y: 1
+        width: 9
+        height: 11
+      pivotPx: {x: 1, y: 3}
+    - rect:
+        x: 236
+        y: 1
+        width: 6
+        height: 13
+      pivotPx: {x: 1, y: 3}
+    - rect:
+        x: 243
+        y: 1
+        width: 5
+        height: 12
+      pivotPx: {x: 1, y: 2}
+  - name: head
+    frames:
+    - rect:
+        x: 249
+        y: 1
+        width: 5
+        height: 5
+      pivotPx: {x: 3, y: 0.5}
+    - rect:
+        x: 255
+        y: 1
+        width: 6
+        height: 6
+      pivotPx: {x: 4, y: 1.5}
+    - rect:
+        x: 262
+        y: 1
+        width: 6
+        height: 6
+      pivotPx: {x: 4, y: 1.5}
+    - rect:
+        x: 269
+        y: 1
+        width: 6
+        height: 6
+      pivotPx: {x: 4, y: 2.5}
+    - rect:
+        x: 276
+        y: 1
+        width: 6
+        height: 6
+      pivotPx: {x: 5, y: 2.5}
+    - rect:
+        x: 283
+        y: 1
+        width: 6
+        height: 5
+      pivotPx: {x: 5, y: 2.5}
+    - rect:
+        x: 290
+        y: 1
+        width: 5
+        height: 5
+      pivotPx: {x: 4, y: 3.5}
+    - rect:
+        x: 296
+        y: 1
+        width: 5
+        height: 5
+      pivotPx: {x: 4, y: 3.5}
+    - rect:
+        x: 302
+        y: 1
+        width: 6
+        height: 6
+      pivotPx: {x: 4, y: 4.5}
+    - rect:
+        x: 309
+        y: 1
+        width: 6
+        height: 6
+      pivotPx: {x: 4, y: 4.5}
+    - rect:
+        x: 316
+        y: 1
+        width: 6
+        height: 6
+      pivotPx: {x: 3, y: 4.5}
+    - rect:
+        x: 323
+        y: 1
+        width: 6
+        height: 5
+      pivotPx: {x: 3, y: 4.5}
+    - rect:
+        x: 330
+        y: 1
+        width: 5
+        height: 5
+      pivotPx: {x: 2, y: 4.5}
+    - rect:
+        x: 336
+        y: 1
+        width: 6
+        height: 6
+      pivotPx: {x: 2, y: 4.5}
+    - rect:
+        x: 343
+        y: 1
+        width: 6
+        height: 6
+      pivotPx: {x: 2, y: 4.5}
+    - rect:
+        x: 350
+        y: 1
+        width: 6
+        height: 6
+      pivotPx: {x: 2, y: 3.5}
+    - rect:
+        x: 357
+        y: 1
+        width: 6
+        height: 6
+      pivotPx: {x: 1, y: 3.5}
+    - rect:
+        x: 364
+        y: 1
+        width: 6
+        height: 5
+      pivotPx: {x: 1, y: 2.5}
+    - rect:
+        x: 371
+        y: 1
+        width: 5
+        height: 5
+      pivotPx: {x: 1, y: 1.5}
+    - rect:
+        x: 377
+        y: 1
+        width: 5
+        height: 5
+      pivotPx: {x: 1, y: 1.5}
+    - rect:
+        x: 383
+        y: 1
+        width: 6
+        height: 6
+      pivotPx: {x: 2, y: 1.5}
+    - rect:
+        x: 390
+        y: 1
+        width: 6
+        height: 6
+      pivotPx: {x: 2, y: 1.5}
+    - rect:
+        x: 397
+        y: 1
+        width: 6
+        height: 6
+      pivotPx: {x: 3, y: 1.5}
+    - rect:
+        x: 404
+        y: 1
+        width: 6
+        height: 5
+      pivotPx: {x: 3, y: 0.5}
+  - name: arm_upper_B
+    frames:
+    - rect:
+        x: 411
+        y: 1
+        width: 4
+        height: 5
+      pivotPx: {x: 2, y: 4}
+    - rect:
+        x: 416
+        y: 1
+        width: 4
+        height: 5
+      pivotPx: {x: 1, y: 4}
+    - rect:
+        x: 421
+        y: 1
+        width: 4
+        height: 5
+      pivotPx: {x: 1, y: 4}
+    - rect:
+        x: 426
+        y: 1
+        width: 4
+        height: 5
+      pivotPx: {x: 1, y: 4}
+    - rect:
+        x: 431
+        y: 1
+        width: 5
+        height: 5
+      pivotPx: {x: 1, y: 4}
+    - rect:
+        x: 437
+        y: 1
+        width: 5
+        height: 5
+      pivotPx: {x: 1, y: 3}
+    - rect:
+        x: 443
+        y: 1
+        width: 5
+        height: 4
+      pivotPx: {x: 1, y: 2}
+    - rect:
+        x: 449
+        y: 1
+        width: 5
+        height: 4
+      pivotPx: {x: 1, y: 1}
+    - rect:
+        x: 455
+        y: 1
+        width: 5
+        height: 4
+      pivotPx: {x: 1, y: 1}
+    - rect:
+        x: 461
+        y: 1
+        width: 5
+        height: 4
+      pivotPx: {x: 1, y: 1}
+    - rect:
+        x: 467
+        y: 1
+        width: 5
+        height: 5
+      pivotPx: {x: 1, y: 1}
+    - rect:
+        x: 473
+        y: 1
+        width: 5
+        height: 5
+      pivotPx: {x: 2, y: 1}
+    - rect:
+        x: 479
+        y: 1
+        width: 4
+        height: 5
+      pivotPx: {x: 2, y: 1}
+    - rect:
+        x: 484
+        y: 1
+        width: 4
+        height: 5
+      pivotPx: {x: 3, y: 1}
+    - rect:
+        x: 489
+        y: 1
+        width: 4
+        height: 5
+      pivotPx: {x: 3, y: 1}
+    - rect:
+        x: 494
+        y: 1
+        width: 4
+        height: 5
+      pivotPx: {x: 3, y: 1}
+    - rect:
+        x: 499
+        y: 1
+        width: 5
+        height: 5
+      pivotPx: {x: 4, y: 1}
+    - rect:
+        x: 505
+        y: 1
+        width: 5
+        height: 5
+      pivotPx: {x: 4, y: 2}
+    - rect:
+        x: 1
+        y: 15
+        width: 5
+        height: 4
+      pivotPx: {x: 4, y: 2}
+    - rect:
+        x: 7
+        y: 15
+        width: 5
+        height: 4
+      pivotPx: {x: 4, y: 3}
+    - rect:
+        x: 13
+        y: 15
+        width: 5
+        height: 4
+      pivotPx: {x: 4, y: 3}
+    - rect:
+        x: 19
+        y: 15
+        width: 5
+        height: 4
+      pivotPx: {x: 4, y: 3}
+    - rect:
+        x: 25
+        y: 15
+        width: 5
+        height: 5
+      pivotPx: {x: 4, y: 4}
+    - rect:
+        x: 31
+        y: 15
+        width: 5
+        height: 5
+      pivotPx: {x: 3, y: 4}
+  - name: arm_lower_B
+    frames:
+    - rect:
+        x: 37
+        y: 15
+        width: 6
+        height: 7
+      pivotPx: {x: 4.5, y: 6}
+    - rect:
+        x: 44
+        y: 15
+        width: 5
+        height: 8
+      pivotPx: {x: 3.5, y: 7}
+    - rect:
+        x: 50
+        y: 15
+        width: 3
+        height: 8
+      pivotPx: {x: 1.5, y: 7}
+    - rect:
+        x: 54
+        y: 15
+        width: 3
+        height: 8
+      pivotPx: {x: 0.5, y: 7}
+    - rect:
+        x: 58
+        y: 15
+        width: 4
+        height: 8
+      pivotPx: {x: 0.5, y: 7}
+    - rect:
+        x: 63
+        y: 15
+        width: 6
+        height: 7
+      pivotPx: {x: 0.5, y: 6}
+    - rect:
+        x: 70
+        y: 15
+        width: 7
+        height: 6
+      pivotPx: {x: 0.5, y: 5}
+    - rect:
+        x: 78
+        y: 15
+        width: 7
+        height: 5
+      pivotPx: {x: 0.5, y: 3}
+    - rect:
+        x: 86
+        y: 15
+        width: 8
+        height: 4
+      pivotPx: {x: 0.5, y: 2}
+    - rect:
+        x: 95
+        y: 15
+        width: 7
+        height: 3
+      pivotPx: {x: 0.5, y: 1}
+    - rect:
+        x: 103
+        y: 15
+        width: 8
+        height: 5
+      pivotPx: {x: 1.5, y: 1}
+    - rect:
+        x: 112
+        y: 15
+        width: 7
+        height: 6
+      pivotPx: {x: 1.5, y: 1}
+    - rect:
+        x: 120
+        y: 15
+        width: 6
+        height: 7
+      pivotPx: {x: 1.5, y: 1}
+    - rect:
+        x: 127
+        y: 15
+        width: 5
+        height: 8
+      pivotPx: {x: 1.5, y: 1}
+    - rect:
+        x: 133
+        y: 15
+        width: 3
+        height: 8
+      pivotPx: {x: 1.5, y: 1}
+    - rect:
+        x: 137
+        y: 15
+        width: 3
+        height: 8
+      pivotPx: {x: 2.5, y: 1}
+    - rect:
+        x: 141
+        y: 15
+        width: 4
+        height: 8
+      pivotPx: {x: 3.5, y: 1}
+    - rect:
+        x: 146
+        y: 15
+        width: 6
+        height: 7
+      pivotPx: {x: 5.5, y: 1}
+    - rect:
+        x: 153
+        y: 15
+        width: 7
+        height: 6
+      pivotPx: {x: 6.5, y: 1}
+    - rect:
+        x: 161
+        y: 15
+        width: 7
+        height: 5
+      pivotPx: {x: 6.5, y: 2}
+    - rect:
+        x: 169
+        y: 15
+        width: 8
+        height: 4
+      pivotPx: {x: 7.5, y: 2}
+    - rect:
+        x: 178
+        y: 15
+        width: 7
+        height: 3
+      pivotPx: {x: 6.5, y: 2}
+    - rect:
+        x: 186
+        y: 15
+        width: 8
+        height: 5
+      pivotPx: {x: 6.5, y: 4}
+    - rect:
+        x: 195
+        y: 15
+        width: 7
+        height: 6
+      pivotPx: {x: 5.5, y: 5}
+  - name: arm_upper_F
+    frames:
+    - rect:
+        x: 203
+        y: 15
+        width: 8
+        height: 5
+      pivotPx: {x: 1.5, y: 3.5}
+    - rect:
+        x: 212
+        y: 15
+        width: 8
+        height: 4
+      pivotPx: {x: 1.5, y: 2.5}
+    - rect:
+        x: 221
+        y: 15
+        width: 9
+        height: 3
+      pivotPx: {x: 1.5, y: 1.5}
+    - rect:
+        x: 231
+        y: 15
+        width: 8
+        height: 5
+      pivotPx: {x: 1.5, y: 2.5}
+    - rect:
+        x: 240
+        y: 15
+        width: 8
+        height: 6
+      pivotPx: {x: 1.5, y: 1.5}
+    - rect:
+        x: 249
+        y: 15
+        width: 6
+        height: 7
+      pivotPx: {x: 1.5, y: 1.5}
+    - rect:
+        x: 256
+        y: 15
+        width: 5
+        height: 8
+      pivotPx: {x: 1.5, y: 1.5}
+    - rect:
+        x: 262
+        y: 15
+        width: 4
+        height: 8
+      pivotPx: {x: 1.5, y: 1.5}
+    - rect:
+        x: 267
+        y: 15
+        width: 3
+        height: 9
+      pivotPx: {x: 1.5, y: 1.5}
+    - rect:
+        x: 271
+        y: 15
+        width: 5
+        height: 8
+      pivotPx: {x: 2.5, y: 1.5}
+    - rect:
+        x: 277
+        y: 15
+        width: 6
+        height: 8
+      pivotPx: {x: 4.5, y: 1.5}
+    - rect:
+        x: 284
+        y: 15
+        width: 7
+        height: 6
+      pivotPx: {x: 5.5, y: 1.5}
+    - rect:
+        x: 292
+        y: 15
+        width: 8
+        height: 5
+      pivotPx: {x: 6.5, y: 1.5}
+    - rect:
+        x: 301
+        y: 15
+        width: 8
+        height: 4
+      pivotPx: {x: 6.5, y: 1.5}
+    - rect:
+        x: 310
+        y: 15
+        width: 9
+        height: 3
+      pivotPx: {x: 7.5, y: 1.5}
+    - rect:
+        x: 320
+        y: 15
+        width: 8
+        height: 5
+      pivotPx: {x: 6.5, y: 2.5}
+    - rect:
+        x: 329
+        y: 15
+        width: 8
+        height: 6
+      pivotPx: {x: 6.5, y: 4.5}
+    - rect:
+        x: 338
+        y: 15
+        width: 6
+        height: 7
+      pivotPx: {x: 4.5, y: 5.5}
+    - rect:
+        x: 345
+        y: 15
+        width: 5
+        height: 8
+      pivotPx: {x: 3.5, y: 6.5}
+    - rect:
+        x: 351
+        y: 15
+        width: 4
+        height: 8
+      pivotPx: {x: 2.5, y: 6.5}
+    - rect:
+        x: 356
+        y: 15
+        width: 3
+        height: 9
+      pivotPx: {x: 1.5, y: 7.5}
+    - rect:
+        x: 360
+        y: 15
+        width: 5
+        height: 8
+      pivotPx: {x: 2.5, y: 6.5}
+    - rect:
+        x: 366
+        y: 15
+        width: 6
+        height: 8
+      pivotPx: {x: 1.5, y: 6.5}
+    - rect:
+        x: 373
+        y: 15
+        width: 7
+        height: 6
+      pivotPx: {x: 1.5, y: 4.5}
+  - name: arm_lower_F
+    frames:
+    - rect:
+        x: 381
+        y: 15
+        width: 2
+        height: 7
+      pivotPx: {x: 0.5, y: 6.5}
+    - rect:
+        x: 384
+        y: 15
+        width: 3
+        height: 7
+      pivotPx: {x: 0.5, y: 6.5}
+    - rect:
+        x: 388
+        y: 15
+        width: 5
+        height: 7
+      pivotPx: {x: 0.5, y: 5.5}
+    - rect:
+        x: 394
+        y: 15
+        width: 6
+        height: 6
+      pivotPx: {x: 0.5, y: 4.5}
+    - rect:
+        x: 401
+        y: 15
+        width: 7
+        height: 5
+      pivotPx: {x: 0.5, y: 3.5}
+    - rect:
+        x: 409
+        y: 15
+        width: 7
+        height: 4
+      pivotPx: {x: 0.5, y: 2.5}
+    - rect:
+        x: 417
+        y: 15
+        width: 7
+        height: 2
+      pivotPx: {x: 0.5, y: 0.5}
+    - rect:
+        x: 425
+        y: 15
+        width: 7
+        height: 3
+      pivotPx: {x: 0.5, y: 0.5}
+    - rect:
+        x: 433
+        y: 15
+        width: 7
+        height: 5
+      pivotPx: {x: 1.5, y: 0.5}
+    - rect:
+        x: 441
+        y: 15
+        width: 6
+        height: 6
+      pivotPx: {x: 1.5, y: 0.5}
+    - rect:
+        x: 448
+        y: 15
+        width: 5
+        height: 7
+      pivotPx: {x: 1.5, y: 0.5}
+    - rect:
+        x: 454
+        y: 15
+        width: 4
+        height: 7
+      pivotPx: {x: 1.5, y: 0.5}
+    - rect:
+        x: 459
+        y: 15
+        width: 2
+        height: 7
+      pivotPx: {x: 1.5, y: 0.5}
+    - rect:
+        x: 462
+        y: 15
+        width: 3
+        height: 7
+      pivotPx: {x: 2.5, y: 0.5}
+    - rect:
+        x: 466
+        y: 15
+        width: 5
+        height: 7
+      pivotPx: {x: 4.5, y: 1.5}
+    - rect:
+        x: 472
+        y: 15
+        width: 6
+        height: 6
+      pivotPx: {x: 5.5, y: 1.5}
+    - rect:
+        x: 479
+        y: 15
+        width: 7
+        height: 5
+      pivotPx: {x: 6.5, y: 1.5}
+    - rect:
+        x: 487
+        y: 15
+        width: 7
+        height: 4
+      pivotPx: {x: 6.5, y: 1.5}
+    - rect:
+        x: 495
+        y: 15
+        width: 7
+        height: 2
+      pivotPx: {x: 6.5, y: 1.5}
+    - rect:
+        x: 503
+        y: 15
+        width: 7
+        height: 3
+      pivotPx: {x: 6.5, y: 2.5}
+    - rect:
+        x: 1
+        y: 25
+        width: 7
+        height: 5
+      pivotPx: {x: 5.5, y: 4.5}
+    - rect:
+        x: 9
+        y: 25
+        width: 6
+        height: 6
+      pivotPx: {x: 4.5, y: 5.5}
+    - rect:
+        x: 16
+        y: 25
+        width: 5
+        height: 7
+      pivotPx: {x: 3.5, y: 6.5}
+    - rect:
+        x: 22
+        y: 25
+        width: 4
+        height: 7
+      pivotPx: {x: 2.5, y: 6.5}
+  - name: leg_upper_B
+    frames:
+    - rect:
+        x: 27
+        y: 25
+        width: 5
+        height: 6
+      pivotPx: {x: 2.5, y: 5}
+    - rect:
+        x: 33
+        y: 25
+        width: 4
+        height: 6
+      pivotPx: {x: 1.5, y: 5}
+    - rect:
+        x: 38
+        y: 25
+        width: 4
+        height: 6
+      pivotPx: {x: 0.5, y: 5}
+    - rect:
+        x: 43
+        y: 25
+        width: 4
+        height: 6
+      pivotPx: {x: 0.5, y: 5}
+    - rect:
+        x: 48
+        y: 25
+        width: 4
+        height: 7
+      pivotPx: {x: 0.5, y: 5}
+    - rect:
+        x: 53
+        y: 25
+        width: 5
+        height: 6
+      pivotPx: {x: 0.5, y: 4}
+    - rect:
+        x: 59
+        y: 25
+        width: 6
+        height: 5
+      pivotPx: {x: 0.5, y: 3}
+    - rect:
+        x: 66
+        y: 25
+        width: 7
+        height: 5
+      pivotPx: {x: 1.5, y: 2}
+    - rect:
+        x: 74
+        y: 25
+        width: 7
+        height: 4
+      pivotPx: {x: 1.5, y: 1}
+    - rect:
+        x: 82
+        y: 25
+        width: 7
+        height: 4
+      pivotPx: {x: 1.5, y: 1}
+    - rect:
+        x: 90
+        y: 25
+        width: 6
+        height: 5
+      pivotPx: {x: 1.5, y: 1}
+    - rect:
+        x: 97
+        y: 25
+        width: 6
+        height: 6
+      pivotPx: {x: 2.5, y: 1}
+    - rect:
+        x: 104
+        y: 25
+        width: 5
+        height: 6
+      pivotPx: {x: 2.5, y: 1}
+    - rect:
+        x: 110
+        y: 25
+        width: 4
+        height: 6
+      pivotPx: {x: 2.5, y: 1}
+    - rect:
+        x: 115
+        y: 25
+        width: 4
+        height: 6
+      pivotPx: {x: 3.5, y: 1}
+    - rect:
+        x: 120
+        y: 25
+        width: 4
+        height: 6
+      pivotPx: {x: 3.5, y: 1}
+    - rect:
+        x: 125
+        y: 25
+        width: 4
+        height: 7
+      pivotPx: {x: 3.5, y: 2}
+    - rect:
+        x: 130
+        y: 25
+        width: 5
+        height: 6
+      pivotPx: {x: 4.5, y: 2}
+    - rect:
+        x: 136
+        y: 25
+        width: 6
+        height: 5
+      pivotPx: {x: 5.5, y: 2}
+    - rect:
+        x: 143
+        y: 25
+        width: 7
+        height: 5
+      pivotPx: {x: 5.5, y: 3}
+    - rect:
+        x: 151
+        y: 25
+        width: 7
+        height: 4
+      pivotPx: {x: 5.5, y: 3}
+    - rect:
+        x: 159
+        y: 25
+        width: 7
+        height: 4
+      pivotPx: {x: 5.5, y: 3}
+    - rect:
+        x: 167
+        y: 25
+        width: 6
+        height: 5
+      pivotPx: {x: 4.5, y: 4}
+    - rect:
+        x: 174
+        y: 25
+        width: 6
+        height: 6
+      pivotPx: {x: 3.5, y: 5}
+  - name: leg_lower_B
+    frames:
+    - rect:
+        x: 181
+        y: 25
+        width: 3
+        height: 8
+      pivotPx: {x: 1.5, y: 7}
+    - rect:
+        x: 185
+        y: 25
+        width: 4
+        height: 8
+      pivotPx: {x: 0.5, y: 7}
+    - rect:
+        x: 190
+        y: 25
+        width: 5
+        height: 7
+      pivotPx: {x: 0.5, y: 6}
+    - rect:
+        x: 196
+        y: 25
+        width: 6
+        height: 7
+      pivotPx: {x: 0.5, y: 6}
+    - rect:
+        x: 203
+        y: 25
+        width: 7
+        height: 7
+      pivotPx: {x: 0.5, y: 5}
+    - rect:
+        x: 211
+        y: 25
+        width: 8
+        height: 5
+      pivotPx: {x: 0.5, y: 3}
+    - rect:
+        x: 220
+        y: 25
+        width: 8
+        height: 3
+      pivotPx: {x: 0.5, y: 2}
+    - rect:
+        x: 229
+        y: 25
+        width: 9
+        height: 4
+      pivotPx: {x: 1.5, y: 1}
+    - rect:
+        x: 239
+        y: 25
+        width: 8
+        height: 6
+      pivotPx: {x: 1.5, y: 1}
+    - rect:
+        x: 248
+        y: 25
+        width: 7
+        height: 7
+      pivotPx: {x: 1.5, y: 1}
+    - rect:
+        x: 256
+        y: 25
+        width: 6
+        height: 7
+      pivotPx: {x: 1.5, y: 1}
+    - rect:
+        x: 263
+        y: 25
+        width: 5
+        height: 8
+      pivotPx: {x: 1.5, y: 1}
+    - rect:
+        x: 269
+        y: 25
+        width: 3
+        height: 8
+      pivotPx: {x: 1.5, y: 1}
+    - rect:
+        x: 273
+        y: 25
+        width: 4
+        height: 8
+      pivotPx: {x: 3.5, y: 1}
+    - rect:
+        x: 278
+        y: 25
+        width: 5
+        height: 7
+      pivotPx: {x: 4.5, y: 1}
+    - rect:
+        x: 284
+        y: 25
+        width: 6
+        height: 7
+      pivotPx: {x: 5.5, y: 1}
+    - rect:
+        x: 291
+        y: 25
+        width: 7
+        height: 7
+      pivotPx: {x: 6.5, y: 2}
+    - rect:
+        x: 299
+        y: 25
+        width: 8
+        height: 5
+      pivotPx: {x: 7.5, y: 2}
+    - rect:
+        x: 308
+        y: 25
+        width: 8
+        height: 3
+      pivotPx: {x: 7.5, y: 1}
+    - rect:
+        x: 317
+        y: 25
+        width: 9
+        height: 4
+      pivotPx: {x: 7.5, y: 3}
+    - rect:
+        x: 327
+        y: 25
+        width: 8
+        height: 6
+      pivotPx: {x: 6.5, y: 5}
+    - rect:
+        x: 336
+        y: 25
+        width: 7
+        height: 7
+      pivotPx: {x: 5.5, y: 6}
+    - rect:
+        x: 344
+        y: 25
+        width: 6
+        height: 7
+      pivotPx: {x: 4.5, y: 6}
+    - rect:
+        x: 351
+        y: 25
+        width: 5
+        height: 8
+      pivotPx: {x: 3.5, y: 7}
+  - name: leg_upper_F
+    frames:
+    - rect:
+        x: 357
+        y: 25
+        width: 5
+        height: 6
+      pivotPx: {x: 1.5, y: 4.5}
+    - rect:
+        x: 363
+        y: 25
+        width: 6
+        height: 5
+      pivotPx: {x: 1.5, y: 3.5}
+    - rect:
+        x: 370
+        y: 25
+        width: 7
+        height: 4
+      pivotPx: {x: 1.5, y: 2.5}
+    - rect:
+        x: 378
+        y: 25
+        width: 7
+        height: 5
+      pivotPx: {x: 1.5, y: 2.5}
+    - rect:
+        x: 386
+        y: 25
+        width: 7
+        height: 3
+      pivotPx: {x: 1.5, y: 1.5}
+    - rect:
+        x: 394
+        y: 25
+        width: 7
+        height: 4
+      pivotPx: {x: 1.5, y: 1.5}
+    - rect:
+        x: 402
+        y: 25
+        width: 6
+        height: 5
+      pivotPx: {x: 1.5, y: 1.5}
+    - rect:
+        x: 409
+        y: 25
+        width: 5
+        height: 6
+      pivotPx: {x: 1.5, y: 1.5}
+    - rect:
+        x: 415
+        y: 25
+        width: 4
+        height: 7
+      pivotPx: {x: 1.5, y: 1.5}
+    - rect:
+        x: 420
+        y: 25
+        width: 5
+        height: 7
+      pivotPx: {x: 2.5, y: 1.5}
+    - rect:
+        x: 426
+        y: 25
+        width: 3
+        height: 7
+      pivotPx: {x: 1.5, y: 1.5}
+    - rect:
+        x: 430
+        y: 25
+        width: 4
+        height: 7
+      pivotPx: {x: 2.5, y: 1.5}
+    - rect:
+        x: 435
+        y: 25
+        width: 5
+        height: 6
+      pivotPx: {x: 3.5, y: 1.5}
+    - rect:
+        x: 441
+        y: 25
+        width: 6
+        height: 5
+      pivotPx: {x: 4.5, y: 1.5}
+    - rect:
+        x: 448
+        y: 25
+        width: 7
+        height: 4
+      pivotPx: {x: 5.5, y: 1.5}
+    - rect:
+        x: 456
+        y: 25
+        width: 7
+        height: 5
+      pivotPx: {x: 5.5, y: 2.5}
+    - rect:
+        x: 464
+        y: 25
+        width: 7
+        height: 3
+      pivotPx: {x: 5.5, y: 1.5}
+    - rect:
+        x: 472
+        y: 25
+        width: 7
+        height: 4
+      pivotPx: {x: 5.5, y: 2.5}
+    - rect:
+        x: 480
+        y: 25
+        width: 6
+        height: 5
+      pivotPx: {x: 4.5, y: 3.5}
+    - rect:
+        x: 487
+        y: 25
+        width: 5
+        height: 6
+      pivotPx: {x: 3.5, y: 4.5}
+    - rect:
+        x: 493
+        y: 25
+        width: 4
+        height: 7
+      pivotPx: {x: 2.5, y: 5.5}
+    - rect:
+        x: 498
+        y: 25
+        width: 5
+        height: 7
+      pivotPx: {x: 2.5, y: 5.5}
+    - rect:
+        x: 504
+        y: 25
+        width: 3
+        height: 7
+      pivotPx: {x: 1.5, y: 5.5}
+    - rect:
+        x: 1
+        y: 34
+        width: 4
+        height: 7
+      pivotPx: {x: 1.5, y: 5.5}
+  - name: leg_lower_F
+    frames:
+    - rect:
+        x: 6
+        y: 34
+        width: 3
+        height: 9
+      pivotPx: {x: 1, y: 8}
+    - rect:
+        x: 10
+        y: 34
+        width: 5
+        height: 9
+      pivotPx: {x: 1, y: 8}
+    - rect:
+        x: 16
+        y: 34
+        width: 6
+        height: 8
+      pivotPx: {x: 1, y: 7}
+    - rect:
+        x: 23
+        y: 34
+        width: 8
+        height: 7
+      pivotPx: {x: 1, y: 6}
+    - rect:
+        x: 32
+        y: 34
+        width: 9
+        height: 6
+      pivotPx: {x: 1, y: 5}
+    - rect:
+        x: 42
+        y: 34
+        width: 9
+        height: 4
+      pivotPx: {x: 1, y: 3}
+    - rect:
+        x: 52
+        y: 34
+        width: 9
+        height: 3
+      pivotPx: {x: 1, y: 1}
+    - rect:
+        x: 62
+        y: 34
+        width: 9
+        height: 5
+      pivotPx: {x: 1, y: 1}
+    - rect:
+        x: 72
+        y: 34
+        width: 8
+        height: 6
+      pivotPx: {x: 1, y: 1}
+    - rect:
+        x: 81
+        y: 34
+        width: 7
+        height: 8
+      pivotPx: {x: 1, y: 1}
+    - rect:
+        x: 89
+        y: 34
+        width: 6
+        height: 9
+      pivotPx: {x: 1, y: 1}
+    - rect:
+        x: 96
+        y: 34
+        width: 4
+        height: 9
+      pivotPx: {x: 1, y: 1}
+    - rect:
+        x: 101
+        y: 34
+        width: 3
+        height: 9
+      pivotPx: {x: 2, y: 1}
+    - rect:
+        x: 105
+        y: 34
+        width: 5
+        height: 9
+      pivotPx: {x: 4, y: 1}
+    - rect:
+        x: 111
+        y: 34
+        width: 6
+        height: 8
+      pivotPx: {x: 5, y: 1}
+    - rect:
+        x: 118
+        y: 34
+        width: 8
+        height: 7
+      pivotPx: {x: 7, y: 1}
+    - rect:
+        x: 127
+        y: 34
+        width: 9
+        height: 6
+      pivotPx: {x: 8, y: 1}
+    - rect:
+        x: 137
+        y: 34
+        width: 9
+        height: 4
+      pivotPx: {x: 8, y: 1}
+    - rect:
+        x: 147
+        y: 34
+        width: 9
+        height: 3
+      pivotPx: {x: 8, y: 2}
+    - rect:
+        x: 157
+        y: 34
+        width: 9
+        height: 5
+      pivotPx: {x: 8, y: 4}
+    - rect:
+        x: 167
+        y: 34
+        width: 8
+        height: 6
+      pivotPx: {x: 7, y: 5}
+    - rect:
+        x: 176
+        y: 34
+        width: 7
+        height: 8
+      pivotPx: {x: 6, y: 7}
+    - rect:
+        x: 184
+        y: 34
+        width: 6
+        height: 9
+      pivotPx: {x: 5, y: 8}
+    - rect:
+        x: 191
+        y: 34
+        width: 4
+        height: 9
+      pivotPx: {x: 3, y: 8}
