@@ -72,3 +72,30 @@ crashlytics-build.properties
 # Temporary auto-generated Android Assets
 /[Aa]ssets/[Ss]treamingAssets/aa.meta
 /[Aa]ssets/[Ss]treamingAssets/aa/*
+
+# ===== 프로젝트 추가 규칙 =====
+
+# Unity 6 안드로이드 빌드 중간 파일 (빌드할 때마다 바뀜)
+/.utmp/
+
+# 빌드 시 생성되는 Burst/IL2CPP 디버그 정보
+*_BurstDebugInformation_DoNotShip/
+*_BackUpThisFolder_ButDontShipItWithYourGame/
+*.symbols.zip
+
+# Unity/EDM4U가 gradle 템플릿을 고칠 때 만드는 백업
+/[Aa]ssets/[Pp]lugins/[Aa]ndroid/*.backup*
+
+# 서명 키는 절대 커밋하지 않음
+*.keystore
+*.jks
+
+# IDE
+.idea/
+.vscode/
+
+# OS 생성 파일
+.DS_Store
+.DS_Store.meta
+Thumbs.db
+Desktop.ini
