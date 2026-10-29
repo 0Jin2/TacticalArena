@@ -61,6 +61,8 @@ public static class RigTestSceneBuilder
 
         var model = (GameObject)PrefabUtility.InstantiatePrefab(characterAsset);
         model.transform.SetParent(visual.transform, false);
+        // 프리팹 연결을 끊어 aseprite 재임포트 시 실행 중인 관절 구조가 덮어써지지 않게 한다 (스프라이트 참조는 그대로 갱신됨)
+        PrefabUtility.UnpackPrefabInstance(model, PrefabUnpackMode.Completely, InteractionMode.AutomatedAction);
         // 임포터가 붙인 애니메이터가 파츠를 덮어쓰지 않도록 끈다
         foreach (var animator in model.GetComponentsInChildren<Animator>(true)) animator.enabled = false;
 

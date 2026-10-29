@@ -1476,3 +1476,4 @@ MonoBehaviour:
         width: 4
         height: 9
       pivotPx: {x: 3, y: 8}
+  version: 3

@@ -8,10 +8,16 @@ public class RotSpriteRig : MonoBehaviour
 {
     [SerializeField] private CutoutRig rig;
     [SerializeField] private RotSpriteSet set;
-    [SerializeField] private bool useRotSprite = true; // 끄면 일반 회전과 비교 가능
+    [Tooltip("끄면 일반 회전으로 그린다 (비교용, 플레이 중 전환 가능)")]
+    [SerializeField] private bool useRotSprite = true;
+    [Tooltip("회전본을 몇 도 간격으로 구울지. 작을수록 회전이 부드럽지만 장 수가 늘어남 (15 → 24장, 7.5 → 48장).\n바꾼 뒤 '회전본 다시 굽기'를 눌러야 적용")]
+    [SerializeField] private float bakeAngleStep = 15f;
+
+    public float BakeAngleStep => bakeAngleStep;
 
     private class Slot
     {
+        public string name;
         public string parent;
         public Transform joint;
         public Transform part;
@@ -26,48 +32,62 @@ public class RotSpriteRig : MonoBehaviour
     private readonly List<Slot> slots = new List<Slot>();
     private readonly Dictionary<string, Slot> slotByName = new Dictionary<string, Slot>();
     private bool applied;
+    private int loadedVersion = -1;
 
     void Start()
     {
-        if (rig == null || set == null || set.atlas == null) return;
+        if (rig == null || set == null) return;
 
         foreach (CutoutRig.Bone bone in rig.Bones)
         {
-            RotSpriteSet.Part data = set.Find(bone.name);
             Transform joint = rig.GetJoint(bone.name);
             Transform part = rig.GetPart(bone.name);
-            if (data == null || joint == null || part == null) continue;
+            if (joint == null || part == null) continue;
 
             var slot = new Slot
             {
+                name = bone.name,
                 parent = bone.parent,
                 joint = joint,
                 part = part,
                 renderer = part.GetComponent<SpriteRenderer>(),
                 originalLocalPos = part.localPosition,
-                sprites = new Sprite[data.frames.Count],
-                pivots = new Vector2[data.frames.Count],
             };
             slot.originalSprite = slot.renderer.sprite;
+            slots.Add(slot);
+            slotByName[bone.name] = slot;
+        }
+        LoadSprites();
+    }
 
+    // 구운 데이터로 회전본 스프라이트 생성 (다시 구우면 실행 중에도 다시 호출됨)
+    private void LoadSprites()
+    {
+        loadedVersion = set.version;
+        foreach (Slot slot in slots)
+        {
+            DestroySprites(slot);
+            RotSpriteSet.Part data = set.Find(slot.name);
+            if (data == null || set.atlas == null) continue;
+
+            slot.sprites = new Sprite[data.frames.Count];
+            slot.pivots = new Vector2[data.frames.Count];
             for (int i = 0; i < data.frames.Count; i++)
             {
                 RotSpriteSet.Frame f = data.frames[i];
                 var rect = new Rect(f.rect.x, f.rect.y, f.rect.width, f.rect.height);
                 var pivot = new Vector2(f.pivotPx.x / rect.width, f.pivotPx.y / rect.height);
                 slot.sprites[i] = Sprite.Create(set.atlas, rect, pivot, set.pixelsPerUnit, 0, SpriteMeshType.FullRect);
-                slot.sprites[i].name = $"{bone.name}_{i * set.angleStep}";
+                slot.sprites[i].name = $"{slot.name}_{i * set.angleStep}";
                 slot.pivots[i] = f.pivotPx / set.pixelsPerUnit;
             }
-
-            slots.Add(slot);
-            slotByName[bone.name] = slot;
         }
     }
 
     void LateUpdate()
     {
         if (slots.Count == 0) return;
+        if (set.version != loadedVersion) LoadSprites();
 
         if (!useRotSprite)
         {
@@ -83,6 +103,7 @@ public class RotSpriteRig : MonoBehaviour
         // 부모 관절부터 순서대로 처리 (Bones 순서 = 부모 먼저)
         foreach (Slot s in slots)
         {
+            if (s.sprites == null) continue;
             float local = Mathf.Round(Mathf.DeltaAngle(0f, s.joint.localEulerAngles.z) / step) * step;
             s.joint.localRotation = Quaternion.Euler(0f, 0f, local);
 
@@ -119,9 +140,13 @@ public class RotSpriteRig : MonoBehaviour
 
     void OnDestroy()
     {
-        foreach (Slot s in slots)
-        {
-            foreach (Sprite sprite in s.sprites) Destroy(sprite);
-        }
+        foreach (Slot s in slots) DestroySprites(s);
+    }
+
+    private static void DestroySprites(Slot slot)
+    {
+        if (slot.sprites == null) return;
+        foreach (Sprite sprite in slot.sprites) Destroy(sprite);
+        slot.sprites = null;
     }
 }

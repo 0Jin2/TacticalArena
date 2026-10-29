@@ -20,11 +20,15 @@ public class CutoutRig : MonoBehaviour
         }
     }
 
-    [SerializeField] private Transform model;                       // 임포트된 aseprite 프리팹 인스턴스
+    [Tooltip("임포트된 aseprite 모델")]
+    [SerializeField] private Transform model;
+    [Tooltip("Aseprite 캔버스 크기 (픽셀)")]
     [SerializeField] private Vector2 canvasSize = new Vector2(32, 32);
+    [Tooltip("스프라이트 PPU (임포트 설정과 같아야 함)")]
     [SerializeField] private float pixelsPerUnit = 64f;
 
-    // 부모가 먼저 오도록 나열
+    [Tooltip("관절 목록. 부모가 먼저 오도록 나열.\n관절 위치는 Aseprite 캔버스 픽셀 좌표(왼쪽 위 원점, Aseprite 화면 아래쪽에 표시되는 좌표 그대로).\n" +
+             "이 오브젝트를 선택하면 관절이 노란 원으로 보임. 플레이 시작할 때 적용되고, 바꾼 뒤엔 RotSprite '회전본 다시 굽기' 필요")]
     [SerializeField] private List<Bone> bones = new List<Bone>
     {
         new Bone("torso",       "",            16f,   18f),

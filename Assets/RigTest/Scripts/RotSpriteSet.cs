@@ -23,6 +23,7 @@ public class RotSpriteSet : ScriptableObject
     public float pixelsPerUnit = 64f;
     public float angleStep = 15f;
     public List<Part> parts = new List<Part>();
+    public int version; // 다시 구울 때마다 증가 → 실행 중 자동 갱신용
 
     public int FrameCount => Mathf.RoundToInt(360f / angleStep);
 

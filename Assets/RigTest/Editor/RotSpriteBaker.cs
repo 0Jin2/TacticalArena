@@ -5,11 +5,11 @@ using UnityEditor.SceneManagement;
 using UnityEngine;
 
 // 메뉴 Tools > RigTest > Bake RotSprite
-// 열린 씬의 CutoutRig 파츠들을 관절 기준으로 AngleStep마다 RotSprite 방식으로 회전시켜 아틀라스로 굽는다.
+// 열린 씬의 CutoutRig 파츠들을 관절 기준으로 각도 단위마다 RotSprite 방식으로 회전시켜 아틀라스로 굽는다.
 // RotSprite: Scale2x를 3번(8배) → 확대된 상태에서 회전 → 원래 크기로 샘플링. 도트 선이 1px 계단으로 깔끔하게 유지됨
 public static class RotSpriteBaker
 {
-    private const float AngleStep = 15f;
+    private const float DefaultAngleStep = 15f;
     private const string OutFolder = "Assets/RigTest/RotSprite";
     private const string AtlasPath = OutFolder + "/rig_test_rot.png";
     private const string SetPath = OutFolder + "/rig_test_rot.asset";
@@ -25,47 +25,57 @@ public static class RotSpriteBaker
         public RectInt rect;
     }
 
-    [MenuItem("Tools/RigTest/Bake RotSprite")]
-    public static void Bake()
-    {
-        if (Application.isPlaying)
-        {
-            Debug.LogError("[RotSprite] 플레이 모드에서는 구울 수 없습니다.");
-            return;
-        }
+    public const string CharacterPath = "Assets/RigTest/rig_test.aseprite";
 
+    [MenuItem("Tools/RigTest/Bake RotSprite")]
+    public static void BakeFromMenu()
+    {
+        Bake(true);
+    }
+
+    // verbose = false 면 리그가 없을 때 조용히 넘어간다 (자동 굽기용)
+    public static void Bake(bool verbose)
+    {
         var rig = Object.FindAnyObjectByType<CutoutRig>();
         if (rig == null)
         {
-            Debug.LogError("[RotSprite] 열린 씬에 CutoutRig가 없습니다. RigTest 씬을 열고 실행하세요.");
+            if (verbose) Debug.LogError("[RotSprite] 열린 씬에 CutoutRig가 없습니다. RigTest 씬을 열고 실행하세요.");
             return;
         }
 
-        int frameCount = Mathf.RoundToInt(360f / AngleStep);
+        // 씬 대신 에셋에서 원본 스프라이트를 읽는다 (플레이 중에는 씬의 파츠가 회전본으로 바뀌어 있음)
+        var sources = new Dictionary<string, Sprite>();
+        foreach (Object asset in AssetDatabase.LoadAllAssetsAtPath(CharacterPath))
+        {
+            if (asset is Sprite sprite) sources[sprite.name] = sprite;
+        }
+
+        // 각도 단위는 씬의 RotSpriteRig 인스펙터 값을 따름
+        var existingRotRig = rig.GetComponent<RotSpriteRig>();
+        float angleStep = existingRotRig != null && existingRotRig.BakeAngleStep > 0f ? existingRotRig.BakeAngleStep : DefaultAngleStep;
+        int frameCount = Mathf.RoundToInt(360f / angleStep);
         var baked = new List<Baked>();
         var partNames = new List<string>();
 
         foreach (CutoutRig.Bone bone in rig.Bones)
         {
-            Transform part = CutoutRig.FindPart(rig.Model, bone.name);
-            var sr = part != null ? part.GetComponent<SpriteRenderer>() : null;
-            if (sr == null || sr.sprite == null)
+            if (!sources.TryGetValue(bone.name, out Sprite sprite))
             {
                 Debug.LogWarning($"[RotSprite] '{bone.name}' 스프라이트를 찾을 수 없어 건너뜁니다.");
                 continue;
             }
 
-            Color32[] src = ReadSprite(sr.sprite, out int w, out int h);
+            Color32[] src = ReadSprite(sprite, out int w, out int h);
             Color32[] up = Scale2x(Scale2x(Scale2x(src, w, h), w * 2, h * 2), w * 4, h * 4);
 
             // 캔버스 좌표(왼쪽 아래 원점, 픽셀). 임포트 피벗 = 캔버스 하단 중앙
-            Vector2 origin = new Vector2(rig.CanvasSize.x * 0.5f, 0f) - sr.sprite.pivot;
+            Vector2 origin = new Vector2(rig.CanvasSize.x * 0.5f, 0f) - sprite.pivot;
             Vector2 joint = new Vector2(bone.pivotPx.x, rig.CanvasSize.y - bone.pivotPx.y);
 
             partNames.Add(bone.name);
             for (int i = 0; i < frameCount; i++)
             {
-                Baked b = Rotate(up, w, h, origin, joint, i * AngleStep);
+                Baked b = Rotate(up, w, h, origin, joint, i * angleStep);
                 b.part = bone.name;
                 baked.Add(b);
             }
@@ -88,7 +98,7 @@ public static class RotSpriteBaker
         }
         set.atlas = AssetDatabase.LoadAssetAtPath<Texture2D>(AtlasPath);
         set.pixelsPerUnit = rig.PixelsPerUnit;
-        set.angleStep = AngleStep;
+        set.angleStep = angleStep;
         set.parts.Clear();
         foreach (string name in partNames)
         {
@@ -99,20 +109,25 @@ public static class RotSpriteBaker
             }
             set.parts.Add(part);
         }
+        set.version++; // 실행 중인 RotSpriteRig가 감지해서 다시 불러옴
         EditorUtility.SetDirty(set);
         AssetDatabase.SaveAssets();
 
-        // 씬의 리그에 연결
+        Debug.Log($"[RotSprite] 파츠 {partNames.Count}개 × {frameCount}각도 굽기 완료: {AtlasPath}");
+
+        // 씬의 리그에 연결 (플레이 중에는 씬을 건드리지 않음)
+        if (Application.isPlaying) return;
         var rotRig = rig.GetComponent<RotSpriteRig>();
         if (rotRig == null) rotRig = rig.gameObject.AddComponent<RotSpriteRig>();
         var so = new SerializedObject(rotRig);
         so.FindProperty("rig").objectReferenceValue = rig;
         so.FindProperty("set").objectReferenceValue = set;
-        so.ApplyModifiedPropertiesWithoutUndo();
-        EditorSceneManager.MarkSceneDirty(rig.gameObject.scene);
-        EditorSceneManager.SaveScene(rig.gameObject.scene);
-
-        Debug.Log($"[RotSprite] 파츠 {partNames.Count}개 × {frameCount}각도 굽기 완료: {AtlasPath}");
+        if (so.hasModifiedProperties)
+        {
+            so.ApplyModifiedPropertiesWithoutUndo();
+            EditorSceneManager.MarkSceneDirty(rig.gameObject.scene);
+            EditorSceneManager.SaveScene(rig.gameObject.scene);
+        }
     }
 
     // 관절(joint)을 중심으로 angle도 회전 (반시계, 캔버스 좌표)
