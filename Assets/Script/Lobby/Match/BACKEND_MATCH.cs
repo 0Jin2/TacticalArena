@@ -270,6 +270,11 @@ public class BACKEND_MATCH : MonoBehaviour
     public bool IsMatchSearchActive => isMatchSearchActive;
     public bool IsEnteringGame => enteringGame;
 
+    public void CancelMatchSearch()
+    {
+        CancelCurrentMatchSearch();
+    }
+
     // 인게임 씬을 에디터에서 바로 실행했을 때 로비 없이 매칭하기 위한 진입점
     public bool StartMatchSearchForTest(TacticalMatchMode mode, string matchCardInDate, string sceneName)
     {

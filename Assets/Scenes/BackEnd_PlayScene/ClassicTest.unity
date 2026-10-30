@@ -1975,6 +1975,7 @@ MonoBehaviour:
   nameTagHeight: 0.62
   autoMatchWhenOpenedDirectly: 1
   testMatchCardInDate: 2026-10-29T11:23:09.812Z
+  soloStartTimeout: 20
 --- !u!4 &436019039
 Transform:
   m_ObjectHideFlags: 0

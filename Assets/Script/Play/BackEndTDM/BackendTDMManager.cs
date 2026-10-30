@@ -91,6 +91,8 @@ public class BackendTDMManager : MonoBehaviour
     [Tooltip("에디터에서 이 씬을 바로 실행하면 로비 없이 자동으로 매칭한 뒤 씬을 다시 불러온다.")]
     [SerializeField] private bool autoMatchWhenOpenedDirectly = true;
     [SerializeField] private string testMatchCardInDate = "2026-10-29T11:23:09.812Z";
+    [Tooltip("이 시간 동안 상대가 없으면 매칭을 취소하고 혼자 진행한다 (1p 시나리오용)")]
+    [SerializeField] private float soloStartTimeout = 8f;
 
     public event Action OnGameStarted;
 
@@ -276,7 +278,14 @@ public class BackendTDMManager : MonoBehaviour
                 yield return null;
                 continue;
             }
-            if (status != null) status.text = "에디터 테스트 매칭 중... " + Mathf.FloorToInt(Time.time - startedAt) + "초\n<size=60%>다른 에디터 창에서도 이 씬을 실행하면 매칭됩니다</size>";
+            float remaining = soloStartTimeout - (Time.time - startedAt);
+            if (remaining <= 0f)
+            {
+                // 1p로 실행하면 상대가 없으므로 기다리지 않고 혼자 진행한다.
+                match.CancelMatchSearch();
+                break;
+            }
+            if (status != null) status.text = "에디터 테스트 매칭 중...\n<size=60%>" + Mathf.CeilToInt(remaining) + "초 안에 상대가 없으면 혼자 시작합니다</size>";
             yield return null;
         }
         if (status != null) Destroy(status.gameObject);
@@ -580,7 +589,7 @@ public class BackendTDMManager : MonoBehaviour
         {
             myTeamText.text = me.team == Team.Red ? "RED TEAM" : "BLUE TEAM";
             // 씬을 직접 실행하면 매칭 정보가 없어 혼자 진행된다. 멀티 테스트로 착각하지 않게 표시한다.
-            if (offlineMode) myTeamText.text += "  <size=60%><color=#FFD24A>오프라인 테스트 (매칭 실패 - 콘솔 확인)</color></size>";
+            if (offlineMode) myTeamText.text += "  <size=60%><color=#FFD24A>오프라인 테스트 (혼자 진행)</color></size>";
             myTeamText.color = me.team == Team.Red ? new Color(1f, 0.35f, 0.35f) : new Color(0.35f, 0.6f, 1f);
         }
         if (redTeamListText != null) redTeamListText.text = BuildTeamList(Team.Red);
