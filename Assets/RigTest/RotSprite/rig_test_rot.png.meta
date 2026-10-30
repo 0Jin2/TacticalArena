@@ -1,0 +1,5590 @@
+fileFormatVersion: 2
+guid: f263fb4bbe866644a8f83ecd3026ab90
+TextureImporter:
+  internalIDToNameTable:
+  - first:
+      213: -1166034988105725714
+    second: rig_test_rot_0
+  - first:
+      213: -6777711078522919587
+    second: rig_test_rot_1
+  - first:
+      213: 8124745746632963072
+    second: rig_test_rot_2
+  - first:
+      213: -1726044344243228116
+    second: rig_test_rot_3
+  - first:
+      213: -4500280762922804748
+    second: rig_test_rot_4
+  - first:
+      213: -6963378929624150153
+    second: rig_test_rot_5
+  - first:
+      213: 4857931014226359027
+    second: rig_test_rot_6
+  - first:
+      213: 8610901094151850026
+    second: rig_test_rot_7
+  - first:
+      213: -3202739120273008724
+    second: rig_test_rot_8
+  - first:
+      213: 5287117450224103861
+    second: rig_test_rot_9
+  - first:
+      213: -5769264062503719695
+    second: rig_test_rot_10
+  - first:
+      213: -8430191427790457037
+    second: rig_test_rot_11
+  - first:
+      213: 4638064919908880013
+    second: rig_test_rot_12
+  - first:
+      213: -8623471422721737144
+    second: rig_test_rot_13
+  - first:
+      213: -8021165821832540237
+    second: rig_test_rot_14
+  - first:
+      213: -8721030112159070772
+    second: rig_test_rot_15
+  - first:
+      213: -444388602396901591
+    second: rig_test_rot_16
+  - first:
+      213: 27754482009507395
+    second: rig_test_rot_17
+  - first:
+      213: 8277846240045136220
+    second: rig_test_rot_18
+  - first:
+      213: 4023972170721856476
+    second: rig_test_rot_19
+  - first:
+      213: 6657123509057871334
+    second: rig_test_rot_20
+  - first:
+      213: 4727832919858344139
+    second: rig_test_rot_21
+  - first:
+      213: 4404005166718178407
+    second: rig_test_rot_22
+  - first:
+      213: 7959076019945591103
+    second: rig_test_rot_23
+  - first:
+      213: -3135977149866958018
+    second: rig_test_rot_24
+  - first:
+      213: 2540273804918249546
+    second: rig_test_rot_25
+  - first:
+      213: -3644463176675419022
+    second: rig_test_rot_26
+  - first:
+      213: 3451536266291057799
+    second: rig_test_rot_27
+  - first:
+      213: 7716784875985781261
+    second: rig_test_rot_28
+  - first:
+      213: -836634571540434011
+    second: rig_test_rot_29
+  - first:
+      213: 9029291934066187168
+    second: rig_test_rot_30
+  - first:
+      213: -2048146759526838436
+    second: rig_test_rot_31
+  - first:
+      213: 2052008947134113574
+    second: rig_test_rot_32
+  - first:
+      213: 5685677851555698017
+    second: rig_test_rot_33
+  - first:
+      213: -4936633758460375363
+    second: rig_test_rot_34
+  - first:
+      213: -2883201619490166606
+    second: rig_test_rot_35
+  - first:
+      213: 1300133350234001271
+    second: rig_test_rot_36
+  - first:
+      213: -8530872616527871684
+    second: rig_test_rot_37
+  - first:
+      213: -2786873036960797680
+    second: rig_test_rot_38
+  - first:
+      213: -2684033269363281178
+    second: rig_test_rot_39
+  - first:
+      213: -1735332772416376423
+    second: rig_test_rot_40
+  - first:
+      213: 5393413079021120019
+    second: rig_test_rot_41
+  - first:
+      213: -8289654205476098309
+    second: rig_test_rot_42
+  - first:
+      213: -8619882883939399191
+    second: rig_test_rot_43
+  - first:
+      213: -7950870620760713580
+    second: rig_test_rot_44
+  - first:
+      213: -6195872790380249455
+    second: rig_test_rot_45
+  - first:
+      213: 7936280437074557255
+    second: rig_test_rot_46
+  - first:
+      213: 918116101833956936
+    second: rig_test_rot_47
+  - first:
+      213: -5687088307793202
+    second: rig_test_rot_48
+  - first:
+      213: -5868045780391884741
+    second: rig_test_rot_49
+  - first:
+      213: -8029769582105996994
+    second: rig_test_rot_50
+  - first:
+      213: -6188688175647670039
+    second: rig_test_rot_51
+  - first:
+      213: 6149704778384811885
+    second: rig_test_rot_52
+  - first:
+      213: 557117108603753641
+    second: rig_test_rot_53
+  - first:
+      213: -2058308085228373034
+    second: rig_test_rot_54
+  - first:
+      213: 7161226971209385331
+    second: rig_test_rot_55
+  - first:
+      213: 7551587137545834243
+    second: rig_test_rot_56
+  - first:
+      213: -3742642290678157139
+    second: rig_test_rot_57
+  - first:
+      213: -1699307703371214671
+    second: rig_test_rot_58
+  - first:
+      213: 3371703750629511781
+    second: rig_test_rot_59
+  - first:
+      213: 948263302650229379
+    second: rig_test_rot_60
+  - first:
+      213: 8932529054556533580
+    second: rig_test_rot_61
+  - first:
+      213: -3205435244875475332
+    second: rig_test_rot_62
+  - first:
+      213: 2486459173900129494
+    second: rig_test_rot_63
+  - first:
+      213: 324340501591248700
+    second: rig_test_rot_64
+  - first:
+      213: 3424238936431704508
+    second: rig_test_rot_65
+  - first:
+      213: 8321937284413598174
+    second: rig_test_rot_66
+  - first:
+      213: -8521007740961240685
+    second: rig_test_rot_67
+  - first:
+      213: -8428203197450950495
+    second: rig_test_rot_68
+  - first:
+      213: 228805854202096368
+    second: rig_test_rot_69
+  - first:
+      213: 214110488827749862
+    second: rig_test_rot_70
+  - first:
+      213: 1576092927781350909
+    second: rig_test_rot_71
+  - first:
+      213: 7137990333043459384
+    second: rig_test_rot_72
+  - first:
+      213: 300892380459935488
+    second: rig_test_rot_73
+  - first:
+      213: -6059170198860182283
+    second: rig_test_rot_74
+  - first:
+      213: -5413249963700621876
+    second: rig_test_rot_75
+  - first:
+      213: 4287895661813572042
+    second: rig_test_rot_76
+  - first:
+      213: -7242172465204709291
+    second: rig_test_rot_77
+  - first:
+      213: -1632671383590678237
+    second: rig_test_rot_78
+  - first:
+      213: -6527282736989812008
+    second: rig_test_rot_79
+  - first:
+      213: 4915146090338956542
+    second: rig_test_rot_80
+  - first:
+      213: -6895624245181852922
+    second: rig_test_rot_81
+  - first:
+      213: 7728713294714055919
+    second: rig_test_rot_82
+  - first:
+      213: -4801037059622903022
+    second: rig_test_rot_83
+  - first:
+      213: -2193788770784815352
+    second: rig_test_rot_84
+  - first:
+      213: 6703955072047292582
+    second: rig_test_rot_85
+  - first:
+      213: -1178668439031129522
+    second: rig_test_rot_86
+  - first:
+      213: 5205847970621545266
+    second: rig_test_rot_87
+  - first:
+      213: -7581136648453160885
+    second: rig_test_rot_88
+  - first:
+      213: -5771623393733803835
+    second: rig_test_rot_89
+  - first:
+      213: 2763833877036261410
+    second: rig_test_rot_90
+  - first:
+      213: -3030538037866350865
+    second: rig_test_rot_91
+  - first:
+      213: -3041515370144822283
+    second: rig_test_rot_92
+  - first:
+      213: -4169638385853509293
+    second: rig_test_rot_93
+  - first:
+      213: 5757119560181973272
+    second: rig_test_rot_94
+  - first:
+      213: 930651869447783181
+    second: rig_test_rot_95
+  - first:
+      213: -4230900204057235766
+    second: rig_test_rot_96
+  - first:
+      213: 553196590652032581
+    second: rig_test_rot_97
+  - first:
+      213: -801468520537506168
+    second: rig_test_rot_98
+  - first:
+      213: 6074653969802493514
+    second: rig_test_rot_99
+  - first:
+      213: -6288082113796297391
+    second: rig_test_rot_100
+  - first:
+      213: 8029265505551469636
+    second: rig_test_rot_101
+  - first:
+      213: 5157979466998190173
+    second: rig_test_rot_102
+  - first:
+      213: 2115358441308559861
+    second: rig_test_rot_103
+  - first:
+      213: -4693324001984716712
+    second: rig_test_rot_104
+  - first:
+      213: 3682965854357391908
+    second: rig_test_rot_105
+  - first:
+      213: 5864149556689339758
+    second: rig_test_rot_106
+  - first:
+      213: 2307590191820592683
+    second: rig_test_rot_107
+  - first:
+      213: 7843191392658894508
+    second: rig_test_rot_108
+  - first:
+      213: 3542664505604302026
+    second: rig_test_rot_109
+  - first:
+      213: 2544724637122981714
+    second: rig_test_rot_110
+  - first:
+      213: -9167115387670238977
+    second: rig_test_rot_111
+  - first:
+      213: -605862732083041376
+    second: rig_test_rot_112
+  - first:
+      213: -1061829999169643955
+    second: rig_test_rot_113
+  - first:
+      213: -7471381961650496296
+    second: rig_test_rot_114
+  - first:
+      213: 5713316981796968283
+    second: rig_test_rot_115
+  - first:
+      213: 8111577590001273952
+    second: rig_test_rot_116
+  - first:
+      213: -2070671750486337358
+    second: rig_test_rot_117
+  - first:
+      213: -8215217414323431706
+    second: rig_test_rot_118
+  - first:
+      213: 2901670459638354931
+    second: rig_test_rot_119
+  - first:
+      213: -4842350850490194129
+    second: rig_test_rot_120
+  - first:
+      213: -3078196903277274208
+    second: rig_test_rot_121
+  - first:
+      213: 946020745175599511
+    second: rig_test_rot_122
+  - first:
+      213: -6804058515331388687
+    second: rig_test_rot_123
+  - first:
+      213: 5428155568858503497
+    second: rig_test_rot_124
+  - first:
+      213: 6537777696836124214
+    second: rig_test_rot_125
+  - first:
+      213: -5832145190057465693
+    second: rig_test_rot_126
+  - first:
+      213: -6033850290785997952
+    second: rig_test_rot_127
+  - first:
+      213: -5138466633405744318
+    second: rig_test_rot_128
+  - first:
+      213: -4767532544446047133
+    second: rig_test_rot_129
+  - first:
+      213: -6536263252420554413
+    second: rig_test_rot_130
+  - first:
+      213: -6673328006893412226
+    second: rig_test_rot_131
+  - first:
+      213: 2771058577079339991
+    second: rig_test_rot_132
+  - first:
+      213: 3357694159218930343
+    second: rig_test_rot_133
+  - first:
+      213: -5118683353673003675
+    second: rig_test_rot_134
+  - first:
+      213: -3176489921664491294
+    second: rig_test_rot_135
+  - first:
+      213: 7359186812501484577
+    second: rig_test_rot_136
+  - first:
+      213: 913966745328843979
+    second: rig_test_rot_137
+  - first:
+      213: -7897718332680697443
+    second: rig_test_rot_138
+  - first:
+      213: -5325415744799539179
+    second: rig_test_rot_139
+  - first:
+      213: 803118754452258187
+    second: rig_test_rot_140
+  - first:
+      213: 3641062043867880881
+    second: rig_test_rot_141
+  - first:
+      213: -3553101925248051533
+    second: rig_test_rot_142
+  - first:
+      213: -8200914464778689809
+    second: rig_test_rot_143
+  - first:
+      213: 8622193559689572737
+    second: rig_test_rot_144
+  - first:
+      213: 766507169713681332
+    second: rig_test_rot_145
+  - first:
+      213: 6947510892700409787
+    second: rig_test_rot_146
+  - first:
+      213: -1843948770876160463
+    second: rig_test_rot_147
+  - first:
+      213: 7071655478824225943
+    second: rig_test_rot_148
+  - first:
+      213: 4406899012135905028
+    second: rig_test_rot_149
+  - first:
+      213: 5407969202971163269
+    second: rig_test_rot_150
+  - first:
+      213: 8466661114956415403
+    second: rig_test_rot_151
+  - first:
+      213: -8839892489235511070
+    second: rig_test_rot_152
+  - first:
+      213: 8677691911553012761
+    second: rig_test_rot_153
+  - first:
+      213: 3435632457043712732
+    second: rig_test_rot_154
+  - first:
+      213: 1851279715205286978
+    second: rig_test_rot_155
+  - first:
+      213: -717619125184725719
+    second: rig_test_rot_156
+  - first:
+      213: 4128772254903540926
+    second: rig_test_rot_157
+  - first:
+      213: 4015106126112445164
+    second: rig_test_rot_158
+  - first:
+      213: -6808020522552008788
+    second: rig_test_rot_159
+  - first:
+      213: 9087570588044829565
+    second: rig_test_rot_160
+  - first:
+      213: -5065208014725219618
+    second: rig_test_rot_161
+  - first:
+      213: -8712530324780995313
+    second: rig_test_rot_162
+  - first:
+      213: -2665401789652013462
+    second: rig_test_rot_163
+  - first:
+      213: -401740607669231967
+    second: rig_test_rot_164
+  - first:
+      213: 1056386168617910873
+    second: rig_test_rot_165
+  - first:
+      213: -3294523421743706616
+    second: rig_test_rot_166
+  - first:
+      213: -6198325216740174969
+    second: rig_test_rot_167
+  - first:
+      213: -7871076154671147167
+    second: rig_test_rot_168
+  - first:
+      213: 127564638983248724
+    second: rig_test_rot_169
+  - first:
+      213: 4988765190332805912
+    second: rig_test_rot_170
+  - first:
+      213: 3580635910048381287
+    second: rig_test_rot_171
+  - first:
+      213: -4800936735720708599
+    second: rig_test_rot_172
+  - first:
+      213: 7750503878748718986
+    second: rig_test_rot_173
+  - first:
+      213: -1914136919249366999
+    second: rig_test_rot_174
+  - first:
+      213: -4298496132721660314
+    second: rig_test_rot_175
+  - first:
+      213: -4939577470863974151
+    second: rig_test_rot_176
+  - first:
+      213: 3852906166479802454
+    second: rig_test_rot_177
+  - first:
+      213: -9037303576989705792
+    second: rig_test_rot_178
+  - first:
+      213: 8155002104101097927
+    second: rig_test_rot_179
+  - first:
+      213: -2831279609861561337
+    second: rig_test_rot_180
+  - first:
+      213: -4688598349905458434
+    second: rig_test_rot_181
+  - first:
+      213: -8048761387861888652
+    second: rig_test_rot_182
+  - first:
+      213: -7753303986470336691
+    second: rig_test_rot_183
+  - first:
+      213: 5036907567073606857
+    second: rig_test_rot_184
+  - first:
+      213: 2998221071243941018
+    second: rig_test_rot_185
+  - first:
+      213: -1018418200116250619
+    second: rig_test_rot_186
+  - first:
+      213: 8481879658285237182
+    second: rig_test_rot_187
+  - first:
+      213: 5091558865843726617
+    second: rig_test_rot_188
+  - first:
+      213: 355854703435911459
+    second: rig_test_rot_189
+  - first:
+      213: 6857329442571479637
+    second: rig_test_rot_190
+  - first:
+      213: 1535208805089639440
+    second: rig_test_rot_191
+  - first:
+      213: -2747613707479316470
+    second: rig_test_rot_192
+  - first:
+      213: -2943756103037946995
+    second: rig_test_rot_193
+  - first:
+      213: -2178184085532794714
+    second: rig_test_rot_194
+  - first:
+      213: 295143295761211561
+    second: rig_test_rot_195
+  - first:
+      213: 1046384428072278518
+    second: rig_test_rot_196
+  - first:
+      213: -4242631036299905256
+    second: rig_test_rot_197
+  - first:
+      213: 3769023375107737679
+    second: rig_test_rot_198
+  - first:
+      213: 6527521077161055466
+    second: rig_test_rot_199
+  - first:
+      213: 8650680042467272971
+    second: rig_test_rot_200
+  - first:
+      213: 6718352550241759820
+    second: rig_test_rot_201
+  - first:
+      213: -1299743656704144358
+    second: rig_test_rot_202
+  - first:
+      213: 6317408006111290359
+    second: rig_test_rot_203
+  - first:
+      213: -517830686914883363
+    second: rig_test_rot_204
+  - first:
+      213: -469758095782953670
+    second: rig_test_rot_205
+  - first:
+      213: -8921331502853189233
+    second: rig_test_rot_206
+  - first:
+      213: 2593251144657079539
+    second: rig_test_rot_207
+  - first:
+      213: -5505575203436622345
+    second: rig_test_rot_208
+  - first:
+      213: -2908890672826713712
+    second: rig_test_rot_209
+  externalObjects: {}
+  serializedVersion: 13
+  mipmaps:
+    mipMapMode: 0
+    enableMipMap: 0
+    sRGBTexture: 1
+    linearTexture: 0
+    fadeOut: 0
+    borderMipMap: 0
+    mipMapsPreserveCoverage: 0
+    alphaTestReferenceValue: 0.5
+    mipMapFadeDistanceStart: 1
+    mipMapFadeDistanceEnd: 3
+  bumpmap:
+    convertToNormalMap: 0
+    externalNormalMap: 0
+    heightScale: 0.25
+    normalMapFilter: 0
+    flipGreenChannel: 0
+  isReadable: 0
+  streamingMipmaps: 0
+  streamingMipmapsPriority: 0
+  vTOnly: 0
+  ignoreMipmapLimit: 0
+  grayScaleToAlpha: 0
+  generateCubemap: 6
+  cubemapConvolution: 0
+  seamlessCubemap: 0
+  textureFormat: 1
+  maxTextureSize: 2048
+  textureSettings:
+    serializedVersion: 2
+    filterMode: 0
+    aniso: 1
+    mipBias: 0
+    wrapU: 1
+    wrapV: 1
+    wrapW: 1
+  nPOTScale: 0
+  lightmap: 0
+  compressionQuality: 50
+  spriteMode: 2
+  spriteExtrude: 1
+  spriteMeshType: 1
+  alignment: 0
+  spritePivot: {x: 0.5, y: 0.5}
+  spritePixelsToUnits: 100
+  spriteBorder: {x: 0, y: 0, z: 0, w: 0}
+  spriteGenerateFallbackPhysicsShape: 1
+  alphaUsage: 1
+  alphaIsTransparency: 1
+  spriteTessellationDetail: -1
+  textureType: 0
+  textureShape: 1
+  singleChannelComponent: 0
+  flipbookRows: 1
+  flipbookColumns: 1
+  maxTextureSizeSet: 0
+  compressionQualitySet: 0
+  textureFormatSet: 0
+  ignorePngGamma: 0
+  applyGammaDecoding: 0
+  swizzle: 50462976
+  cookieLightType: 0
+  platformSettings:
+  - serializedVersion: 4
+    buildTarget: DefaultTexturePlatform
+    maxTextureSize: 2048
+    resizeAlgorithm: 0
+    textureFormat: -1
+    textureCompression: 0
+    compressionQuality: 50
+    crunchedCompression: 0
+    allowsAlphaSplitting: 0
+    overridden: 0
+    ignorePlatformSupport: 0
+    androidETC2FallbackOverride: 0
+    forceMaximumCompressionQuality_BC6H_BC7: 0
+  - serializedVersion: 4
+    buildTarget: Standalone
+    maxTextureSize: 2048
+    resizeAlgorithm: 0
+    textureFormat: -1
+    textureCompression: 1
+    compressionQuality: 50
+    crunchedCompression: 0
+    allowsAlphaSplitting: 0
+    overridden: 0
+    ignorePlatformSupport: 0
+    androidETC2FallbackOverride: 0
+    forceMaximumCompressionQuality_BC6H_BC7: 0
+  - serializedVersion: 4
+    buildTarget: Android
+    maxTextureSize: 2048
+    resizeAlgorithm: 0
+    textureFormat: -1
+    textureCompression: 1
+    compressionQuality: 50
+    crunchedCompression: 0
+    allowsAlphaSplitting: 0
+    overridden: 0
+    ignorePlatformSupport: 0
+    androidETC2FallbackOverride: 0
+    forceMaximumCompressionQuality_BC6H_BC7: 0
+  spriteSheet:
+    serializedVersion: 2
+    sprites:
+    - serializedVersion: 2
+      name: rig_test_rot_0
+      rect:
+        serializedVersion: 2
+        x: 0
+        y: 33
+        width: 10
+        height: 11
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: ee808423b5961dfe0800000000000000
+      internalID: -1166034988105725714
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: rig_test_rot_1
+      rect:
+        serializedVersion: 2
+        x: 9
+        y: 33
+        width: 7
+        height: 11
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: d5569661fabb0f1a0800000000000000
+      internalID: -6777711078522919587
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: rig_test_rot_2
+      rect:
+        serializedVersion: 2
+        x: 15
+        y: 33
+        width: 8
+        height: 10
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 0047c66b535e0c070800000000000000
+      internalID: 8124745746632963072
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: rig_test_rot_3
+      rect:
+        serializedVersion: 2
+        x: 15
+        y: 24
+        width: 7
+        height: 9
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: c227fca50dbdb08e0800000000000000
+      internalID: -1726044344243228116
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: rig_test_rot_4
+      rect:
+        serializedVersion: 2
+        x: 21
+        y: 24
+        width: 6
+        height: 9
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 4f956785d7acb81c0800000000000000
+      internalID: -4500280762922804748
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: rig_test_rot_5
+      rect:
+        serializedVersion: 2
+        x: 22
+        y: 33
+        width: 10
+        height: 9
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 77f005fc1cb1d5f90800000000000000
+      internalID: -6963378929624150153
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: rig_test_rot_6
+      rect:
+        serializedVersion: 2
+        x: 31
+        y: 33
+        width: 11
+        height: 8
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 3f2b05ed486da6340800000000000000
+      internalID: 4857931014226359027
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: rig_test_rot_7
+      rect:
+        serializedVersion: 2
+        x: 41
+        y: 33
+        width: 21
+        height: 6
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: a2881f03ce0108770800000000000000
+      internalID: 8610901094151850026
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: rig_test_rot_8
+      rect:
+        serializedVersion: 2
+        x: 47
+        y: 24
+        width: 6
+        height: 9
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: ca751eb2db59d83d0800000000000000
+      internalID: -3202739120273008724
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: rig_test_rot_9
+      rect:
+        serializedVersion: 2
+        x: 61
+        y: 33
+        width: 11
+        height: 7
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 5b170620f4d9f5940800000000000000
+      internalID: 5287117450224103861
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: rig_test_rot_10
+      rect:
+        serializedVersion: 2
+        x: 71
+        y: 33
+        width: 10
+        height: 8
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 1fce90be6e47fefa0800000000000000
+      internalID: -5769264062503719695
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: rig_test_rot_11
+      rect:
+        serializedVersion: 2
+        x: 80
+        y: 33
+        width: 9
+        height: 10
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 337b10ebf81f10b80800000000000000
+      internalID: -8430191427790457037
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: rig_test_rot_12
+      rect:
+        serializedVersion: 2
+        x: 88
+        y: 33
+        width: 8
+        height: 11
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: d8e8e5c9877bd5040800000000000000
+      internalID: 4638064919908880013
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: rig_test_rot_13
+      rect:
+        serializedVersion: 2
+        x: 95
+        y: 33
+        width: 10
+        height: 11
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 84e30fd1e66435880800000000000000
+      internalID: -8623471422721737144
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: rig_test_rot_14
+      rect:
+        serializedVersion: 2
+        x: 104
+        y: 33
+        width: 7
+        height: 11
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 3bfca29de281fa090800000000000000
+      internalID: -8021165821832540237
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: rig_test_rot_15
+      rect:
+        serializedVersion: 2
+        x: 110
+        y: 33
+        width: 8
+        height: 10
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: cc50649a15da8f680800000000000000
+      internalID: -8721030112159070772
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: rig_test_rot_16
+      rect:
+        serializedVersion: 2
+        x: 117
+        y: 33
+        width: 10
+        height: 9
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 92f76ebabe635d9f0800000000000000
+      internalID: -444388602396901591
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: rig_test_rot_17
+      rect:
+        serializedVersion: 2
+        x: 124
+        y: 24
+        width: 6
+        height: 9
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 3460a19ed8a926000800000000000000
+      internalID: 27754482009507395
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: rig_test_rot_18
+      rect:
+        serializedVersion: 2
+        x: 126
+        y: 33
+        width: 11
+        height: 8
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: c5971332c41d0e270800000000000000
+      internalID: 8277846240045136220
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: rig_test_rot_19
+      rect:
+        serializedVersion: 2
+        x: 136
+        y: 33
+        width: 21
+        height: 6
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: cdb0fed8e5508d730800000000000000
+      internalID: 4023972170721856476
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: rig_test_rot_20
+      rect:
+        serializedVersion: 2
+        x: 156
+        y: 33
+        width: 11
+        height: 7
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 6eddb4f7f8ad26c50800000000000000
+      internalID: 6657123509057871334
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: rig_test_rot_21
+      rect:
+        serializedVersion: 2
+        x: 166
+        y: 33
+        width: 10
+        height: 8
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: bc0fd81ddf2ac9140800000000000000
+      internalID: 4727832919858344139
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: rig_test_rot_22
+      rect:
+        serializedVersion: 2
+        x: 173
+        y: 24
+        width: 12
+        height: 10
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 764d83f9d5b2e1d30800000000000000
+      internalID: 4404005166718178407
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: rig_test_rot_23
+      rect:
+        serializedVersion: 2
+        x: 175
+        y: 33
+        width: 9
+        height: 10
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: f31df2d9871547e60800000000000000
+      internalID: 7959076019945591103
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: rig_test_rot_24
+      rect:
+        serializedVersion: 2
+        x: 183
+        y: 33
+        width: 8
+        height: 11
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: e332076b565ca74d0800000000000000
+      internalID: -3135977149866958018
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: rig_test_rot_25
+      rect:
+        serializedVersion: 2
+        x: 184
+        y: 24
+        width: 6
+        height: 10
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: a48d16e019dd04320800000000000000
+      internalID: 2540273804918249546
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: rig_test_rot_26
+      rect:
+        serializedVersion: 2
+        x: 189
+        y: 24
+        width: 7
+        height: 9
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 27c154dcc044c6dc0800000000000000
+      internalID: -3644463176675419022
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: rig_test_rot_27
+      rect:
+        serializedVersion: 2
+        x: 190
+        y: 33
+        width: 6
+        height: 11
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 78418a972f156ef20800000000000000
+      internalID: 3451536266291057799
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: rig_test_rot_28
+      rect:
+        serializedVersion: 2
+        x: 195
+        y: 24
+        width: 8
+        height: 9
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: d024d3d95f6871b60800000000000000
+      internalID: 7716784875985781261
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: rig_test_rot_29
+      rect:
+        serializedVersion: 2
+        x: 202
+        y: 24
+        width: 9
+        height: 9
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 5a375843a4da364f0800000000000000
+      internalID: -836634571540434011
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: rig_test_rot_30
+      rect:
+        serializedVersion: 2
+        x: 247
+        y: 24
+        width: 9
+        height: 9
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 0ab905fbc2d7e4d70800000000000000
+      internalID: 9029291934066187168
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: rig_test_rot_31
+      rect:
+        serializedVersion: 2
+        x: 255
+        y: 24
+        width: 8
+        height: 9
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: c5f098eaf558393e0800000000000000
+      internalID: -2048146759526838436
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: rig_test_rot_32
+      rect:
+        serializedVersion: 2
+        x: 262
+        y: 24
+        width: 11
+        height: 10
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 6272ad1f3433a7c10800000000000000
+      internalID: 2052008947134113574
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: rig_test_rot_33
+      rect:
+        serializedVersion: 2
+        x: 272
+        y: 24
+        width: 6
+        height: 10
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 1659849c1e597ee40800000000000000
+      internalID: 5685677851555698017
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: rig_test_rot_34
+      rect:
+        serializedVersion: 2
+        x: 277
+        y: 24
+        width: 7
+        height: 9
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: dbe84c880cd8d7bb0800000000000000
+      internalID: -4936633758460375363
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: rig_test_rot_35
+      rect:
+        serializedVersion: 2
+        x: 283
+        y: 24
+        width: 8
+        height: 9
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 2b82576276fccf7d0800000000000000
+      internalID: -2883201619490166606
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: rig_test_rot_36
+      rect:
+        serializedVersion: 2
+        x: 290
+        y: 24
+        width: 9
+        height: 9
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 77f0655c4600b0210800000000000000
+      internalID: 1300133350234001271
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: rig_test_rot_37
+      rect:
+        serializedVersion: 2
+        x: 335
+        y: 24
+        width: 9
+        height: 9
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: c31cfb3cd804c9980800000000000000
+      internalID: -8530872616527871684
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: rig_test_rot_38
+      rect:
+        serializedVersion: 2
+        x: 343
+        y: 24
+        width: 8
+        height: 9
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 01c66d50db90359d0800000000000000
+      internalID: -2786873036960797680
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: rig_test_rot_39
+      rect:
+        serializedVersion: 2
+        x: 350
+        y: 24
+        width: 7
+        height: 10
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 6e2754e46f560cad0800000000000000
+      internalID: -2684033269363281178
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: rig_test_rot_40
+      rect:
+        serializedVersion: 2
+        x: 414
+        y: 24
+        width: 6
+        height: 9
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 9913705a90cdae7e0800000000000000
+      internalID: -1735332772416376423
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: rig_test_rot_41
+      rect:
+        serializedVersion: 2
+        x: 419
+        y: 24
+        width: 11
+        height: 9
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 31aeffdae9049da40800000000000000
+      internalID: 5393413079021120019
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: rig_test_rot_42
+      rect:
+        serializedVersion: 2
+        x: 429
+        y: 24
+        width: 6
+        height: 9
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: bfe26cbab6b35fc80800000000000000
+      internalID: -8289654205476098309
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: rig_test_rot_43
+      rect:
+        serializedVersion: 2
+        x: 492
+        y: 24
+        width: 6
+        height: 9
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 9e98259ef26006880800000000000000
+      internalID: -8619882883939399191
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: rig_test_rot_44
+      rect:
+        serializedVersion: 2
+        x: 494
+        y: 14
+        width: 17
+        height: 19
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 496d772cb45d8a190800000000000000
+      internalID: -7950870620760713580
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: rig_test_rot_45
+      rect:
+        serializedVersion: 2
+        x: 0
+        y: 24
+        width: 9
+        height: 7
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 19e70e73686d30aa0800000000000000
+      internalID: -6195872790380249455
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: rig_test_rot_46
+      rect:
+        serializedVersion: 2
+        x: 8
+        y: 24
+        width: 8
+        height: 8
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 749f5b16205532e60800000000000000
+      internalID: 7936280437074557255
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: rig_test_rot_47
+      rect:
+        serializedVersion: 2
+        x: 26
+        y: 24
+        width: 7
+        height: 8
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 84e1160fabdcdbc00800000000000000
+      internalID: 918116101833956936
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: rig_test_rot_48
+      rect:
+        serializedVersion: 2
+        x: 32
+        y: 24
+        width: 6
+        height: 8
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: ec29b919f9bcbeff0800000000000000
+      internalID: -5687088307793202
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: rig_test_rot_49
+      rect:
+        serializedVersion: 2
+        x: 37
+        y: 24
+        width: 6
+        height: 8
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: b380306f373809ea0800000000000000
+      internalID: -5868045780391884741
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: rig_test_rot_50
+      rect:
+        serializedVersion: 2
+        x: 42
+        y: 24
+        width: 6
+        height: 8
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: e31d55ecb17809090800000000000000
+      internalID: -8029769582105996994
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: rig_test_rot_51
+      rect:
+        serializedVersion: 2
+        x: 43
+        y: 14
+        width: 11
+        height: 10
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 9e04cd0b4ec5d1aa0800000000000000
+      internalID: -6188688175647670039
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: rig_test_rot_52
+      rect:
+        serializedVersion: 2
+        x: 52
+        y: 24
+        width: 7
+        height: 8
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: d672625d9e3285550800000000000000
+      internalID: 6149704778384811885
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: rig_test_rot_53
+      rect:
+        serializedVersion: 2
+        x: 53
+        y: 14
+        width: 10
+        height: 10
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 9a49e9cfe074bb700800000000000000
+      internalID: 557117108603753641
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: rig_test_rot_54
+      rect:
+        serializedVersion: 2
+        x: 58
+        y: 24
+        width: 8
+        height: 7
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 6dbf5ada3bb6f63e0800000000000000
+      internalID: -2058308085228373034
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: rig_test_rot_55
+      rect:
+        serializedVersion: 2
+        x: 65
+        y: 24
+        width: 9
+        height: 7
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 375c1ee0df9c16360800000000000000
+      internalID: 7161226971209385331
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: rig_test_rot_56
+      rect:
+        serializedVersion: 2
+        x: 73
+        y: 24
+        width: 9
+        height: 6
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 30f04d7dd70acc860800000000000000
+      internalID: 7551587137545834243
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: rig_test_rot_57
+      rect:
+        serializedVersion: 2
+        x: 81
+        y: 24
+        width: 9
+        height: 6
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: da036ce7aa67f0cc0800000000000000
+      internalID: -3742642290678157139
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: rig_test_rot_58
+      rect:
+        serializedVersion: 2
+        x: 89
+        y: 24
+        width: 8
+        height: 7
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 1b05978a5a8da68e0800000000000000
+      internalID: -1699307703371214671
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: rig_test_rot_59
+      rect:
+        serializedVersion: 2
+        x: 96
+        y: 24
+        width: 8
+        height: 8
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 562df1872b2bace20800000000000000
+      internalID: 3371703750629511781
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: rig_test_rot_60
+      rect:
+        serializedVersion: 2
+        x: 103
+        y: 24
+        width: 7
+        height: 8
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 382710c1378e82d00800000000000000
+      internalID: 948263302650229379
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: rig_test_rot_61
+      rect:
+        serializedVersion: 2
+        x: 109
+        y: 24
+        width: 6
+        height: 8
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: c43b2ba39d7b6fb70800000000000000
+      internalID: 8932529054556533580
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: rig_test_rot_62
+      rect:
+        serializedVersion: 2
+        x: 114
+        y: 24
+        width: 6
+        height: 8
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: c761eaeb0a10483d0800000000000000
+      internalID: -3205435244875475332
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: rig_test_rot_63
+      rect:
+        serializedVersion: 2
+        x: 119
+        y: 24
+        width: 6
+        height: 8
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 6d414d0e17da18220800000000000000
+      internalID: 2486459173900129494
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: rig_test_rot_64
+      rect:
+        serializedVersion: 2
+        x: 126
+        y: 14
+        width: 11
+        height: 10
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: c3f4e9fb7f9408400800000000000000
+      internalID: 324340501591248700
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: rig_test_rot_65
+      rect:
+        serializedVersion: 2
+        x: 129
+        y: 24
+        width: 7
+        height: 8
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: cb9b2189b27558f20800000000000000
+      internalID: 3424238936431704508
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: rig_test_rot_66
+      rect:
+        serializedVersion: 2
+        x: 135
+        y: 24
+        width: 8
+        height: 7
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: ed92d806ed57d7370800000000000000
+      internalID: 8321937284413598174
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: rig_test_rot_67
+      rect:
+        serializedVersion: 2
+        x: 136
+        y: 14
+        width: 10
+        height: 10
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 399c6a71b9c4fb980800000000000000
+      internalID: -8521007740961240685
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: rig_test_rot_68
+      rect:
+        serializedVersion: 2
+        x: 142
+        y: 24
+        width: 9
+        height: 7
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 1a8ef11b8d1090b80800000000000000
+      internalID: -8428203197450950495
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: rig_test_rot_69
+      rect:
+        serializedVersion: 2
+        x: 150
+        y: 24
+        width: 9
+        height: 6
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 0faee3e46b1ec2300800000000000000
+      internalID: 228805854202096368
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: rig_test_rot_70
+      rect:
+        serializedVersion: 2
+        x: 158
+        y: 24
+        width: 9
+        height: 6
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 6e5634dea5ca8f200800000000000000
+      internalID: 214110488827749862
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: rig_test_rot_71
+      rect:
+        serializedVersion: 2
+        x: 166
+        y: 24
+        width: 8
+        height: 7
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: dfda965da286fd510800000000000000
+      internalID: 1576092927781350909
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: rig_test_rot_72
+      rect:
+        serializedVersion: 2
+        x: 210
+        y: 24
+        width: 19
+        height: 7
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 8354a33a36c3f0360800000000000000
+      internalID: 7137990333043459384
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: rig_test_rot_73
+      rect:
+        serializedVersion: 2
+        x: 228
+        y: 24
+        width: 11
+        height: 6
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 007afec960cfc2400800000000000000
+      internalID: 300892380459935488
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: rig_test_rot_74
+      rect:
+        serializedVersion: 2
+        x: 238
+        y: 24
+        width: 10
+        height: 8
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 5fc4e479ec089eba0800000000000000
+      internalID: -6059170198860182283
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: rig_test_rot_75
+      rect:
+        serializedVersion: 2
+        x: 255
+        y: 14
+        width: 7
+        height: 10
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: ccd6a31b6d540e4b0800000000000000
+      internalID: -5413249963700621876
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: rig_test_rot_76
+      rect:
+        serializedVersion: 2
+        x: 261
+        y: 14
+        width: 10
+        height: 11
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: ac1265cd26aa18b30800000000000000
+      internalID: 4287895661813572042
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: rig_test_rot_77
+      rect:
+        serializedVersion: 2
+        x: 270
+        y: 14
+        width: 7
+        height: 10
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 558bb597382ae7b90800000000000000
+      internalID: -7242172465204709291
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: rig_test_rot_78
+      rect:
+        serializedVersion: 2
+        x: 276
+        y: 14
+        width: 8
+        height: 10
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 321d122e6069759e0800000000000000
+      internalID: -1632671383590678237
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: rig_test_rot_79
+      rect:
+        serializedVersion: 2
+        x: 298
+        y: 24
+        width: 19
+        height: 7
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 8dace290fee6a65a0800000000000000
+      internalID: -6527282736989812008
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: rig_test_rot_80
+      rect:
+        serializedVersion: 2
+        x: 316
+        y: 24
+        width: 11
+        height: 6
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: ef4bdcdd35b163440800000000000000
+      internalID: 4915146090338956542
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: rig_test_rot_81
+      rect:
+        serializedVersion: 2
+        x: 326
+        y: 24
+        width: 10
+        height: 8
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 6035d599842dd40a0800000000000000
+      internalID: -6895624245181852922
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: rig_test_rot_82
+      rect:
+        serializedVersion: 2
+        x: 344
+        y: 14
+        width: 7
+        height: 10
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: fec25460bc7e14b60800000000000000
+      internalID: 7728713294714055919
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: rig_test_rot_83
+      rect:
+        serializedVersion: 2
+        x: 350
+        y: 14
+        width: 10
+        height: 11
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 213e0b33b3a4f5db0800000000000000
+      internalID: -4801037059622903022
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: rig_test_rot_84
+      rect:
+        serializedVersion: 2
+        x: 356
+        y: 24
+        width: 7
+        height: 8
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 80751257cb81e81e0800000000000000
+      internalID: -2193788770784815352
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: rig_test_rot_85
+      rect:
+        serializedVersion: 2
+        x: 359
+        y: 14
+        width: 7
+        height: 10
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 6a0ae837e9b390d50800000000000000
+      internalID: 6703955072047292582
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: rig_test_rot_86
+      rect:
+        serializedVersion: 2
+        x: 362
+        y: 24
+        width: 8
+        height: 7
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: e4ad59fac4784afe0800000000000000
+      internalID: -1178668439031129522
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: rig_test_rot_87
+      rect:
+        serializedVersion: 2
+        x: 365
+        y: 14
+        width: 8
+        height: 10
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 23bd593c523ee3840800000000000000
+      internalID: 5205847970621545266
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: rig_test_rot_88
+      rect:
+        serializedVersion: 2
+        x: 369
+        y: 24
+        width: 9
+        height: 6
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: b40014382646ac690800000000000000
+      internalID: -7581136648453160885
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: rig_test_rot_89
+      rect:
+        serializedVersion: 2
+        x: 377
+        y: 24
+        width: 17
+        height: 7
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 5c0892f4a1317efa0800000000000000
+      internalID: -5771623393733803835
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: rig_test_rot_90
+      rect:
+        serializedVersion: 2
+        x: 393
+        y: 24
+        width: 9
+        height: 6
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 220efea844c1b5620800000000000000
+      internalID: 2763833877036261410
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: rig_test_rot_91
+      rect:
+        serializedVersion: 2
+        x: 401
+        y: 24
+        width: 8
+        height: 7
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: fe6baa606bd51f5d0800000000000000
+      internalID: -3030538037866350865
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: rig_test_rot_92
+      rect:
+        serializedVersion: 2
+        x: 408
+        y: 24
+        width: 7
+        height: 8
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 5fb80afa2ed5ac5d0800000000000000
+      internalID: -3041515370144822283
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: rig_test_rot_93
+      rect:
+        serializedVersion: 2
+        x: 434
+        y: 24
+        width: 7
+        height: 8
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 3515e51daf77226c0800000000000000
+      internalID: -4169638385853509293
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: rig_test_rot_94
+      rect:
+        serializedVersion: 2
+        x: 440
+        y: 24
+        width: 8
+        height: 7
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 811891accb565ef40800000000000000
+      internalID: 5757119560181973272
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: rig_test_rot_95
+      rect:
+        serializedVersion: 2
+        x: 447
+        y: 24
+        width: 9
+        height: 6
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: d030df7c1f65aec00800000000000000
+      internalID: 930651869447783181
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: rig_test_rot_96
+      rect:
+        serializedVersion: 2
+        x: 455
+        y: 24
+        width: 17
+        height: 7
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: ace6a014ea2d845c0800000000000000
+      internalID: -4230900204057235766
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: rig_test_rot_97
+      rect:
+        serializedVersion: 2
+        x: 471
+        y: 24
+        width: 9
+        height: 6
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 54685c44e595da700800000000000000
+      internalID: 553196590652032581
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: rig_test_rot_98
+      rect:
+        serializedVersion: 2
+        x: 479
+        y: 24
+        width: 8
+        height: 7
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 88e34be70ac90e4f0800000000000000
+      internalID: -801468520537506168
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: rig_test_rot_99
+      rect:
+        serializedVersion: 2
+        x: 486
+        y: 24
+        width: 7
+        height: 8
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: a4e7e73c9918d4450800000000000000
+      internalID: 6074653969802493514
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: rig_test_rot_100
+      rect:
+        serializedVersion: 2
+        x: 0
+        y: 14
+        width: 7
+        height: 6
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 15d2fa812ae3cb8a0800000000000000
+      internalID: -6288082113796297391
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: rig_test_rot_101
+      rect:
+        serializedVersion: 2
+        x: 0
+        y: 0
+        width: 7
+        height: 14
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 44c41b9bf6ead6f60800000000000000
+      internalID: 8029265505551469636
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: rig_test_rot_102
+      rect:
+        serializedVersion: 2
+        x: 6
+        y: 14
+        width: 7
+        height: 6
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: d509f214ff2d49740800000000000000
+      internalID: 5157979466998190173
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: rig_test_rot_103
+      rect:
+        serializedVersion: 2
+        x: 6
+        y: 0
+        width: 9
+        height: 14
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 5f912d27b434b5d10800000000000000
+      internalID: 2115358441308559861
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: rig_test_rot_104
+      rect:
+        serializedVersion: 2
+        x: 12
+        y: 14
+        width: 7
+        height: 6
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 850e2edbfa6fddeb0800000000000000
+      internalID: -4693324001984716712
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: rig_test_rot_105
+      rect:
+        serializedVersion: 2
+        x: 18
+        y: 14
+        width: 7
+        height: 6
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 42a8ddc6ee58c1330800000000000000
+      internalID: 3682965854357391908
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: rig_test_rot_106
+      rect:
+        serializedVersion: 2
+        x: 24
+        y: 14
+        width: 7
+        height: 7
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: e658b34c3f4a16150800000000000000
+      internalID: 5864149556689339758
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: rig_test_rot_107
+      rect:
+        serializedVersion: 2
+        x: 30
+        y: 14
+        width: 7
+        height: 7
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: b2654a6ad05360020800000000000000
+      internalID: 2307590191820592683
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: rig_test_rot_108
+      rect:
+        serializedVersion: 2
+        x: 36
+        y: 14
+        width: 8
+        height: 9
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: caea5d0440d98dc60800000000000000
+      internalID: 7843191392658894508
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: rig_test_rot_109
+      rect:
+        serializedVersion: 2
+        x: 62
+        y: 14
+        width: 8
+        height: 9
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: ac4ede619921a2130800000000000000
+      internalID: 3542664505604302026
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: rig_test_rot_110
+      rect:
+        serializedVersion: 2
+        x: 69
+        y: 14
+        width: 9
+        height: 8
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 25f66ee239da05320800000000000000
+      internalID: 2544724637122981714
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: rig_test_rot_111
+      rect:
+        serializedVersion: 2
+        x: 77
+        y: 14
+        width: 9
+        height: 7
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: ff8e5e6df1dd7c080800000000000000
+      internalID: -9167115387670238977
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: rig_test_rot_112
+      rect:
+        serializedVersion: 2
+        x: 85
+        y: 14
+        width: 18
+        height: 6
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 0abea8f1e0b8797f0800000000000000
+      internalID: -605862732083041376
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: rig_test_rot_113
+      rect:
+        serializedVersion: 2
+        x: 102
+        y: 14
+        width: 10
+        height: 7
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: d4ad3a7dd3f9341f0800000000000000
+      internalID: -1061829999169643955
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: rig_test_rot_114
+      rect:
+        serializedVersion: 2
+        x: 111
+        y: 14
+        width: 9
+        height: 8
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 8dc9f82e0b1505890800000000000000
+      internalID: -7471381961650496296
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: rig_test_rot_115
+      rect:
+        serializedVersion: 2
+        x: 111
+        y: 0
+        width: 8
+        height: 15
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: b5717354687c94f40800000000000000
+      internalID: 5713316981796968283
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: rig_test_rot_116
+      rect:
+        serializedVersion: 2
+        x: 118
+        y: 0
+        width: 7
+        height: 14
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 06c8b0457dc129070800000000000000
+      internalID: 8111577590001273952
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: rig_test_rot_117
+      rect:
+        serializedVersion: 2
+        x: 119
+        y: 14
+        width: 8
+        height: 9
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 2b853d9830f7343e0800000000000000
+      internalID: -2070671750486337358
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: rig_test_rot_118
+      rect:
+        serializedVersion: 2
+        x: 124
+        y: 0
+        width: 7
+        height: 14
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 6e616aaa94fadfd80800000000000000
+      internalID: -8215217414323431706
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: rig_test_rot_119
+      rect:
+        serializedVersion: 2
+        x: 130
+        y: 0
+        width: 9
+        height: 14
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 3f31df9c8edc44820800000000000000
+      internalID: 2901670459638354931
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: rig_test_rot_120
+      rect:
+        serializedVersion: 2
+        x: 145
+        y: 14
+        width: 8
+        height: 9
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: f27a8beae838cccb0800000000000000
+      internalID: -4842350850490194129
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: rig_test_rot_121
+      rect:
+        serializedVersion: 2
+        x: 152
+        y: 14
+        width: 9
+        height: 8
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 0ab5377b93c0845d0800000000000000
+      internalID: -3078196903277274208
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: rig_test_rot_122
+      rect:
+        serializedVersion: 2
+        x: 160
+        y: 14
+        width: 9
+        height: 7
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 79987520bd0f02d00800000000000000
+      internalID: 946020745175599511
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: rig_test_rot_123
+      rect:
+        serializedVersion: 2
+        x: 168
+        y: 14
+        width: 18
+        height: 6
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 1fa63ba64d02391a0800000000000000
+      internalID: -6804058515331388687
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: rig_test_rot_124
+      rect:
+        serializedVersion: 2
+        x: 185
+        y: 14
+        width: 10
+        height: 7
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 9499e53fabea45b40800000000000000
+      internalID: 5428155568858503497
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: rig_test_rot_125
+      rect:
+        serializedVersion: 2
+        x: 194
+        y: 14
+        width: 9
+        height: 8
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 63e73683d2adaba50800000000000000
+      internalID: 6537777696836124214
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: rig_test_rot_126
+      rect:
+        serializedVersion: 2
+        x: 202
+        y: 14
+        width: 10
+        height: 7
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 3a82f1489de001fa0800000000000000
+      internalID: -5832145190057465693
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: rig_test_rot_127
+      rect:
+        serializedVersion: 2
+        x: 211
+        y: 14
+        width: 20
+        height: 6
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 08b20d51125734ca0800000000000000
+      internalID: -6033850290785997952
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: rig_test_rot_128
+      rect:
+        serializedVersion: 2
+        x: 230
+        y: 14
+        width: 10
+        height: 7
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 24b37a952df70b8b0800000000000000
+      internalID: -5138466633405744318
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: rig_test_rot_129
+      rect:
+        serializedVersion: 2
+        x: 235
+        y: 0
+        width: 8
+        height: 15
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 36cdd29096256ddb0800000000000000
+      internalID: -4767532544446047133
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: rig_test_rot_130
+      rect:
+        serializedVersion: 2
+        x: 239
+        y: 14
+        width: 10
+        height: 8
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 3519809d3378a45a0800000000000000
+      internalID: -6536263252420554413
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: rig_test_rot_131
+      rect:
+        serializedVersion: 2
+        x: 242
+        y: 0
+        width: 7
+        height: 14
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: e70e377d8839363a0800000000000000
+      internalID: -6673328006893412226
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: rig_test_rot_132
+      rect:
+        serializedVersion: 2
+        x: 248
+        y: 14
+        width: 8
+        height: 9
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 7db0d9a1817c47620800000000000000
+      internalID: 2771058577079339991
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: rig_test_rot_133
+      rect:
+        serializedVersion: 2
+        x: 283
+        y: 14
+        width: 9
+        height: 8
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 7a2f5a84c0de89e20800000000000000
+      internalID: 3357694159218930343
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: rig_test_rot_134
+      rect:
+        serializedVersion: 2
+        x: 291
+        y: 14
+        width: 10
+        height: 7
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 56d8d9a1c98c6f8b0800000000000000
+      internalID: -5118683353673003675
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: rig_test_rot_135
+      rect:
+        serializedVersion: 2
+        x: 300
+        y: 14
+        width: 20
+        height: 6
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 2e0649afe37dae3d0800000000000000
+      internalID: -3176489921664491294
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: rig_test_rot_136
+      rect:
+        serializedVersion: 2
+        x: 319
+        y: 14
+        width: 10
+        height: 7
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 124e3e25a65112660800000000000000
+      internalID: 7359186812501484577
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: rig_test_rot_137
+      rect:
+        serializedVersion: 2
+        x: 328
+        y: 14
+        width: 10
+        height: 8
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: bcc78d799ef0fac00800000000000000
+      internalID: 913966745328843979
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: rig_test_rot_138
+      rect:
+        serializedVersion: 2
+        x: 337
+        y: 14
+        width: 8
+        height: 9
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: d990a74350ba56290800000000000000
+      internalID: -7897718332680697443
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: rig_test_rot_139
+      rect:
+        serializedVersion: 2
+        x: 372
+        y: 14
+        width: 12
+        height: 9
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 51083f968925816b0800000000000000
+      internalID: -5325415744799539179
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: rig_test_rot_140
+      rect:
+        serializedVersion: 2
+        x: 383
+        y: 14
+        width: 11
+        height: 9
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: b8db4978040452b00800000000000000
+      internalID: 803118754452258187
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: rig_test_rot_141
+      rect:
+        serializedVersion: 2
+        x: 393
+        y: 14
+        width: 8
+        height: 8
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 1bd17e143a6a78230800000000000000
+      internalID: 3641062043867880881
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: rig_test_rot_142
+      rect:
+        serializedVersion: 2
+        x: 400
+        y: 14
+        width: 9
+        height: 7
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 3b655d6cf98d0bec0800000000000000
+      internalID: -3553101925248051533
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: rig_test_rot_143
+      rect:
+        serializedVersion: 2
+        x: 408
+        y: 14
+        width: 17
+        height: 6
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: fe2e08d9ebf703e80800000000000000
+      internalID: -8200914464778689809
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: rig_test_rot_144
+      rect:
+        serializedVersion: 2
+        x: 424
+        y: 14
+        width: 17
+        height: 7
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 18135f53c5f28a770800000000000000
+      internalID: 8622193559689572737
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: rig_test_rot_145
+      rect:
+        serializedVersion: 2
+        x: 440
+        y: 14
+        width: 8
+        height: 8
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 4b3f290b53e23aa00800000000000000
+      internalID: 766507169713681332
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: rig_test_rot_146
+      rect:
+        serializedVersion: 2
+        x: 447
+        y: 14
+        width: 7
+        height: 9
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: bbf9090f8548a6060800000000000000
+      internalID: 6947510892700409787
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: rig_test_rot_147
+      rect:
+        serializedVersion: 2
+        x: 453
+        y: 14
+        width: 9
+        height: 9
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 13688efcc5af866e0800000000000000
+      internalID: -1843948770876160463
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: rig_test_rot_148
+      rect:
+        serializedVersion: 2
+        x: 461
+        y: 14
+        width: 11
+        height: 9
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 79c4345d031932260800000000000000
+      internalID: 7071655478824225943
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: rig_test_rot_149
+      rect:
+        serializedVersion: 2
+        x: 471
+        y: 14
+        width: 8
+        height: 8
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 40761638d43782d30800000000000000
+      internalID: 4406899012135905028
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: rig_test_rot_150
+      rect:
+        serializedVersion: 2
+        x: 478
+        y: 14
+        width: 9
+        height: 7
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 58a39536657fc0b40800000000000000
+      internalID: 5407969202971163269
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: rig_test_rot_151
+      rect:
+        serializedVersion: 2
+        x: 486
+        y: 14
+        width: 9
+        height: 6
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: ba1079efc6f9f7570800000000000000
+      internalID: 8466661114956415403
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: rig_test_rot_152
+      rect:
+        serializedVersion: 2
+        x: 14
+        y: 0
+        width: 12
+        height: 12
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 2e84976ed94625580800000000000000
+      internalID: -8839892489235511070
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: rig_test_rot_153
+      rect:
+        serializedVersion: 2
+        x: 25
+        y: 0
+        width: 13
+        height: 11
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 914d56231da5d6870800000000000000
+      internalID: 8677691911553012761
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: rig_test_rot_154
+      rect:
+        serializedVersion: 2
+        x: 37
+        y: 0
+        width: 15
+        height: 8
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: cda94e45481ddaf20800000000000000
+      internalID: 3435632457043712732
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: rig_test_rot_155
+      rect:
+        serializedVersion: 2
+        x: 51
+        y: 0
+        width: 14
+        height: 7
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 24c82bca71111b910800000000000000
+      internalID: 1851279715205286978
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: rig_test_rot_156
+      rect:
+        serializedVersion: 2
+        x: 64
+        y: 0
+        width: 14
+        height: 7
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 92d765f25318a06f0800000000000000
+      internalID: -717619125184725719
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: rig_test_rot_157
+      rect:
+        serializedVersion: 2
+        x: 77
+        y: 0
+        width: 14
+        height: 9
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: ebc930c9d785c4930800000000000000
+      internalID: 4128772254903540926
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: rig_test_rot_158
+      rect:
+        serializedVersion: 2
+        x: 90
+        y: 0
+        width: 12
+        height: 12
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: ce25d6eafb588b730800000000000000
+      internalID: 4015106126112445164
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: rig_test_rot_159
+      rect:
+        serializedVersion: 2
+        x: 101
+        y: 0
+        width: 11
+        height: 13
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: cafd7b9b76d0581a0800000000000000
+      internalID: -6808020522552008788
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: rig_test_rot_160
+      rect:
+        serializedVersion: 2
+        x: 138
+        y: 0
+        width: 12
+        height: 12
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: d7323b34d498d1e70800000000000000
+      internalID: 9087570588044829565
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: rig_test_rot_161
+      rect:
+        serializedVersion: 2
+        x: 149
+        y: 0
+        width: 13
+        height: 11
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: eda77d0b524c4b9b0800000000000000
+      internalID: -5065208014725219618
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: rig_test_rot_162
+      rect:
+        serializedVersion: 2
+        x: 161
+        y: 0
+        width: 15
+        height: 8
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: f0d2c90a4dfd61780800000000000000
+      internalID: -8712530324780995313
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: rig_test_rot_163
+      rect:
+        serializedVersion: 2
+        x: 175
+        y: 0
+        width: 14
+        height: 7
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: a6ee918b137920bd0800000000000000
+      internalID: -2665401789652013462
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: rig_test_rot_164
+      rect:
+        serializedVersion: 2
+        x: 188
+        y: 0
+        width: 14
+        height: 7
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 1ae960cbb0bbc6af0800000000000000
+      internalID: -401740607669231967
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: rig_test_rot_165
+      rect:
+        serializedVersion: 2
+        x: 201
+        y: 0
+        width: 14
+        height: 9
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 9524b169f9909ae00800000000000000
+      internalID: 1056386168617910873
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: rig_test_rot_166
+      rect:
+        serializedVersion: 2
+        x: 214
+        y: 0
+        width: 12
+        height: 12
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 80e03ce27608742d0800000000000000
+      internalID: -3294523421743706616
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: rig_test_rot_167
+      rect:
+        serializedVersion: 2
+        x: 225
+        y: 0
+        width: 11
+        height: 13
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 7831bd53e002bf9a0800000000000000
+      internalID: -6198325216740174969
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: rig_test_rot_168
+      rect:
+        serializedVersion: 2
+        x: 248
+        y: 0
+        width: 7
+        height: 7
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 16757c8a0f154c290800000000000000
+      internalID: -7871076154671147167
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: rig_test_rot_169
+      rect:
+        serializedVersion: 2
+        x: 254
+        y: 0
+        width: 8
+        height: 8
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 45b5f700d5335c100800000000000000
+      internalID: 127564638983248724
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: rig_test_rot_170
+      rect:
+        serializedVersion: 2
+        x: 261
+        y: 0
+        width: 8
+        height: 8
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 813fe9d4287ab3540800000000000000
+      internalID: 4988765190332805912
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: rig_test_rot_171
+      rect:
+        serializedVersion: 2
+        x: 268
+        y: 0
+        width: 8
+        height: 8
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 769f070a369f0b130800000000000000
+      internalID: 3580635910048381287
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: rig_test_rot_172
+      rect:
+        serializedVersion: 2
+        x: 275
+        y: 0
+        width: 8
+        height: 8
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 9066e3ea975af5db0800000000000000
+      internalID: -4800936735720708599
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: rig_test_rot_173
+      rect:
+        serializedVersion: 2
+        x: 282
+        y: 0
+        width: 8
+        height: 7
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: a87ca1bb6325f8b60800000000000000
+      internalID: 7750503878748718986
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: rig_test_rot_174
+      rect:
+        serializedVersion: 2
+        x: 289
+        y: 0
+        width: 7
+        height: 7
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 9205eac0d9e9f65e0800000000000000
+      internalID: -1914136919249366999
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: rig_test_rot_175
+      rect:
+        serializedVersion: 2
+        x: 295
+        y: 0
+        width: 7
+        height: 7
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 66e2cbcaa8ca854c0800000000000000
+      internalID: -4298496132721660314
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: rig_test_rot_176
+      rect:
+        serializedVersion: 2
+        x: 301
+        y: 0
+        width: 8
+        height: 8
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 9f061a41678137bb0800000000000000
+      internalID: -4939577470863974151
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: rig_test_rot_177
+      rect:
+        serializedVersion: 2
+        x: 308
+        y: 0
+        width: 8
+        height: 8
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 650d0fdaeb5487530800000000000000
+      internalID: 3852906166479802454
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: rig_test_rot_178
+      rect:
+        serializedVersion: 2
+        x: 315
+        y: 0
+        width: 8
+        height: 8
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 0c95926474c059280800000000000000
+      internalID: -9037303576989705792
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: rig_test_rot_179
+      rect:
+        serializedVersion: 2
+        x: 322
+        y: 0
+        width: 8
+        height: 7
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 7c15285e4336c2170800000000000000
+      internalID: 8155002104101097927
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: rig_test_rot_180
+      rect:
+        serializedVersion: 2
+        x: 329
+        y: 0
+        width: 7
+        height: 7
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 7042562123645b8d0800000000000000
+      internalID: -2831279609861561337
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: rig_test_rot_181
+      rect:
+        serializedVersion: 2
+        x: 335
+        y: 0
+        width: 8
+        height: 8
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: efa076b54a0ceeeb0800000000000000
+      internalID: -4688598349905458434
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: rig_test_rot_182
+      rect:
+        serializedVersion: 2
+        x: 342
+        y: 0
+        width: 8
+        height: 8
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 471bc92792e0d4090800000000000000
+      internalID: -8048761387861888652
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: rig_test_rot_183
+      rect:
+        serializedVersion: 2
+        x: 349
+        y: 0
+        width: 8
+        height: 8
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: d47c0d26a1bb66490800000000000000
+      internalID: -7753303986470336691
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: rig_test_rot_184
+      rect:
+        serializedVersion: 2
+        x: 356
+        y: 0
+        width: 8
+        height: 8
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 9cc36eddeb0b6e540800000000000000
+      internalID: 5036907567073606857
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: rig_test_rot_185
+      rect:
+        serializedVersion: 2
+        x: 363
+        y: 0
+        width: 8
+        height: 7
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: a941695dd22db9920800000000000000
+      internalID: 2998221071243941018
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: rig_test_rot_186
+      rect:
+        serializedVersion: 2
+        x: 370
+        y: 0
+        width: 7
+        height: 7
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 5083745fa0addd1f0800000000000000
+      internalID: -1018418200116250619
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: rig_test_rot_187
+      rect:
+        serializedVersion: 2
+        x: 376
+        y: 0
+        width: 7
+        height: 7
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: eb304bb3c90b5b570800000000000000
+      internalID: 8481879658285237182
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: rig_test_rot_188
+      rect:
+        serializedVersion: 2
+        x: 382
+        y: 0
+        width: 8
+        height: 8
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 9192b9fefc9d8a640800000000000000
+      internalID: 5091558865843726617
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: rig_test_rot_189
+      rect:
+        serializedVersion: 2
+        x: 389
+        y: 0
+        width: 8
+        height: 8
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 32113f5a7ff30f400800000000000000
+      internalID: 355854703435911459
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: rig_test_rot_190
+      rect:
+        serializedVersion: 2
+        x: 396
+        y: 0
+        width: 8
+        height: 8
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 55aec4cdbc02a2f50800000000000000
+      internalID: 6857329442571479637
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: rig_test_rot_191
+      rect:
+        serializedVersion: 2
+        x: 403
+        y: 0
+        width: 8
+        height: 7
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 01c7b6b36482e4510800000000000000
+      internalID: 1535208805089639440
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: rig_test_rot_192
+      rect:
+        serializedVersion: 2
+        x: 410
+        y: 0
+        width: 6
+        height: 7
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: a0883b9f3e38ed9d0800000000000000
+      internalID: -2747613707479316470
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: rig_test_rot_193
+      rect:
+        serializedVersion: 2
+        x: 415
+        y: 0
+        width: 6
+        height: 7
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: d83f805cb6da527d0800000000000000
+      internalID: -2943756103037946995
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: rig_test_rot_194
+      rect:
+        serializedVersion: 2
+        x: 420
+        y: 0
+        width: 6
+        height: 7
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 6a0a86e5d1985c1e0800000000000000
+      internalID: -2178184085532794714
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: rig_test_rot_195
+      rect:
+        serializedVersion: 2
+        x: 425
+        y: 0
+        width: 6
+        height: 7
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 9a06fa5834f881400800000000000000
+      internalID: 295143295761211561
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: rig_test_rot_196
+      rect:
+        serializedVersion: 2
+        x: 430
+        y: 0
+        width: 7
+        height: 7
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 6f99fb5e711858e00800000000000000
+      internalID: 1046384428072278518
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: rig_test_rot_197
+      rect:
+        serializedVersion: 2
+        x: 436
+        y: 0
+        width: 7
+        height: 7
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 817fb480d852f15c0800000000000000
+      internalID: -4242631036299905256
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: rig_test_rot_198
+      rect:
+        serializedVersion: 2
+        x: 442
+        y: 0
+        width: 7
+        height: 6
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: f48c07f5ac24e4430800000000000000
+      internalID: 3769023375107737679
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: rig_test_rot_199
+      rect:
+        serializedVersion: 2
+        x: 448
+        y: 0
+        width: 7
+        height: 6
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: ae45f0cd5d9669a50800000000000000
+      internalID: 6527521077161055466
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: rig_test_rot_200
+      rect:
+        serializedVersion: 2
+        x: 454
+        y: 0
+        width: 7
+        height: 6
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: b09a2d45aa36d0870800000000000000
+      internalID: 8650680042467272971
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: rig_test_rot_201
+      rect:
+        serializedVersion: 2
+        x: 460
+        y: 0
+        width: 7
+        height: 6
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: c42fff09c026c3d50800000000000000
+      internalID: 6718352550241759820
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: rig_test_rot_202
+      rect:
+        serializedVersion: 2
+        x: 466
+        y: 0
+        width: 7
+        height: 7
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: a1c0513d70266fde0800000000000000
+      internalID: -1299743656704144358
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: rig_test_rot_203
+      rect:
+        serializedVersion: 2
+        x: 472
+        y: 0
+        width: 7
+        height: 7
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 7f3e8794c11fba750800000000000000
+      internalID: 6317408006111290359
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: rig_test_rot_204
+      rect:
+        serializedVersion: 2
+        x: 478
+        y: 0
+        width: 6
+        height: 7
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: dd054acdbbb40d8f0800000000000000
+      internalID: -517830686914883363
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: rig_test_rot_205
+      rect:
+        serializedVersion: 2
+        x: 483
+        y: 0
+        width: 6
+        height: 7
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: a3d3e7230851b79f0800000000000000
+      internalID: -469758095782953670
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: rig_test_rot_206
+      rect:
+        serializedVersion: 2
+        x: 488
+        y: 0
+        width: 6
+        height: 7
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: f811fe0f340113480800000000000000
+      internalID: -8921331502853189233
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: rig_test_rot_207
+      rect:
+        serializedVersion: 2
+        x: 493
+        y: 0
+        width: 6
+        height: 7
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 3fc09aa2d241df320800000000000000
+      internalID: 2593251144657079539
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: rig_test_rot_208
+      rect:
+        serializedVersion: 2
+        x: 498
+        y: 0
+        width: 7
+        height: 7
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 7fd06f2b5844893b0800000000000000
+      internalID: -5505575203436622345
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: rig_test_rot_209
+      rect:
+        serializedVersion: 2
+        x: 504
+        y: 0
+        width: 7
+        height: 7
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 09977b3585b81a7d0800000000000000
+      internalID: -2908890672826713712
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    outline: []
+    customData: 
+    physicsShape: []
+    bones: []
+    spriteID: 
+    internalID: 0
+    vertices: []
+    indices: 
+    edges: []
+    weights: []
+    secondaryTextures: []
+    spriteCustomMetadata:
+      entries: []
+    nameFileIdTable:
+      rig_test_rot_0: -1166034988105725714
+      rig_test_rot_1: -6777711078522919587
+      rig_test_rot_10: -5769264062503719695
+      rig_test_rot_100: -6288082113796297391
+      rig_test_rot_101: 8029265505551469636
+      rig_test_rot_102: 5157979466998190173
+      rig_test_rot_103: 2115358441308559861
+      rig_test_rot_104: -4693324001984716712
+      rig_test_rot_105: 3682965854357391908
+      rig_test_rot_106: 5864149556689339758
+      rig_test_rot_107: 2307590191820592683
+      rig_test_rot_108: 7843191392658894508
+      rig_test_rot_109: 3542664505604302026
+      rig_test_rot_11: -8430191427790457037
+      rig_test_rot_110: 2544724637122981714
+      rig_test_rot_111: -9167115387670238977
+      rig_test_rot_112: -605862732083041376
+      rig_test_rot_113: -1061829999169643955
+      rig_test_rot_114: -7471381961650496296
+      rig_test_rot_115: 5713316981796968283
+      rig_test_rot_116: 8111577590001273952
+      rig_test_rot_117: -2070671750486337358
+      rig_test_rot_118: -8215217414323431706
+      rig_test_rot_119: 2901670459638354931
+      rig_test_rot_12: 4638064919908880013
+      rig_test_rot_120: -4842350850490194129
+      rig_test_rot_121: -3078196903277274208
+      rig_test_rot_122: 946020745175599511
+      rig_test_rot_123: -6804058515331388687
+      rig_test_rot_124: 5428155568858503497
+      rig_test_rot_125: 6537777696836124214
+      rig_test_rot_126: -5832145190057465693
+      rig_test_rot_127: -6033850290785997952
+      rig_test_rot_128: -5138466633405744318
+      rig_test_rot_129: -4767532544446047133
+      rig_test_rot_13: -8623471422721737144
+      rig_test_rot_130: -6536263252420554413
+      rig_test_rot_131: -6673328006893412226
+      rig_test_rot_132: 2771058577079339991
+      rig_test_rot_133: 3357694159218930343
+      rig_test_rot_134: -5118683353673003675
+      rig_test_rot_135: -3176489921664491294
+      rig_test_rot_136: 7359186812501484577
+      rig_test_rot_137: 913966745328843979
+      rig_test_rot_138: -7897718332680697443
+      rig_test_rot_139: -5325415744799539179
+      rig_test_rot_14: -8021165821832540237
+      rig_test_rot_140: 803118754452258187
+      rig_test_rot_141: 3641062043867880881
+      rig_test_rot_142: -3553101925248051533
+      rig_test_rot_143: -8200914464778689809
+      rig_test_rot_144: 8622193559689572737
+      rig_test_rot_145: 766507169713681332
+      rig_test_rot_146: 6947510892700409787
+      rig_test_rot_147: -1843948770876160463
+      rig_test_rot_148: 7071655478824225943
+      rig_test_rot_149: 4406899012135905028
+      rig_test_rot_15: -8721030112159070772
+      rig_test_rot_150: 5407969202971163269
+      rig_test_rot_151: 8466661114956415403
+      rig_test_rot_152: -8839892489235511070
+      rig_test_rot_153: 8677691911553012761
+      rig_test_rot_154: 3435632457043712732
+      rig_test_rot_155: 1851279715205286978
+      rig_test_rot_156: -717619125184725719
+      rig_test_rot_157: 4128772254903540926
+      rig_test_rot_158: 4015106126112445164
+      rig_test_rot_159: -6808020522552008788
+      rig_test_rot_16: -444388602396901591
+      rig_test_rot_160: 9087570588044829565
+      rig_test_rot_161: -5065208014725219618
+      rig_test_rot_162: -8712530324780995313
+      rig_test_rot_163: -2665401789652013462
+      rig_test_rot_164: -401740607669231967
+      rig_test_rot_165: 1056386168617910873
+      rig_test_rot_166: -3294523421743706616
+      rig_test_rot_167: -6198325216740174969
+      rig_test_rot_168: -7871076154671147167
+      rig_test_rot_169: 127564638983248724
+      rig_test_rot_17: 27754482009507395
+      rig_test_rot_170: 4988765190332805912
+      rig_test_rot_171: 3580635910048381287
+      rig_test_rot_172: -4800936735720708599
+      rig_test_rot_173: 7750503878748718986
+      rig_test_rot_174: -1914136919249366999
+      rig_test_rot_175: -4298496132721660314
+      rig_test_rot_176: -4939577470863974151
+      rig_test_rot_177: 3852906166479802454
+      rig_test_rot_178: -9037303576989705792
+      rig_test_rot_179: 8155002104101097927
+      rig_test_rot_18: 8277846240045136220
+      rig_test_rot_180: -2831279609861561337
+      rig_test_rot_181: -4688598349905458434
+      rig_test_rot_182: -8048761387861888652
+      rig_test_rot_183: -7753303986470336691
+      rig_test_rot_184: 5036907567073606857
+      rig_test_rot_185: 2998221071243941018
+      rig_test_rot_186: -1018418200116250619
+      rig_test_rot_187: 8481879658285237182
+      rig_test_rot_188: 5091558865843726617
+      rig_test_rot_189: 355854703435911459
+      rig_test_rot_19: 4023972170721856476
+      rig_test_rot_190: 6857329442571479637
+      rig_test_rot_191: 1535208805089639440
+      rig_test_rot_192: -2747613707479316470
+      rig_test_rot_193: -2943756103037946995
+      rig_test_rot_194: -2178184085532794714
+      rig_test_rot_195: 295143295761211561
+      rig_test_rot_196: 1046384428072278518
+      rig_test_rot_197: -4242631036299905256
+      rig_test_rot_198: 3769023375107737679
+      rig_test_rot_199: 6527521077161055466
+      rig_test_rot_2: 8124745746632963072
+      rig_test_rot_20: 6657123509057871334
+      rig_test_rot_200: 8650680042467272971
+      rig_test_rot_201: 6718352550241759820
+      rig_test_rot_202: -1299743656704144358
+      rig_test_rot_203: 6317408006111290359
+      rig_test_rot_204: -517830686914883363
+      rig_test_rot_205: -469758095782953670
+      rig_test_rot_206: -8921331502853189233
+      rig_test_rot_207: 2593251144657079539
+      rig_test_rot_208: -5505575203436622345
+      rig_test_rot_209: -2908890672826713712
+      rig_test_rot_21: 4727832919858344139
+      rig_test_rot_22: 4404005166718178407
+      rig_test_rot_23: 7959076019945591103
+      rig_test_rot_24: -3135977149866958018
+      rig_test_rot_25: 2540273804918249546
+      rig_test_rot_26: -3644463176675419022
+      rig_test_rot_27: 3451536266291057799
+      rig_test_rot_28: 7716784875985781261
+      rig_test_rot_29: -836634571540434011
+      rig_test_rot_3: -1726044344243228116
+      rig_test_rot_30: 9029291934066187168
+      rig_test_rot_31: -2048146759526838436
+      rig_test_rot_32: 2052008947134113574
+      rig_test_rot_33: 5685677851555698017
+      rig_test_rot_34: -4936633758460375363
+      rig_test_rot_35: -2883201619490166606
+      rig_test_rot_36: 1300133350234001271
+      rig_test_rot_37: -8530872616527871684
+      rig_test_rot_38: -2786873036960797680
+      rig_test_rot_39: -2684033269363281178
+      rig_test_rot_4: -4500280762922804748
+      rig_test_rot_40: -1735332772416376423
+      rig_test_rot_41: 5393413079021120019
+      rig_test_rot_42: -8289654205476098309
+      rig_test_rot_43: -8619882883939399191
+      rig_test_rot_44: -7950870620760713580
+      rig_test_rot_45: -6195872790380249455
+      rig_test_rot_46: 7936280437074557255
+      rig_test_rot_47: 918116101833956936
+      rig_test_rot_48: -5687088307793202
+      rig_test_rot_49: -5868045780391884741
+      rig_test_rot_5: -6963378929624150153
+      rig_test_rot_50: -8029769582105996994
+      rig_test_rot_51: -6188688175647670039
+      rig_test_rot_52: 6149704778384811885
+      rig_test_rot_53: 557117108603753641
+      rig_test_rot_54: -2058308085228373034
+      rig_test_rot_55: 7161226971209385331
+      rig_test_rot_56: 7551587137545834243
+      rig_test_rot_57: -3742642290678157139
+      rig_test_rot_58: -1699307703371214671
+      rig_test_rot_59: 3371703750629511781
+      rig_test_rot_6: 4857931014226359027
+      rig_test_rot_60: 948263302650229379
+      rig_test_rot_61: 8932529054556533580
+      rig_test_rot_62: -3205435244875475332
+      rig_test_rot_63: 2486459173900129494
+      rig_test_rot_64: 324340501591248700
+      rig_test_rot_65: 3424238936431704508
+      rig_test_rot_66: 8321937284413598174
+      rig_test_rot_67: -8521007740961240685
+      rig_test_rot_68: -8428203197450950495
+      rig_test_rot_69: 228805854202096368
+      rig_test_rot_7: 8610901094151850026
+      rig_test_rot_70: 214110488827749862
+      rig_test_rot_71: 1576092927781350909
+      rig_test_rot_72: 7137990333043459384
+      rig_test_rot_73: 300892380459935488
+      rig_test_rot_74: -6059170198860182283
+      rig_test_rot_75: -5413249963700621876
+      rig_test_rot_76: 4287895661813572042
+      rig_test_rot_77: -7242172465204709291
+      rig_test_rot_78: -1632671383590678237
+      rig_test_rot_79: -6527282736989812008
+      rig_test_rot_8: -3202739120273008724
+      rig_test_rot_80: 4915146090338956542
+      rig_test_rot_81: -6895624245181852922
+      rig_test_rot_82: 7728713294714055919
+      rig_test_rot_83: -4801037059622903022
+      rig_test_rot_84: -2193788770784815352
+      rig_test_rot_85: 6703955072047292582
+      rig_test_rot_86: -1178668439031129522
+      rig_test_rot_87: 5205847970621545266
+      rig_test_rot_88: -7581136648453160885
+      rig_test_rot_89: -5771623393733803835
+      rig_test_rot_9: 5287117450224103861
+      rig_test_rot_90: 2763833877036261410
+      rig_test_rot_91: -3030538037866350865
+      rig_test_rot_92: -3041515370144822283
+      rig_test_rot_93: -4169638385853509293
+      rig_test_rot_94: 5757119560181973272
+      rig_test_rot_95: 930651869447783181
+      rig_test_rot_96: -4230900204057235766
+      rig_test_rot_97: 553196590652032581
+      rig_test_rot_98: -801468520537506168
+      rig_test_rot_99: 6074653969802493514
+  mipmapLimitGroupName: 
+  pSDRemoveMatte: 0
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 

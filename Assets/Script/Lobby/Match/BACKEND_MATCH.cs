@@ -83,6 +83,12 @@ public class BACKEND_MATCH : MonoBehaviour
     private string matchedCardInDate;
     private MatchInGameRoomInfo matchedRoomInfo;
     private readonly HashSet<string> joinedGameSessionIds = new HashSet<string>();
+    private readonly Dictionary<string, MatchUserGameRecord> joinedGameRecords = new Dictionary<string, MatchUserGameRecord>();
+
+    // 인게임 씬(팀데스매치 등)에서 참가자 정보를 읽기 위한 공개 프로퍼티
+    public IReadOnlyCollection<MatchUserGameRecord> GameRecords => joinedGameRecords.Values;
+    public int MatchHeadCount => selectedMatchCard != null ? selectedMatchCard.matchHeadCount : joinedGameRecords.Count;
+    public TacticalMatchMode SelectedMode => selectedMode;
 
     private void Awake()
     {
@@ -192,7 +198,8 @@ public class BACKEND_MATCH : MonoBehaviour
     {
         if (playButton == null)
         {
-            Debug.LogError("[BACKEND_MATCH] Play Button이 Inspector에 연결되지 않았습니다.");
+            // 인게임 씬에서 테스트 매칭용으로 생성된 경우에는 버튼이 없다.
+            Debug.LogWarning("[BACKEND_MATCH] Play Button이 Inspector에 연결되지 않았습니다.");
             return;
         }
 
@@ -257,6 +264,38 @@ public class BACKEND_MATCH : MonoBehaviour
             return;
         }
 
+        BeginMatchSearch();
+    }
+
+    public bool IsMatchSearchActive => isMatchSearchActive;
+    public bool IsEnteringGame => enteringGame;
+
+    // 인게임 씬을 에디터에서 바로 실행했을 때 로비 없이 매칭하기 위한 진입점
+    public bool StartMatchSearchForTest(TacticalMatchMode mode, string matchCardInDate, string sceneName)
+    {
+        if (isMatchSearchActive || enteringGame) return true;
+
+        BeginBackendInitialization();
+        if (!backendInitialized || !isAuthenticated)
+        {
+            Debug.LogWarning("[BACKEND_MATCH] 테스트 매칭 불가: 뒤끝 로그인 상태가 아닙니다.");
+            return false;
+        }
+
+        selectedMode = mode;
+        switch (mode)
+        {
+            case TacticalMatchMode.CLASSIC: classicMatchCardInDate = matchCardInDate; classicMapSceneNames = new List<string> { sceneName }; break;
+            case TacticalMatchMode.ARCADE: arcadeMatchCardInDate = matchCardInDate; arcadeMapSceneNames = new List<string> { sceneName }; break;
+            case TacticalMatchMode.RANK: rankMatchCardInDate = matchCardInDate; rankMapSceneNames = new List<string> { sceneName }; break;
+        }
+
+        BeginMatchSearch();
+        return isMatchSearchActive;
+    }
+
+    private void BeginMatchSearch()
+    {
         string configuredInDate = GetConfiguredInDate(selectedMode);
         if (string.IsNullOrWhiteSpace(configuredInDate))
         {
@@ -288,6 +327,7 @@ public class BACKEND_MATCH : MonoBehaviour
         matchedRoomInfo = null;
         matchedCardInDate = null;
         joinedGameSessionIds.Clear();
+        joinedGameRecords.Clear();
 
         SetPlayButtonLabel("매칭취소");
         SetMatchPanelVisible(true);
@@ -715,12 +755,14 @@ public class BACKEND_MATCH : MonoBehaviour
         }
 
         joinedGameSessionIds.Clear();
+        joinedGameRecords.Clear();
         if (args.GameRecords != null)
         {
             foreach (MatchUserGameRecord record in args.GameRecords)
             {
                 if (record == null || record.m_sessionId == null) continue;
                 joinedGameSessionIds.Add(record.m_sessionId.ToString());
+                joinedGameRecords[record.m_sessionId.ToString()] = record;
             }
         }
         UpdateInGamePlayerCount("게임방에 접속했습니다. 다른 참가자의 접속을 기다립니다.");
@@ -738,6 +780,7 @@ public class BACKEND_MATCH : MonoBehaviour
 
         string sessionId = args.GameRecord.m_sessionId.ToString();
         bool added = joinedGameSessionIds.Add(sessionId);
+        joinedGameRecords[sessionId] = args.GameRecord;
         if (added)
         {
             Debug.Log("[BACKEND_MATCH] Player connected to the game room. Session=" + sessionId + ", count=" + joinedGameSessionIds.Count);
