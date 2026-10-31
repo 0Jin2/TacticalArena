@@ -12,9 +12,9 @@ EditorBuildSettings:
     path: Assets/Scenes/LobbyPage.unity
     guid: 6ccc89aba4a642442b9827522e0cb85f
   - enabled: 1
-    path: Assets/Scenes/PhotonPlay/Tutorial.unity
+    path: Assets/Scenes/Sample/Tutorial.unity
     guid: 44b1d4adb9c02af4e956a393711e12e9
   - enabled: 1
-    path: Assets/Scenes/BackEnd_PlayScene/ClassicTest.unity
+    path: Assets/Scenes/PlayScene/Test.unity
     guid: 24025da678d517941a4ae970b11ab02f
   m_configObjects: {}
