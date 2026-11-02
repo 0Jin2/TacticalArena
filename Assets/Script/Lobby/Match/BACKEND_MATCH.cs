@@ -269,6 +269,7 @@ public class BACKEND_MATCH : MonoBehaviour
 
     public bool IsMatchSearchActive => isMatchSearchActive;
     public bool IsEnteringGame => enteringGame;
+    public bool IsPollingMatchEvents => pollMatchEvents;   // InGameNet이 Poll 중복 호출을 피하기 위해 확인
 
     public void CancelMatchSearch()
     {
@@ -733,6 +734,8 @@ public class BACKEND_MATCH : MonoBehaviour
 
     private void HandleSessionJoinInGameServer(JoinChannelEventArgs args)
     {
+        // 재접속(JoinGameServer isReconnect=true) 중에는 JoinGameRoom을 호출하면 InvalidOperation 오류가 난다. NetConnectionManager가 처리한다.
+        if (InGameNet.IsReconnecting) return;
         Debug.Log("[BACKEND_MATCH] OnSessionJoinInServer event received: " + args.ErrInfo.Reason + " / " + args.ErrInfo.Category);
         if (args.ErrInfo.Category != ErrorCode.Success)
         {
@@ -752,6 +755,8 @@ public class BACKEND_MATCH : MonoBehaviour
 
     private void HandleSessionListInGameServer(MatchInGameSessionListEventArgs args)
     {
+        // 재접속 때 받는 유저 목록은 InGameNet이 처리한다. (매칭 UI/실패 처리가 끼어들지 않게 한다)
+        if (InGameNet.IsReconnecting) return;
         Debug.Log("[BACKEND_MATCH] OnSessionListInServer event received: " + args.ErrInfo);
         if (args.ErrInfo != ErrorCode.Success)
         {
@@ -836,6 +841,8 @@ public class BACKEND_MATCH : MonoBehaviour
             "모든 참가자의 준비가 완료되었습니다. 맵으로 이동합니다.");
         Debug.Log("[BACKEND_MATCH] Loading shared deterministic map. RoomToken=" + roomToken +
                   ", inDate=" + matchedCardInDate + ", mode=" + selectedMode + ", index=" + sceneIndex + ", scene=" + chosenScene);
+        // 참가자 명단(세션ID/닉네임) 수집 + 레드/블루 팀 배정을 마친 뒤 씬을 이동한다. (씬이 바뀌어도 InGameNet은 유지)
+        InGameNet.Ensure().PrepareFromMatch(joinedGameRecords.Values, selectedMode, chosenScene, roomToken, matchedCardInDate);
         SceneManager.LoadScene(chosenScene);
     }
 

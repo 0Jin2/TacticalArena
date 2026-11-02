@@ -1,3 +1,6 @@
+// [DISABLED] Photon removed (BACKND migration). Kept for reference only.
+// To re-enable, delete the "#if false" line and the final "#endif" line.
+#if false
 using System.Collections;
 using UnityEngine;
 using Fusion;
@@ -58,3 +61,4 @@ public class SkillHandler_ShieldSummon : SkillHandler
         GamePlayUIController.Instance?.UpdateSkillButtonFill(1f);
     }
 }
+#endif

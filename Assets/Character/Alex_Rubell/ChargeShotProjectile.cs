@@ -1,4 +1,7 @@
-﻿using System.Collections;
+﻿// [DISABLED] Photon removed (BACKND migration). Kept for reference only.
+// To re-enable, delete the "#if false" line and the final "#endif" line.
+#if false
+using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using Fusion;
@@ -212,3 +215,4 @@ public class ChargeShotProjectile : NetworkBehaviour
             Runner.Despawn(Object);
     }
 }
+#endif

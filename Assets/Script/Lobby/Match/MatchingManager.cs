@@ -1,4 +1,7 @@
-﻿using System.Collections;
+﻿// [DISABLED] Photon matching removed (replaced by BACKEND_MATCH). Kept for reference only.
+// To re-enable, delete the "#if false" line and the final "#endif" line.
+#if false
+using System.Collections;
 using System.Threading.Tasks;
 using System.Collections.Generic;
 using UnityEngine;
@@ -464,3 +467,4 @@ public class MatchingManager : MonoBehaviour
         rightModeButton.interactable = true;
     }
 }
+#endif

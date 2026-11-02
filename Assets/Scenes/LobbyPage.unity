@@ -43497,11 +43497,9 @@ MonoBehaviour:
   arcadeMatchCardInDate: 
   rankMatchCardInDate: 
   classicMapSceneNames:
-  - Test
-  arcadeMapSceneNames:
-  - 
-  rankMapSceneNames:
-  - 
+  - TDM
+  arcadeMapSceneNames: []
+  rankMapSceneNames: []
   logVerboseMatchEvents: 1
 --- !u!4 &9015763637868123743
 Transform:

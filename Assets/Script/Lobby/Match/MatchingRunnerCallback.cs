@@ -1,4 +1,7 @@
-﻿using Fusion;
+﻿// [DISABLED] Photon matching removed (replaced by BACKEND_MATCH). Kept for reference only.
+// To re-enable, delete the "#if false" line and the final "#endif" line.
+#if false
+using Fusion;
 using Fusion.Sockets;
 using System;
 using System.Collections;
@@ -133,7 +136,7 @@ public class MatchingRunnerCallback : MonoBehaviour, INetworkRunnerCallbacks
             runner.ProvideInput = true;
 
             // 선택/타이머 UI 바인딩 재연결(원래 콜백이 하던 역할과 일관 유지)
-            CharacterSelectionManager.Instance?.RebindTimerEvents();
+            // (removed: CharacterSelectionManager was replaced by CharSelectUI)
 
             Debug.Log("✅ 자동 재접속 성공");
         }
@@ -288,9 +291,11 @@ public class MatchingRunnerCallback : MonoBehaviour, INetworkRunnerCallbacks
         Debug.Log("✅ Host Migration 재시작 완료");
 
         // 기존 FusionTimerData 인스턴스를 그대로 사용하도록 UI만 리바인딩
-        CharacterSelectionManager.Instance?.RebindTimerEvents();
+        // (removed: CharacterSelectionManager was replaced by CharSelectUI)
     }
 
     public void OnSceneLoadDone(NetworkRunner runner) { }
     public void OnSceneLoadStart(NetworkRunner runner) { }
 }
+
+#endif

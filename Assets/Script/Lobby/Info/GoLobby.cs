@@ -1,8 +1,10 @@
-﻿using UnityEngine;
+﻿using BackEnd;
+using UnityEngine;
 using UnityEngine.UI;
 using UnityEngine.SceneManagement;
-using Fusion;
 
+// 로비로 돌아가는 버튼 (튜토리얼/결과 화면 등).
+// 예전에는 Photon NetworkRunner 를 종료했지만, 이제는 뒤끝 게임 서버에서 나가고 씬을 이동한다.
 public class GoLobby : MonoBehaviour
 {
     [Header("로비 이동 버튼")]
@@ -14,17 +16,13 @@ public class GoLobby : MonoBehaviour
         if (GoLobbyButton != null)
             GoLobbyButton.onClick.AddListener(OnClick_GoLobbyButton);
         else
-            Debug.LogError("❌ TutorialCompleteButton: completeButton 참조가 없습니다!");
+            Debug.LogError("GoLobby: GoLobbyButton 참조가 없습니다!");
     }
 
     public void OnClick_GoLobbyButton()
     {
-        var runners = FindObjectsOfType<NetworkRunner>(true);
-        foreach (var r in runners)
-        {
-            try { if (r.IsRunning) r.Shutdown(); } catch { /* 무시 */ }
-            Destroy(r.gameObject);
-        }
+        try { if (Backend.IsInitialized) Backend.Match.LeaveGameServer(); }
+        catch (System.Exception exception) { Debug.LogWarning("GoLobby: LeaveGameServer 예외 - " + exception.Message); }
 
         SceneManager.LoadScene(lobbySceneName);
     }
