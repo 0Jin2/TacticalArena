@@ -12,4 +12,11 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 46fb4b772243f4345b25644716c63e3c, type: 3}
   m_Name: CharacterCatalog
   m_EditorClassIdentifier: Assembly-CSharp::CharacterCatalog
-  characters: []
+  characters:
+  - {fileID: 11400000, guid: b5b848032bce0f7451dd15330777c0fc, type: 2}
+  - {fileID: 11400000, guid: d7e4d4f28348b2a43dd7f0b185c129fc, type: 2}
+  - {fileID: 11400000, guid: 6008ff217f12ad15cd6cdfc666edd544, type: 2}
+  - {fileID: 11400000, guid: 4453099f9b585b8bb348f98c3fa784e8, type: 2}
+  - {fileID: 11400000, guid: 8dedf946ca9f3a08b29e792fd1af3b6d, type: 2}
+  - {fileID: 11400000, guid: 82a0fcec5aff81c618ecbdce2a32af74, type: 2}
+  - {fileID: 11400000, guid: 67d5a241013c7031aa3aea1053e91c62, type: 2}

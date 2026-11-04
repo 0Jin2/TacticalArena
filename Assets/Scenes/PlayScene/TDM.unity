@@ -7069,7 +7069,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 7f4f2a412d8bebb40828b38c514b0e3c, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::PlayerSpawner
-  catalog: {fileID: 0}
+  catalog: {fileID: 11400000, guid: 6c77801c6febaea439783df1c7078d80, type: 2}
   redSpawnPoints: []
   blueSpawnPoints: []
   redFacing: 1

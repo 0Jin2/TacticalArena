@@ -58,6 +58,7 @@ Canvas:
   m_OverridePixelPerfect: 0
   m_SortingBucketNormalizedSize: 0
   m_VertexColorAlwaysGammaSpace: 0
+  m_UseReflectionProbes: 0
   m_AdditionalShaderChannelsFlag: 0
   m_UpdateRectTransformForStandalone: 0
   m_SortingLayerID: 0
@@ -112,12 +113,13 @@ MonoBehaviour:
   m_GameObject: {fileID: 4371590402741302473}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: fcdb3f86fa47bab40a0efabd36a53d0f, type: 3}
+  m_Script: {fileID: 11500000, guid: 24287fe24d629c7488987dc60f418cf2, type: 3}
   m_Name: 
-  m_EditorClassIdentifier: 
+  m_EditorClassIdentifier: Assembly-CSharp::PlayerHealthBar
   fillImage: {fileID: 2851158664259666648}
+  scaleWidthByMaxHp: 1
   baseBarWidth: 1
-  baseHP: 100
+  baseHp: 100
 --- !u!1 &8087099161832136010
 GameObject:
   m_ObjectHideFlags: 0
