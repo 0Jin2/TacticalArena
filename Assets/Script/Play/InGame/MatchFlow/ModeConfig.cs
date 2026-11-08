@@ -22,7 +22,8 @@ public class ModeConfig : ScriptableObject
     public float sceneLoadTimeout = 15f;            // 모두의 씬 로딩을 기다리는 최대 시간
     public float introSeconds = 4f;                 // 인트로 애니메이션 길이
     public float characterSelectSeconds = 30f;      // 캐릭터 선택 시간 (FALL은 10, 0 = 무제한)
-    public float countdownSeconds = 5f;             // 게임 시작 전 카운트다운
+    public float countdownSeconds = 5f;             // 게임 시작 전 카운트다운 (끝나면 캐릭터 생성 + 카메라 줌인)
+    public float zoomWaitTimeout = 10f;             // 캐릭터 생성/줌인이 끝나지 않은 유저를 기다려 주는 최대 시간
     public float matchSeconds = 600f;               // 본 게임 시간. 0 = 시간 제한 없음 (BOMB처럼 모드가 직접 관리)
     public float resultSeconds = 6f;                // 결과 화면 표시 시간
 
@@ -59,6 +60,7 @@ public class ModeConfig : ScriptableObject
         introSeconds = Mathf.Max(0.1f, introSeconds);
         characterSelectSeconds = Mathf.Max(0f, characterSelectSeconds);   // 0 = 무제한 (튜토리얼)
         countdownSeconds = Mathf.Max(0.1f, countdownSeconds);
+        zoomWaitTimeout = Mathf.Max(1f, zoomWaitTimeout);
         matchSeconds = Mathf.Max(0f, matchSeconds);
         resultSeconds = Mathf.Max(0.1f, resultSeconds);
         reconnectTimeLimit = Mathf.Max(0f, reconnectTimeLimit);

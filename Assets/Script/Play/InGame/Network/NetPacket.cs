@@ -30,6 +30,7 @@ public enum NetPacketType : byte
     CharacterSelect = 0x11,       // 각 유저 → 전체: 캐릭터를 골랐다 (바꿀 수 있음)
     CharacterReady = 0x12,        // 각 유저 → 전체: 준비 완료/해제 (bool)
     ScoreAdd = 0x13,              // 호스트 → 전체: 팀 점수 가산 (팀, 점수)
+    ZoomReady = 0x14,             // 각 유저 → 전체: 캐릭터 생성 + 내 카메라 줌인이 끝났다 (호스트가 전원 확인 후 Playing 으로)
     // ── 플레이어 (이동 동기화)   0x20~
     PlayerState = 0x20,           // 주인 → 전체: 위치/속도/방향/체력 (주기 전송, 유실 허용)
     PlayerSpawn = 0x21,           // 주인 → 전체: 부활(위치, 방향, 무적시간)

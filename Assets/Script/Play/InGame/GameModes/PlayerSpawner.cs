@@ -71,9 +71,10 @@ public class PlayerSpawner : MonoBehaviour, INetStateProvider
         flow = MatchFlow.Instance;
         if (flow == null) { NetLog.Error("PlayerSpawner: MatchFlow 가 씬에 없습니다."); return; }
         flow.OnPhaseChanged += HandlePhaseChanged;
+        flow.OnSpawnStage += HandleSpawnStage;
 
         // 이미 진행 중인 단계에서 늦게 시작된 경우(재접속 등) 대비
-        if (flow.Phase == MatchPhase.Playing) SpawnAll(true);
+        if (flow.Phase == MatchPhase.Playing || (flow.Phase == MatchPhase.Countdown && flow.SpawnStageStarted)) SpawnAll(true);
     }
 
     private void OnDisable()
@@ -84,7 +85,11 @@ public class PlayerSpawner : MonoBehaviour, INetStateProvider
             net.PlayersChanged -= HandlePlayersChanged;
         }
         PlayerEntity.OnAnyDeath -= HandleAnyDeath;
-        if (flow != null) flow.OnPhaseChanged -= HandlePhaseChanged;
+        if (flow != null)
+        {
+            flow.OnPhaseChanged -= HandlePhaseChanged;
+            flow.OnSpawnStage -= HandleSpawnStage;
+        }
     }
 
     private void OnDestroy()
@@ -94,8 +99,15 @@ public class PlayerSpawner : MonoBehaviour, INetStateProvider
 
     private void HandlePhaseChanged(MatchPhase phase, bool restored)
     {
+        // 보통은 카운트다운이 끝난 직후(OnSpawnStage)에 이미 만들어져 있다. 못 만들었다면 Playing 에서라도 만든다.
         if (phase == MatchPhase.Playing) SpawnAll(restored);
         else if (phase == MatchPhase.Result) CancelRespawn();
+    }
+
+    /// <summary>게임 시작 대기 카운트다운이 끝나고 패널이 닫혔다 → 캐릭터를 만들고 카메라 줌인</summary>
+    private void HandleSpawnStage()
+    {
+        SpawnAll(false);
     }
 
     #endregion
@@ -133,8 +145,11 @@ public class PlayerSpawner : MonoBehaviour, INetStateProvider
         if (AvatarsSpawned) return;
         if (catalog == null) { NetLog.Error("PlayerSpawner: CharacterCatalog 가 비어 있습니다."); return; }
 
+        net.RefreshLocalSessionId();                     // 내 세션 번호가 0 이면 한 번 더 읽어 온다 (내 캐릭터 판별용)
+
         var modeType = flow != null && flow.Config != null ? flow.Config.modeType : GameModeType.TDM;
         var players = new List<NetPlayer>(net.Players);
+        Debug.Log("[Camera] PlayerSpawner: 캐릭터 생성 시작. 인원=" + players.Count + ", 내 세션=" + net.LocalSessionId + ", 스폰포인트 Red=" + CountPoints(redSpawnPoints) + " Blue=" + CountPoints(blueSpawnPoints));
 
         foreach (var player in players)
         {
@@ -157,6 +172,8 @@ public class PlayerSpawner : MonoBehaviour, INetStateProvider
 
             Vector2 pos = InitialSpawnPosition(player);
             float facing = FacingOf(player.Team);
+            if (CountPoints(PointsOf(player.Team)) == 0)
+                NetLog.Warn("PlayerSpawner: " + player.Team + " 팀 스폰 포인트가 비어 있어 (0,0) 에 생성합니다. 인스펙터에서 지정하세요.");
 
             var go = Instantiate(prefab, pos, Quaternion.identity, avatarRoot);
             var entity = go.GetComponent<PlayerEntity>();
@@ -186,13 +203,75 @@ public class PlayerSpawner : MonoBehaviour, INetStateProvider
         if (AvatarsReady != null) AvatarsReady();
     }
 
+    private static int CountPoints(Transform[] points)
+    {
+        if (points == null) return 0;
+        int n = 0;
+        for (int i = 0; i < points.Length; i++) if (points[i] != null) n++;
+        return n;
+    }
+
+    /// <summary>화면에 만들어진 캐릭터 중 "내 캐릭터"를 찾는다. (PlayerEntity.Local 이 비어 있어도 세션 번호로 한 번 더 찾는다)</summary>
+    private PlayerEntity FindLocalEntity()
+    {
+        if (PlayerEntity.Local != null) return PlayerEntity.Local;
+
+        uint mySession = net != null ? net.LocalSessionId : 0u;
+        var all = PlayerEntity.All;
+        for (int i = 0; i < all.Count; i++)
+        {
+            var e = all[i];
+            if (e == null) continue;
+            if (e.IsMine) return e;
+            if (mySession != 0u && e.SessionId == mySession) return e;
+            if (e.Info != null && e.Info.IsLocal) return e;
+        }
+        return null;
+    }
+
+    /// <summary>내 캐릭터를 카메라가 따라가게 하고, 줌인이 끝나면 MatchFlow 에 "준비 완료"를 알린다.</summary>
     private void FollowLocal(bool snap)
     {
-        if (!followLocalCamera) return;
-        var local = PlayerEntity.Local;
-        if (local == null || CameraZoomController.Instance == null) return;
-        if (snap) CameraZoomController.Instance.SnapToTarget(local.transform);
-        else CameraZoomController.Instance.ZoomInToTarget(local.transform);
+        var cam = CameraZoomController.Instance;
+        var local = FindLocalEntity();
+
+        if (!followLocalCamera)
+        {
+            NetLog.Warn("PlayerSpawner: followLocalCamera 가 꺼져 있어 카메라가 캐릭터를 따라가지 않습니다.");
+            ReportZoomReady();
+            return;
+        }
+        if (cam == null)
+        {
+            NetLog.Error("PlayerSpawner: CameraZoomController 가 씬에 없습니다. CM PlayerCamera 오브젝트에 붙어 있는지 확인하세요.");
+            ReportZoomReady();                       // 줌인할 카메라가 없으면 기다릴 필요가 없다
+            return;
+        }
+        if (local == null)
+        {
+            NetLog.Error("PlayerSpawner: 내 캐릭터를 찾지 못했습니다. 내 세션=" + (net != null ? net.LocalSessionId : 0u)
+                + ", 생성된 캐릭터 수=" + PlayerEntity.All.Count + " (캐릭터 생성 실패 경고가 위에 있는지 확인)");
+            ReportZoomReady();
+            return;
+        }
+
+        Debug.Log("[Camera] PlayerSpawner: 카메라 대상 = " + local.name + " 위치=" + local.transform.position + (snap ? " (즉시)" : " (줌인)"));
+        cam.OnZoomInCompleted -= HandleZoomInDone;
+        cam.OnZoomInCompleted += HandleZoomInDone;
+        if (snap) cam.SnapToTarget(local.transform);
+        else cam.ZoomInToTarget(local.transform);
+    }
+
+    private void HandleZoomInDone()
+    {
+        var cam = CameraZoomController.Instance;
+        if (cam != null) cam.OnZoomInCompleted -= HandleZoomInDone;
+        ReportZoomReady();
+    }
+
+    private void ReportZoomReady()
+    {
+        if (flow != null) flow.ReportZoomReady();
     }
 
     private void HandlePlayersChanged()

@@ -12,7 +12,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: ae99cf589c1b94142bb9d38b14b90614, type: 3}
   m_Name: KangChulWoo_stat
   m_EditorClassIdentifier: 
-  moveSpeed: 7
+  moveSpeed: 4
   jumpPower: 10
   maxHP: 260
   allowDoubleJump: 1

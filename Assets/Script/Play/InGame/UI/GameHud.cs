@@ -354,7 +354,13 @@ public class GameHud : MonoBehaviour
 
     private void HandlePhaseChanged(MatchPhase phase, bool restored)
     {
-        if (phase == MatchPhase.Playing) InitModeUi();
+        if (phase == MatchPhase.Playing)
+        {
+            InitModeUi();
+            // 모두의 줌인이 끝나 본 게임이 시작됐다 → 내 줌인이 이미 끝났다면 지금 조작 UI 를 만든다.
+            var cam = CameraZoomController.Instance;
+            if (cam != null && cam.ZoomInDone) HandleZoomInCompleted();
+        }
         else if (phase == MatchPhase.Result) ShowResultUi();
     }
 
@@ -437,6 +443,8 @@ public class GameHud : MonoBehaviour
     {
         if (gameplayShown) return;
         if (flow != null && flow.Phase == MatchPhase.Result) return;
+        // 내 줌인이 먼저 끝나도, 다른 유저를 기다리는 동안(본 게임 시작 전)에는 UI 를 켜지 않는다.
+        if (flow != null && flow.Phase != MatchPhase.Playing) return;
         ShowGameplayUI();
 
         var me = PlayerEntity.Local;

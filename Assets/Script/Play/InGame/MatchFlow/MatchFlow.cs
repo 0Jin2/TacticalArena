@@ -10,6 +10,12 @@ using UnityEngine.SceneManagement;
 //   Loading → Intro → CharSelect → Countdown → Playing → Result
 //   (로딩)   (인트로) (캐릭터선택) (5초 카운트) (본 게임)  (결과)
 //
+//   Countdown 단계 안의 순서
+//     1) 5초 카운트다운 (게임 시작 대기 패널)
+//     2) 카운트다운이 끝나고 패널이 닫히면 BeginSpawnStage() → 캐릭터 생성 + 카메라 줌인 (OnSpawnStage)
+//     3) 각자 줌인이 끝나면 ZoomReady 신호 → 호스트가 전원 확인 (최대 ModeConfig.zoomWaitTimeout 초)
+//     4) 호스트가 Playing 으로 → 본 게임 타이머 시작 + 조작 UI 켜짐
+//
 // 하는 일
 //   1) 모든 유저의 씬 로딩이 끝나길 기다린다.               (호스트만 판단)
 //   2) 시간이 다 되면 다음 단계로 넘어가라고 모두에게 알린다. (호스트만 판단)
@@ -44,12 +50,17 @@ public class MatchFlow : MonoBehaviour, INetStateProvider
     public bool IsPlaying { get { return Phase == MatchPhase.Playing; } }
     public bool HasTimeLimit { get { return PhaseDuration > 0f; } }
     public float RemainingSeconds { get { return Mathf.Max(0f, (float)(phaseEndAt - NetClock.Now)); } }
+    /// <summary>Countdown 단계의 5초 카운트다운이 끝났는가</summary>
+    public bool CountdownFinished { get { return Phase == MatchPhase.Countdown && PhaseDuration > 0f && NetClock.Now >= phaseEndAt; } }
+    /// <summary>캐릭터 생성 + 줌인 구간이 시작됐는가 (Countdown 단계 안)</summary>
+    public bool SpawnStageStarted { get { return spawnStageStarted; } }
 
     // ── 이벤트 (UI/모드 스크립트가 구독) ─────────────────────────────────────
     public event Action<MatchPhase, bool> OnPhaseChanged;   // (새 단계, 재접속 복구로 바뀐 것인가)
     public event Action OnTimeUp;                           // 호스트에서만: 본 게임 시간 종료. 모드가 EndMatch()를 호출해야 함
     public event Action<NetPlayer> OnCharacterPicked;       // 누군가 캐릭터를 골랐다/바꿨다
     public event Action OnMatchFinished;                    // 결과 화면 시간 종료 (→ 로비 복귀 시점, ResultReporter가 처리)
+    public event Action OnSpawnStage;                       // 카운트다운이 끝나 캐릭터를 만들고 줌인할 시점 (PlayerSpawner 가 구독)
 
     /// <summary>시간 안에 못 고른 내 캐릭터를 정할 때 호출됨. 지정 안 하면 ModeConfig.defaultCharacterId 사용.</summary>
     public Func<string> autoPickProvider;
@@ -63,6 +74,11 @@ public class MatchFlow : MonoBehaviour, INetStateProvider
     private bool started;
     private bool waitingForRestore;              // 앱 재시작 복귀: 스냅샷을 받기 전에는 호스트 판단 금지
     private bool timeUpRaised, finished, autoPicked;
+    private bool spawnStageStarted;              // Countdown 단계에서 캐릭터 생성/줌인 구간이 시작됐는가
+    private double spawnStageAt;
+    private bool zoomReportSent;
+    private const float SpawnStageAutoSeconds = 3f;   // 카운트다운이 끝난 뒤 UI 가 시작하지 않아도 이 시간 뒤엔 자동으로 시작
+    private readonly HashSet<uint> zoomReady = new HashSet<uint>();
     private readonly HashSet<uint> readySessions = new HashSet<uint>();
     private readonly HashSet<uint> confirmed = new HashSet<uint>();
 
@@ -99,6 +115,7 @@ public class MatchFlow : MonoBehaviour, INetStateProvider
         if (net == null) return;
         net.Subscribe(NetPacketType.SceneReady, HandleSceneReady);
         net.Subscribe(NetPacketType.PhaseChange, HandlePhaseChange);
+        net.Subscribe(NetPacketType.ZoomReady, HandleZoomReady);
         net.Subscribe(NetPacketType.CharacterSelect, HandleCharacterSelect);
         net.Subscribe(NetPacketType.CharacterReady, HandleCharacterReady);
         net.RegisterStateProvider(this);
@@ -110,6 +127,7 @@ public class MatchFlow : MonoBehaviour, INetStateProvider
         if (net == null) return;
         net.Unsubscribe(NetPacketType.SceneReady, HandleSceneReady);
         net.Unsubscribe(NetPacketType.PhaseChange, HandlePhaseChange);
+        net.Unsubscribe(NetPacketType.ZoomReady, HandleZoomReady);
         net.Unsubscribe(NetPacketType.CharacterSelect, HandleCharacterSelect);
         net.Unsubscribe(NetPacketType.CharacterReady, HandleCharacterReady);
         net.UnregisterStateProvider(this);
@@ -148,8 +166,11 @@ public class MatchFlow : MonoBehaviour, INetStateProvider
                 break;
 
             case MatchPhase.Intro:
-            case MatchPhase.Countdown:
                 if (Expired && CanAct()) HostSend(Phase + 1, DurationOf(Phase + 1), NetTeam.None, false);
+                break;
+
+            case MatchPhase.Countdown:
+                UpdateCountdown();
                 break;
 
             case MatchPhase.CharSelect:
@@ -200,6 +221,53 @@ public class MatchFlow : MonoBehaviour, INetStateProvider
         bool graceOver = HasTimeLimit && NetClock.Now >= phaseEndAt + PickGraceSeconds;
         if (!graceOver && !AllConfirmed()) return;
         if (CanAct()) HostSend(MatchPhase.Countdown, config.countdownSeconds, NetTeam.None, false);
+    }
+
+    /// <summary>
+    /// Countdown 단계: 5초가 끝나면 캐릭터 생성/줌인 구간으로 넘어가고(UI 가 BeginSpawnStage 호출),
+    /// 호스트는 모두의 줌인 완료를 확인한 뒤 Playing 으로 보낸다.
+    /// </summary>
+    private void UpdateCountdown()
+    {
+        if (!CountdownFinished) return;
+
+        if (!spawnStageStarted)
+        {
+            // 보통은 게임 시작 대기 패널이 닫힌 뒤 CharSelectUI 가 BeginSpawnStage 를 부른다. UI 가 없어도 멈추지 않게 자동 시작.
+            if (NetClock.Now >= phaseEndAt + SpawnStageAutoSeconds) BeginSpawnStage();
+            return;
+        }
+
+        bool waitOver = NetClock.Now - spawnStageAt > config.zoomWaitTimeout;      // 오래 안 오는 유저는 기다리지 않는다
+        if ((AllZoomReady() || waitOver) && CanAct())
+            HostSend(MatchPhase.Playing, DurationOf(MatchPhase.Playing), NetTeam.None, false);
+    }
+
+    /// <summary>[CharSelectUI] 카운트다운이 끝나고 패널이 닫혔다 → 캐릭터 생성 + 카메라 줌인 시작. (한 번만)</summary>
+    public void BeginSpawnStage()
+    {
+        if (Phase != MatchPhase.Countdown || spawnStageStarted) return;
+        spawnStageStarted = true;
+        spawnStageAt = NetClock.Now;
+        if (OnSpawnStage != null) OnSpawnStage();
+    }
+
+    private bool AllZoomReady()
+    {
+        foreach (var p in net.Players)
+        {
+            if (!p.IsOnline || p.IsForfeited) continue;       // 끊긴 유저는 기다리지 않는다
+            if (!zoomReady.Contains(p.SessionId)) return false;
+        }
+        return true;
+    }
+
+    /// <summary>[PlayerSpawner] 내 카메라 줌인이 끝났다고 모두에게 알린다. (Countdown 단계에서 한 번만)</summary>
+    public void ReportZoomReady()
+    {
+        if (zoomReportSent || Phase != MatchPhase.Countdown) return;
+        zoomReportSent = true;
+        net.Send(NetPacketType.ZoomReady, null, true);
     }
 
     private bool AllReady()
@@ -342,6 +410,11 @@ public class MatchFlow : MonoBehaviour, INetStateProvider
         readySessions.Add(packet.Sender);
     }
 
+    private void HandleZoomReady(NetPacket packet)
+    {
+        zoomReady.Add(packet.Sender);
+    }
+
     private void HandleCharacterSelect(NetPacket packet)
     {
         var player = net.GetPlayer(packet.Sender);
@@ -404,6 +477,9 @@ public class MatchFlow : MonoBehaviour, INetStateProvider
         timeUpRaised = false;
         finished = false;
         autoPicked = false;
+        if (phase == MatchPhase.CharSelect) zoomReady.Clear();
+        zoomReportSent = false;
+        spawnStageStarted = false;
         if (phase == MatchPhase.CharSelect && !restored) confirmed.Clear();
 
         NetLog.Info("단계 전환: " + phase + " (" + duration + "s, 복구=" + restored + ")");
