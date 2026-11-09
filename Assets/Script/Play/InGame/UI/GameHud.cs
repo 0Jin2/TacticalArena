@@ -32,6 +32,9 @@ public class GameHud : MonoBehaviour
     [Header("팀 점수 TEXT")]
     public TMP_Text redTeamScoreText;
     public TMP_Text blueTeamScoreText;
+    [Tooltip("{0} 자리에 점수가 들어갑니다. 색/팀 이름 태그를 넣어 둘 수 있습니다.")]
+    public string redScoreFormat = "{0}";
+    public string blueScoreFormat = "{0}";
 
     [Header("버튼 UI")]
     public GameObject joystick;
@@ -119,6 +122,7 @@ public class GameHud : MonoBehaviour
     private NetConnectionManager subscribedConnection;
     private MatchFlow flow;
     private bool failHandled;
+    private bool reconnectBannerShowing;
 
     // ═════════════════════════════════════════════════════════════════════════
     #region 수명
@@ -274,12 +278,14 @@ public class GameHud : MonoBehaviour
     private void UpdateScore()
     {
         var mode = GameModeBase.Current;
-        if (mode == null || scoreUI == null || !scoreUI.activeInHierarchy) return;
+        if (mode == null) return;
+        // scoreUI 를 비워 둔 씬에서도 점수 글자는 갱신되도록 (기존: scoreUI 가 null 이면 영영 갱신 안 됨)
+        if (scoreUI != null && !scoreUI.activeInHierarchy) return;
         int red = mode.ScoreOf(NetTeam.Red), blue = mode.ScoreOf(NetTeam.Blue);
         if (red == lastRed && blue == lastBlue) return;
         lastRed = red; lastBlue = blue;
-        if (redTeamScoreText != null) redTeamScoreText.text = red.ToString();
-        if (blueTeamScoreText != null) blueTeamScoreText.text = blue.ToString();
+        if (redTeamScoreText != null) redTeamScoreText.text = string.Format(redScoreFormat, red);
+        if (blueTeamScoreText != null) blueTeamScoreText.text = string.Format(blueScoreFormat, blue);
     }
 
     private void UpdateSkillFill()
@@ -342,7 +348,21 @@ public class GameHud : MonoBehaviour
         bool show = conn != null && (conn.State == NetConnectionState.Disconnected
                                      || conn.State == NetConnectionState.Reconnecting
                                      || conn.State == NetConnectionState.Recovering);
-        if (reconnectBanner.activeSelf != show) reconnectBanner.SetActive(show);
+
+        // 배너를 알림(alertRoot)과 같은 오브젝트로 공유하는 씬이 있다.
+        // 그때 매 프레임 SetActive(false) 하면 일반 알림이 켜지자마자 꺼지므로, "켜짐↔꺼짐이 바뀔 때만" 손댄다.
+        bool shared = reconnectBanner == alertRoot;
+        if (show != reconnectBannerShowing)
+        {
+            reconnectBannerShowing = show;
+            if (show && shared) HideAlert();                 // 진행 중인 알림 타이머가 배너를 끄지 않도록
+            reconnectBanner.SetActive(show);
+        }
+        else if (!shared && reconnectBanner.activeSelf != show)
+        {
+            reconnectBanner.SetActive(show);
+        }
+
         if (show && reconnectBannerText != null)
             reconnectBannerText.text = string.Format(reconnectingFormat, Mathf.CeilToInt(conn.RemainingReconnectSeconds));
     }
@@ -563,6 +583,7 @@ public class GameHud : MonoBehaviour
     public void ShowAlert(string message, float seconds)
     {
         if (alertRoot == null || alertText == null || string.IsNullOrEmpty(message)) return;
+        if (reconnectBannerShowing && reconnectBanner == alertRoot) return;   // 재접속 배너가 같은 칸을 쓰는 중
         if (alertRoutine != null) StopCoroutine(alertRoutine);
         alertText.text = message;
         alertRoot.SetActive(true);

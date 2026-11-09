@@ -34,6 +34,8 @@ public class PlayerCombat : MonoBehaviour
     public float muzzleFlashLifetime = 1f;
     [Tooltip("오른쪽을 볼 때의 이펙트 회전각. 왼쪽을 볼 때는 부호가 반대로 적용된다.")]
     public float muzzleAngleRight = -90f;
+    [Tooltip("총구 이펙트 프리팹이 맞춰져 있는 캐릭터 배율. 캐릭터 배율이 이 값과 다르면 같은 비율로 키우거나 줄인다. (FALL용 _FD = 3, 일반 = 0.5)")]
+    public float muzzleReferenceScale = 3f;
 
     [Header("발사 효과음")]
     public AudioClip shootClip;
@@ -214,6 +216,15 @@ public class PlayerCombat : MonoBehaviour
         {
             float angle = facing > 0f ? muzzleAngleRight : -muzzleAngleRight;
             var flash = Instantiate(muzzleFlashPrefab, position, Quaternion.Euler(0f, 0f, angle));
+            // 이펙트는 캐릭터 밖(월드)에 생기므로 캐릭터 배율을 직접 반영한다.
+            float ratio = muzzleReferenceScale > 0f ? Mathf.Abs(transform.lossyScale.y) / muzzleReferenceScale : 1f;
+            flash.transform.localScale *= ratio;
+            // 2D 조명 반경은 배율을 따라가지 않으므로 같이 맞춘다.
+            foreach (var light in flash.GetComponentsInChildren<UnityEngine.Rendering.Universal.Light2D>(true))
+            {
+                light.pointLightOuterRadius *= ratio;
+                light.pointLightInnerRadius *= ratio;
+            }
             Destroy(flash, muzzleFlashLifetime);
         }
         if (entity != null && entity.Audio != null) entity.Audio.PlayOneShot(shootClip, shootMixer);
