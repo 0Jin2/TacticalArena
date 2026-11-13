@@ -1,6 +1,7 @@
 using BackEnd;
 using BackEnd.Tcp;
 using System;
+using System.Collections;
 using System.Collections.Generic;
 using TMPro;
 using UnityEngine;
@@ -55,6 +56,12 @@ public class BACKEND_MATCH : MonoBehaviour
     [SerializeField] private List<string> classicMapSceneNames = new List<string>();
     [SerializeField] private List<string> arcadeMapSceneNames = new List<string>();
     [SerializeField] private List<string> rankMapSceneNames = new List<string>();
+
+    [Header("Scene Loading (모두 로딩이 끝나면 같이 입장)")]
+    [Tooltip("(선택) 인게임 씬을 불러오는 동안 켜 둘 패널 오브젝트(처음엔 꺼 두세요). 비워 두면 검은 화면 + LOADING 글자를 자동으로 만들어 보여 줍니다.")]
+    [SerializeField] private GameObject loadingPanel;
+    [Tooltip("내 로딩이 끝난 뒤 다른 유저를 기다리는 최대 시간(초). 넘으면 기다리지 않고 입장합니다.")]
+    [SerializeField] private float sceneLoadSyncTimeout = 30f;
 
     [Header("Diagnostics")]
     [SerializeField] private bool logVerboseMatchEvents = true;
@@ -843,7 +850,67 @@ public class BACKEND_MATCH : MonoBehaviour
                   ", inDate=" + matchedCardInDate + ", mode=" + selectedMode + ", index=" + sceneIndex + ", scene=" + chosenScene);
         // 참가자 명단(세션ID/닉네임) 수집 + 레드/블루 팀 배정을 마친 뒤 씬을 이동한다. (씬이 바뀌어도 InGameNet은 유지)
         InGameNet.Ensure().PrepareFromMatch(joinedGameRecords.Values, selectedMode, chosenScene, roomToken, matchedCardInDate);
-        SceneManager.LoadScene(chosenScene);
+
+        // 씬을 미리 불러 두고, 모든 참가자가 불러오기를 끝냈을 때 같이 이동한다. (먼저 들어가서 기다리는 유저가 생기지 않게)
+        StartCoroutine(Co_LoadMatchSceneTogether(chosenScene));
+    }
+
+    // 인스펙터의 Loading Panel(GameObject)에 끌어다 놓은 패널을 쓴다. 패널에 MatchLoadingPanel 이 없으면 자동으로 붙인다.
+    // 비워 두면 검은 화면 + LOADING 글자를 자동으로 만든다.
+    private MatchLoadingPanel ResolveLoadingPanel()
+    {
+        if (loadingPanel != null)
+        {
+            var controller = loadingPanel.GetComponent<MatchLoadingPanel>();
+            if (controller == null) controller = loadingPanel.AddComponent<MatchLoadingPanel>();
+            controller.panelRoot = loadingPanel;
+            return controller;
+        }
+
+        var go = new GameObject("MatchLoadingPanel(auto)");
+        return go.AddComponent<MatchLoadingPanel>();
+    }
+
+    private IEnumerator Co_LoadMatchSceneTogether(string sceneName)
+    {
+        var panel = ResolveLoadingPanel();
+        panel.Show();
+
+        var net = InGameNet.Ensure();
+        var operation = SceneManager.LoadSceneAsync(sceneName);
+        if (operation == null)
+        {
+            Debug.LogError("[BACKEND_MATCH] LoadSceneAsync 실패: " + sceneName);
+            SceneManager.LoadScene(sceneName);
+            yield break;
+        }
+        operation.allowSceneActivation = false;        // 90% 에서 멈추고 입장 신호를 기다린다
+
+        while (operation.progress < 0.9f)
+        {
+            panel.SetProgress(Mathf.Clamp01(operation.progress / 0.9f));
+            yield return null;
+        }
+        panel.SetProgress(1f);
+
+        // 내 로딩 끝 → 모두에게 알리고, 모두 끝날 때까지 기다린다.
+        net.ReportSceneLoaded(sceneLoadSyncTimeout + 10f);
+        Debug.Log("[BACKEND_MATCH] 씬 로딩 완료(" + sceneName + "). 다른 유저를 기다립니다.");
+
+        float waitStart = Time.unscaledTime;
+        while (!net.AllSceneLoaded && Time.unscaledTime - waitStart < sceneLoadSyncTimeout)
+        {
+            panel.SetWaiting(net.SceneLoadedCount, net.SceneLoadTargetCount);
+            yield return null;
+        }
+
+        if (!net.AllSceneLoaded)
+            Debug.LogWarning("[BACKEND_MATCH] 일부 유저의 로딩 완료 신호를 못 받았지만 대기 시간(" + sceneLoadSyncTimeout + "초)이 지나 입장합니다.");
+        else
+            Debug.Log("[BACKEND_MATCH] 모든 유저 로딩 완료. 인게임 씬으로 이동합니다.");
+
+        panel.SetWaiting(net.SceneLoadedCount, net.SceneLoadTargetCount);
+        operation.allowSceneActivation = true;
     }
 
     #endregion
@@ -1026,6 +1093,7 @@ public class BACKEND_MATCH : MonoBehaviour
         if (sceneComponent.matchStatusTitleText != null) matchStatusTitleText = sceneComponent.matchStatusTitleText;
         if (sceneComponent.matchPlayerCountText != null) matchPlayerCountText = sceneComponent.matchPlayerCountText;
         if (sceneComponent.matchProgressText != null) matchProgressText = sceneComponent.matchProgressText;
+        if (sceneComponent.loadingPanel != null) loadingPanel = sceneComponent.loadingPanel;
 
         if (!string.IsNullOrWhiteSpace(sceneComponent.classicMatchCardInDate)) classicMatchCardInDate = sceneComponent.classicMatchCardInDate;
         if (!string.IsNullOrWhiteSpace(sceneComponent.arcadeMatchCardInDate)) arcadeMatchCardInDate = sceneComponent.arcadeMatchCardInDate;

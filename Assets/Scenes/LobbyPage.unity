@@ -1305,7 +1305,7 @@ MonoBehaviour:
   m_linkedTextComponent: {fileID: 0}
   parentLinkedComponent: {fileID: 0}
   m_enableKerning: 1
-  m_ActiveFontFeatures: 00000000
+  m_ActiveFontFeatures: 6e72656b
   m_enableExtraPadding: 0
   checkPaddingRequired: 0
   m_isRichText: 1
@@ -20390,7 +20390,7 @@ GameObject:
   - component: {fileID: 1348483650}
   - component: {fileID: 1348483649}
   m_Layer: 5
-  m_Name: GoLobbyPanel
+  m_Name: LoadingPanel
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -30723,7 +30723,7 @@ RectTransform:
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
   m_AnchoredPosition: {x: 0, y: -180}
-  m_SizeDelta: {x: 350, y: 50}
+  m_SizeDelta: {x: 2290.47, y: 134.11}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &2096341081
 MonoBehaviour:
@@ -30745,10 +30745,10 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_text: Loading...
+  m_text: "\uACE0\uB178\uC57C\uB85C "
   m_isRightToLeft: 0
-  m_fontAsset: {fileID: 11400000, guid: 9f48c4f8a523c9448919ed45d204d01f, type: 2}
-  m_sharedMaterial: {fileID: -8223626920222465958, guid: 9f48c4f8a523c9448919ed45d204d01f, type: 2}
+  m_fontAsset: {fileID: 11400000, guid: b0e93e609348b12468758012d4ad10e1, type: 2}
+  m_sharedMaterial: {fileID: 6313942739428531613, guid: b0e93e609348b12468758012d4ad10e1, type: 2}
   m_fontSharedMaterials: []
   m_fontMaterial: {fileID: 0}
   m_fontMaterials: []
@@ -30772,8 +30772,8 @@ MonoBehaviour:
   m_faceColor:
     serializedVersion: 2
     rgba: 4294967295
-  m_fontSize: 110
-  m_fontSizeBase: 110
+  m_fontSize: 50.5
+  m_fontSizeBase: 50.5
   m_fontWeight: 400
   m_enableAutoSizing: 0
   m_fontSizeMin: 18
@@ -30795,7 +30795,7 @@ MonoBehaviour:
   m_linkedTextComponent: {fileID: 0}
   parentLinkedComponent: {fileID: 0}
   m_enableKerning: 1
-  m_ActiveFontFeatures: 00000000
+  m_ActiveFontFeatures: 6e72656b
   m_enableExtraPadding: 0
   checkPaddingRequired: 0
   m_isRichText: 1
@@ -43500,6 +43500,8 @@ MonoBehaviour:
   - TDM
   arcadeMapSceneNames: []
   rankMapSceneNames: []
+  loadingPanel: {fileID: 1348483647}
+  sceneLoadSyncTimeout: 30
   logVerboseMatchEvents: 1
 --- !u!4 &9015763637868123743
 Transform:

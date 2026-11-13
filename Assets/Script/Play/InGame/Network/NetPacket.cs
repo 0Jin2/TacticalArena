@@ -24,6 +24,7 @@ public enum NetPacketType : byte
     Ping = 0x02,                  // 연결 확인용. 서버가 나에게도 되돌려주므로 "에코가 오면 연결 정상"
     StateSnapshotRequest = 0x03,  // 재접속한 유저 → 호스트: 현재 상태를 달라
     StateSnapshot = 0x04,         // 호스트 → 재접속한 유저: 현재 상태 묶음
+    SceneLoaded = 0x05,           // 각 유저 → 전체: 인게임 씬 로딩이 끝나 이동 대기 중 (로비에서, 씬 이동 전에 보냄)
 
     // ── 매치 흐름 (MatchFlow)   0x10~
     PhaseChange = 0x10,           // 호스트 → 전체: 다음 단계로 이동 (단계, 시간, 승리팀, 캐릭터 확정 목록)

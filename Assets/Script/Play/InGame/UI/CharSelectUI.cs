@@ -60,7 +60,7 @@ public class CharSelectUI : MonoBehaviour
     [Header("단계별 화면 (선택)")]
     [Tooltip("Loading 단계에서만 켜지는 화면")]
     public GameObject loadingPanel;
-    [Tooltip("Intro 단계에서만 켜지는 화면")]
+    [Tooltip("씬에 들어오는 순간부터 Intro 단계가 끝날 때까지 켜져 있는 화면. (캐릭터 선택으로 넘어가면 꺼짐)")]
     public GameObject introPanel;
 
     [Header("준비 버튼 글자")]
@@ -128,7 +128,7 @@ public class CharSelectUI : MonoBehaviour
         Instance = this;
         if (selectionPanel != null) selectionPanel.SetActive(false);
         if (loadingPanel != null) loadingPanel.SetActive(false);
-        if (introPanel != null) introPanel.SetActive(false);
+        if (introPanel != null) introPanel.SetActive(true);          // 씬에 들어오자마자 인트로 화면
         if (startWaitPanel != null) startWaitPanel.SetActive(false);
     }
 
@@ -198,7 +198,8 @@ public class CharSelectUI : MonoBehaviour
 
         var phase = flow.Phase;
         if (loadingPanel != null) loadingPanel.SetActive(phase == MatchPhase.Loading);
-        if (introPanel != null) introPanel.SetActive(phase == MatchPhase.Intro);
+        // 인트로 화면: 씬 입장(Loading) ~ Intro 단계 동안 계속 켜 둔다.
+        if (introPanel != null) introPanel.SetActive(phase == MatchPhase.Loading || phase == MatchPhase.Intro);
 
         // 씬에 들어오자마자(내 팀이 정해지는 즉시) 내 팀 패널만 켠다.
         RefreshTeamPanels();

@@ -10,6 +10,11 @@ using UnityEngine;
 //     차지샷    : damage 를 크게, speed/lifeTime 조정
 //     넉백탄(FALL): stopOnWorld = false, applyKnockback = true
 //
+//  빠른 총알 관통 방지
+//   총알은 물리 계산 1번(0.02초)마다 "속도 × 0.02" 만큼 순간이동한다. (속도 50 이면 한 번에 1m)
+//   캐릭터 몸이 그보다 얇으면 총알이 몸을 "건너뛰어" 충돌 이벤트가 안 생긴다 → 가까이에서는 안 맞고 거리가 맞아야 맞는 현상.
+//   그래서 FixedUpdate 에서 "이번에 이동할 길"을 미리 훑어(Cast) 그 사이에 있는 대상도 맞은 것으로 처리한다.
+//
 //  동작 방식 (릴레이 서버 구조)
 //   - 사격자가 Fire 패킷을 보내면 "모든 기기가 같은 총알을 각자 만들어" 날린다. (서버가 총알을 대신 관리하지 않음)
 //   - 맞았는지 판정하고 Damage 패킷을 보내는 사람은 "총알 주인(사격자)의 기기" 한 곳뿐이다.
@@ -57,11 +62,21 @@ public class NetProjectile : MonoBehaviour
     private bool launched;
     private readonly HashSet<ulong> damaged = new HashSet<ulong>();
 
+    // 이동 경로 훑기(관통 방지)용
+    private static readonly RaycastHit2D[] castBuffer = new RaycastHit2D[16];
+    private ContactFilter2D castFilter;
+    private bool hasImpactPos;
+    private Vector2 impactPos;
+
     private void Awake()
     {
         body = GetComponent<Rigidbody2D>();
         myCollider = GetComponent<Collider2D>();
         if (bulletSprite == null) bulletSprite = GetComponentInChildren<SpriteRenderer>(true);
+
+        castFilter = new ContactFilter2D();
+        castFilter.NoFilter();                 // 모든 레이어, 트리거 포함 (무엇을 무시할지는 HandleContact 가 정한다)
+        castFilter.useTriggers = true;
     }
 
     /// <summary>생성 직후 호출. dir 은 정규화된 진행 방향.</summary>
@@ -79,6 +94,41 @@ public class NetProjectile : MonoBehaviour
         body.linearVelocity = dir.normalized * speed;
         launched = true;
         Invoke(nameof(DestroySelf), lifeTime);
+    }
+
+    // 물리 계산 직전: 이번 한 칸 동안 지나갈 길에 있는 대상을 미리 찾아 처리한다. (얇은 몸을 건너뛰지 않게)
+    private void FixedUpdate()
+    {
+        if (!launched || hasImpacted) return;
+
+        Vector2 velocity = body.linearVelocity;
+        float distance = velocity.magnitude * Time.fixedDeltaTime;
+        if (distance <= 0.0001f) return;
+
+        int count = myCollider.Cast(velocity.normalized, castFilter, castBuffer, distance);
+        if (count <= 0) return;
+
+        // 가까운 것부터 처리 (총알은 처음 맞은 것에서 멈춘다)
+        for (int i = 1; i < count; i++)
+        {
+            var key = castBuffer[i];
+            int j = i - 1;
+            while (j >= 0 && castBuffer[j].distance > key.distance) { castBuffer[j + 1] = castBuffer[j]; j--; }
+            castBuffer[j + 1] = key;
+        }
+
+        for (int i = 0; i < count && !hasImpacted; i++)
+        {
+            var hit = castBuffer[i];
+            var col = hit.collider;
+            if (col == null) continue;
+            if (!stopOnWorld && GameLayers.IsWorld(col.gameObject.layer)) continue;   // 통과하는 총알은 맵을 무시
+
+            impactPos = hit.centroid;           // 맞은 자리에서 이펙트가 나오도록
+            hasImpactPos = true;
+            HandleContact(col);
+        }
+        hasImpactPos = false;
     }
 
     private void OnTriggerEnter2D(Collider2D other)
@@ -182,6 +232,12 @@ public class NetProjectile : MonoBehaviour
         if (hasImpacted) return;
         hasImpacted = true;
         CancelInvoke(nameof(DestroySelf));        // 이펙트 재생 중 수명으로 사라지지 않게
+
+        if (hasImpactPos)
+        {
+            body.position = impactPos;
+            transform.position = new Vector3(impactPos.x, impactPos.y, transform.position.z);
+        }
 
         body.linearVelocity = Vector2.zero;
         body.angularVelocity = 0f;

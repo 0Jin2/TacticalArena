@@ -104,6 +104,11 @@ public class InGameNet : MonoBehaviour
     // ── 내부 상태 ────────────────────────────────────────────────────────────
     private bool isReconnecting;
     private bool sceneReady;
+
+    // 씬 이동 전 "모두 로딩 끝났는가" 확인용
+    private readonly HashSet<uint> sceneLoadedSessions = new HashSet<uint>();
+    private float announceUntil;
+    private float nextAnnounceAt;
     private bool eventsRegistered;
 
     private readonly Dictionary<NetPacketType, List<Action<NetPacket>>> handlers = new Dictionary<NetPacketType, List<Action<NetPacket>>>();
@@ -175,6 +180,7 @@ public class InGameNet : MonoBehaviour
         NetLog.Verbose = verboseLog;
         PollBackend();
         FlushDeferredCritical();
+        UpdateSceneLoadedAnnounce();
     }
 
     /// <summary>
@@ -259,6 +265,8 @@ public class InGameNet : MonoBehaviour
         pendingQueue.Clear();
         deferredCritical.Clear();
         sceneReady = false;
+        sceneLoadedSessions.Clear();
+        announceUntil = 0f;
         isReconnecting = false;
         IsOfflineTest = false;
         IsResumedMatch = false;
@@ -449,6 +457,7 @@ public class InGameNet : MonoBehaviour
         var payload = new byte[data.Length - 3];
         Buffer.BlockCopy(data, 3, payload, 0, payload.Length);
         var packet = new NetPacket(type, sender, sender == LocalSessionId, payload);
+        if (type == NetPacketType.SceneLoaded) sceneLoadedSessions.Add(sender);
 
         // 코어 패킷(연결 확인/스냅샷)은 씬 준비와 무관하게 즉시 처리, 나머지는 씬이 준비될 때까지 보관
         if (sceneReady || IsImmediate(type)) Dispatch(packet);
@@ -458,6 +467,7 @@ public class InGameNet : MonoBehaviour
     private static bool IsImmediate(NetPacketType type)
     {
         return type == NetPacketType.Ping
+            || type == NetPacketType.SceneLoaded
             || type == NetPacketType.StateSnapshotRequest
             || type == NetPacketType.StateSnapshot;
     }
@@ -513,6 +523,81 @@ public class InGameNet : MonoBehaviour
         sceneReady = true;
         NetLog.Info("씬 준비 완료. 보관된 패킷 " + pendingQueue.Count + "개 전달");
         while (pendingQueue.Count > 0) Dispatch(pendingQueue.Dequeue());
+    }
+
+    #endregion
+
+    // ═════════════════════════════════════════════════════════════════════════
+    #region 씬 이동 전 로딩 동기화 (로비에서 사용)
+
+    // 흐름: 각자 인게임 씬을 90% 까지 미리 불러 둔다 → ReportSceneLoaded() → 모두의 SceneLoaded 가 모이면 같이 씬을 연다.
+    // 상대 기기가 아직 매치 준비 전이라 패킷을 버릴 수 있으므로, 완료 신고는 1초마다 반복해서 보낸다. (같은 신고를 여러 번 받아도 문제 없음)
+
+    /// <summary>내 기기의 씬 로딩이 끝났음을 알린다. keepAnnouncingSeconds 동안 1초마다 다시 알린다.</summary>
+    public void ReportSceneLoaded(float keepAnnouncingSeconds)
+    {
+        sceneLoadedSessions.Add(LocalSessionId);
+        announceUntil = Time.unscaledTime + Mathf.Max(1f, keepAnnouncingSeconds);
+        SendSceneLoaded();
+    }
+
+    private void SendSceneLoaded()
+    {
+        nextAnnounceAt = Time.unscaledTime + 1f;
+        Send(NetPacketType.SceneLoaded, null, true);
+    }
+
+    private void UpdateSceneLoadedAnnounce()
+    {
+        if (announceUntil <= 0f) return;
+
+        float now = Time.unscaledTime;
+        if (now >= announceUntil) { announceUntil = 0f; return; }
+
+        // 모두 끝났어도 아직 못 받은 사람이 있을 수 있어 5초는 더 알려 준다.
+        if (AllSceneLoaded && announceUntil > now + 5f) announceUntil = now + 5f;
+        if (now >= nextAnnounceAt) SendSceneLoaded();
+    }
+
+    private bool MustWaitFor(NetPlayer p)
+    {
+        if (p == null) return false;
+        if (p.SessionId == LocalSessionId) return true;
+        return !p.IsForfeited && p.IsOnline;       // 이미 나간 사람은 기다리지 않는다
+    }
+
+    /// <summary>씬 로딩을 끝낸 사람 수 (기다릴 대상 중)</summary>
+    public int SceneLoadedCount
+    {
+        get
+        {
+            int n = 0;
+            for (int i = 0; i < players.Count; i++)
+                if (MustWaitFor(players[i]) && sceneLoadedSessions.Contains(players[i].SessionId)) n++;
+            return n;
+        }
+    }
+
+    /// <summary>기다릴 총 인원</summary>
+    public int SceneLoadTargetCount
+    {
+        get
+        {
+            int n = 0;
+            for (int i = 0; i < players.Count; i++) if (MustWaitFor(players[i])) n++;
+            return n;
+        }
+    }
+
+    /// <summary>기다릴 모든 사람이 씬 로딩을 끝냈는가</summary>
+    public bool AllSceneLoaded
+    {
+        get
+        {
+            for (int i = 0; i < players.Count; i++)
+                if (MustWaitFor(players[i]) && !sceneLoadedSessions.Contains(players[i].SessionId)) return false;
+            return true;
+        }
     }
 
     #endregion
