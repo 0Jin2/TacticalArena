@@ -7,7 +7,7 @@ Material:
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_Name: LobbyBG_Blur
+  m_Name: SpriteBlur
   m_Shader: {fileID: 4800000, guid: 7efd5874b0074774a51ba12c384d021c, type: 3}
   m_ValidKeywords: []
   m_InvalidKeywords: []
