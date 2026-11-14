@@ -693,7 +693,7 @@ public class BackendTDMManager : MonoBehaviour
         Vector3 position = Vector3.zero;
         if (points != null && points.Length > 0) position = points[slot.teamIndex % points.Length].position;
 
-        slot.spawnedCharacter = BackendTDMCharacterFactory.CreateLocalCharacter(info.prefab.gameObject, position);
+        slot.spawnedCharacter = BackendTDMCharacterFactory.CreateLocalCharacter(info.prefab, position);
         slot.spawnedCharacter.name = info.characterId + "_" + slot.nickname;
 
         // 블루팀은 왼쪽을 바라보게 한다.
