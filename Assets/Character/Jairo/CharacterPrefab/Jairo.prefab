@@ -5963,12 +5963,13 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: b644a585e0b5c894dab85cebd3aa2ede, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::PlayerCombat
-  projectilePrefab: {fileID: 7802968425330420635, guid: afa8d18bfba10fa4f8383e3e2001767d, type: 3}
+  projectilePrefab: {fileID: -1617837034837521806, guid: faa8ffb3e4c3ad44798bc93dbb728f3e, type: 3}
   projectileSpawnPoint: {fileID: 9143706564982701835}
   fireDelay: 0.01
   muzzleFlashPrefab: {fileID: 1825317255248144397, guid: cd1fa7c744b04f24bbc8a475eb85707c, type: 3}
   muzzleFlashLifetime: 1
   muzzleAngleRight: -90
+  muzzleReferenceScale: 3
   shootClip: {fileID: 8300000, guid: 755ee76e96722ca448641ac41b8ffe25, type: 3}
   shootMixer: {fileID: -2375065348857442081, guid: 6f5bbe61afb42c749ba2651340c2b065, type: 2}
   reloadClip: {fileID: 8300000, guid: 872ad7b4cbfe2944daca982a8acad1a4, type: 3}
@@ -11120,6 +11121,10 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 7003382939353922594}
     m_Modifications:
+    - target: {fileID: 6761131975339045548, guid: be196896ba84dcf448d0b35b7b083641, type: 3}
+      propertyPath: 'm_ActiveFontFeatures.Array.data[0]'
+      value: 1801810542
+      objectReference: {fileID: 0}
     - target: {fileID: 7642638377721300252, guid: be196896ba84dcf448d0b35b7b083641, type: 3}
       propertyPath: m_PresetInfoIsWorld
       value: 0
