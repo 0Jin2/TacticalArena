@@ -9,12 +9,12 @@ using UnityEngine.UI;
 public class MyStatusItem : MonoBehaviour
 {
     [Header("UI 요소")]
-    [SerializeField] private TMP_Text nicknameText;
-    [SerializeField] private Image healthBarFillImage;         // Fill Amount
-    [SerializeField] private Image characterIconImage;
+    [SerializeField] private TMP_Text nicknameText;            // 내 닉네임 글자
+    [SerializeField] private Image healthBarFillImage;         // 체력 바 채움 이미지 (Fill Amount 사용)
+    [SerializeField] private Image characterIconImage;         // 내 캐릭터 아이콘
     [SerializeField] private GameObject deadOverlay;           // 사망 시 활성화
     [Tooltip("(선택) '85 / 100' 같은 체력 숫자")]
-    [SerializeField] private TMP_Text hpText;
+    [SerializeField] private TMP_Text hpText;                  // (선택) 체력 숫자 글자
 
     private PlayerHealth health;
 
@@ -22,7 +22,11 @@ public class MyStatusItem : MonoBehaviour
     {
         Unhook();
 
-        if (nicknameText != null) nicknameText.text = nickname;
+        if (nicknameText != null)
+        {
+            nicknameText.text = nickname;
+            nicknameText.color = TeamView.Settings.selfColor;   // 내 닉네임 = 노랑
+        }
         if (characterIconImage != null) characterIconImage.sprite = characterIcon;
 
         health = target;

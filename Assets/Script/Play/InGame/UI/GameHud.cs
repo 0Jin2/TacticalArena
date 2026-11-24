@@ -29,85 +29,85 @@ public class GameHud : MonoBehaviour
     /// <summary>공격 버튼을 누르고 있는가</summary>
     public bool AttackHeld { get { return attackHold != null && attackHold.IsHeld && attackButton != null && attackButton.activeInHierarchy; } }
 
-    [Header("팀 점수 TEXT")]
-    public TMP_Text redTeamScoreText;
-    public TMP_Text blueTeamScoreText;
+    [Header("팀 점수 TEXT (파랑 = 항상 우리 팀, 빨강 = 항상 상대 팀)")]
+    public TMP_Text redTeamScoreText;       // 빨강 점수 글자 = 상대 팀 점수
+    public TMP_Text blueTeamScoreText;      // 파랑 점수 글자 = 우리 팀 점수
     [Tooltip("{0} 자리에 점수가 들어갑니다. 색/팀 이름 태그를 넣어 둘 수 있습니다.")]
-    public string redScoreFormat = "{0}";
-    public string blueScoreFormat = "{0}";
+    public string redScoreFormat = "{0}";   // 빨강(상대 팀) 점수 표시 형식 ({0} = 점수)
+    public string blueScoreFormat = "{0}";  // 파랑(우리 팀) 점수 표시 형식 ({0} = 점수)
 
     [Header("버튼 UI")]
-    public GameObject joystick;
-    public GameObject jumpButton;
-    public GameObject attackButton;
-    public GameObject reloadButton;
-    public GameObject skillButton;
+    public GameObject joystick;      // 이동 조이스틱
+    public GameObject jumpButton;    // 점프 버튼
+    public GameObject attackButton;  // 공격 버튼 (누르고 있으면 연사)
+    public GameObject reloadButton;  // 재장전 버튼
+    public GameObject skillButton;   // 스킬 버튼 (FALL 모드에서는 숨김)
 
     [Header("폭탄 상호작용 버튼 (BOMB)")]
-    [SerializeField] private GameObject bombInteractButton;
-    [SerializeField] private GameObject bombProgressRoot;
-    [SerializeField] private TMP_Text bombProgressLabel;
-    [SerializeField] private Image bombProgressFill;
-    public string plantButtonLabel = "폭탄 설치";
-    public string defuseButtonLabel = "폭탄 해제";
+    [SerializeField] private GameObject bombInteractButton;  // 폭탄 설치/해제 버튼 (BOMB)
+    [SerializeField] private GameObject bombProgressRoot;    // 설치/해제 진행도 묶음
+    [SerializeField] private TMP_Text bombProgressLabel;     // 진행도 글자
+    [SerializeField] private Image bombProgressFill;         // 진행도 채움 이미지
+    public string plantButtonLabel = "폭탄 설치";            // 설치 버튼 글자
+    public string defuseButtonLabel = "폭탄 해제";           // 해제 버튼 글자
 
     [Header("스코어 및 프로필 UI")]
-    public GameObject settingsButton;
+    public GameObject settingsButton;               // 설정 버튼 (게임 중 표시)
     public GameObject myStatusParent;               // 본인 상태 UI가 붙을 부모
     public GameObject myStatusItemPrefab;           // MyStatusItem 프리팹
-    public GameObject scoreUI;
+    public GameObject scoreUI;                      // 상단 점수판 묶음
 
     [Header("모드별 UI")]
-    [SerializeField] private GameObject timerUI;
-    [SerializeField] private TMP_Text timerText;
-    [SerializeField] private GameObject roundUI;
-    [SerializeField] private TMP_Text roundText;
-    [SerializeField] private GameObject goalUI;
-    [SerializeField] private TMP_Text goalText;
+    [SerializeField] private GameObject timerUI;  // 남은 시간 표시 묶음
+    [SerializeField] private TMP_Text timerText;  // 남은 시간 글자
+    [SerializeField] private GameObject roundUI;  // 라운드 표시 묶음 (BOMB)
+    [SerializeField] private TMP_Text roundText;  // 라운드 글자
+    [SerializeField] private GameObject goalUI;   // 목표 표시 묶음
+    [SerializeField] private TMP_Text goalText;   // 목표 글자 (예: 목표 처치 : 30킬)
 
     [Header("리로드/스킬 버튼")]
-    public TMP_Text reloadButtonText;               // "현재 / 최대"
-    public Image reloadButtonImage;                 // fill radial
+    public TMP_Text reloadButtonText;               // 남은 탄 글자 ("현재 / 최대")
+    public Image reloadButtonImage;                 // 재장전 진행 채움 이미지 (Image Type = Filled, Radial)
     public Image skillButtonImage;                  // 스킬 아이콘 + 쿨타임 fill
 
     [Header("사망 UI")]
-    [SerializeField] private GameObject deathUI;
-    [SerializeField] private TMP_Text deathText;
-    public string respawnCountdownFormat = "부활까지 {0}초";
+    [SerializeField] private GameObject deathUI;                // 죽었을 때 켜지는 화면
+    [SerializeField] private TMP_Text deathText;                // 부활 카운트다운 글자
+    public string respawnCountdownFormat = "부활까지 {0}초";    // 부활 문구 ({0} = 남은 초)
     [Tooltip("부활이 없는 모드(BOMB)에서 죽었을 때 표시할 문구")]
-    public string noRespawnText = "다음 라운드를 기다리는 중";
+    public string noRespawnText = "다음 라운드를 기다리는 중";  // 부활이 없는 모드(BOMB)에서 죽었을 때 문구
 
     [Header("결과 패널 UI")]
     public GameObject resultPanel;                  // 결과 전체 패널
     public GameObject myTeamWinImage;               // 내 팀 승 이미지
     public GameObject myTeamNotWinImage;            // 내 팀 패 이미지
     [Tooltip("(선택) 무승부 이미지. 비워 두면 무승부도 '패' 이미지를 사용 (기존 동작)")]
-    public GameObject drawImage;
-    public Transform redResultContent;              // 레드 팀 리스트 부모
-    public Transform blueResultContent;             // 블루 팀 리스트 부모
+    public GameObject drawImage;                    // (선택) 무승부 이미지
+    public Transform redResultContent;              // 빨강 리스트 부모 = 상대 팀 결과
+    public Transform blueResultContent;             // 파랑 리스트 부모 = 우리 팀 결과
     public GameObject resultItemPrefab;             // ResultMemberItem 프리팹
     public TMP_Text myRewardText;                   // 내 보상 텍스트
     [Tooltip("캐릭터 아이콘을 찾을 목록. 비워 두면 PlayerSpawner 의 목록을 사용")]
-    public CharacterCatalog catalogOverride;
+    public CharacterCatalog catalogOverride;        // (선택) 아이콘을 찾을 캐릭터 목록. 비우면 PlayerSpawner 의 목록 사용
 
     [Header("공용 알림 UI")]
-    [SerializeField] private GameObject alertRoot;
-    [SerializeField] private TMP_Text alertText;
-    public float alertSeconds = 2f;
+    [SerializeField] private GameObject alertRoot;  // 화면 가운데 알림 묶음
+    [SerializeField] private TMP_Text alertText;    // 알림 글자
+    public float alertSeconds = 2f;                 // 알림 표시 시간(초)
 
     [Header("연결 상태 알림 (선택)")]
     [Tooltip("내 연결이 끊겨 재접속 중일 때 켜지는 배너")]
-    [SerializeField] private GameObject reconnectBanner;
-    [SerializeField] private TMP_Text reconnectBannerText;
-    public string reconnectingFormat = "연결이 끊겼습니다. 재접속 중... ({0}초)";
-    public string opponentDisconnectedFormat = "{0} 님의 연결이 끊겼습니다.";
-    public string opponentReconnectedFormat = "{0} 님이 다시 접속했습니다.";
-    public string opponentForfeitedFormat = "{0} 님이 게임에서 이탈했습니다.";
-    public string reconnectFailedMessage = "연결할 수 없어 로비로 돌아갑니다.";
-    public float returnToLobbyAfterFailSeconds = 3f;
+    [SerializeField] private GameObject reconnectBanner;                           // 내 연결이 끊겨 재접속 중일 때 켜지는 배너
+    [SerializeField] private TMP_Text reconnectBannerText;                         // 재접속 배너 글자
+    public string reconnectingFormat = "연결이 끊겼습니다. 재접속 중... ({0}초)";  // 재접속 중 문구 ({0} = 남은 초)
+    public string opponentDisconnectedFormat = "{0} 님의 연결이 끊겼습니다.";      // 상대 연결 끊김 문구 ({0} = 닉네임)
+    public string opponentReconnectedFormat = "{0} 님이 다시 접속했습니다.";       // 상대 재접속 문구 ({0} = 닉네임)
+    public string opponentForfeitedFormat = "{0} 님이 게임에서 이탈했습니다.";     // 상대 이탈 문구 ({0} = 닉네임)
+    public string reconnectFailedMessage = "연결할 수 없어 로비로 돌아갑니다.";    // 재접속 실패 문구
+    public float returnToLobbyAfterFailSeconds = 3f;                               // 재접속 실패 후 로비로 이동하기까지(초)
 
     [Header("튜토리얼")]
-    [SerializeField] private string tutorialSceneKeyword = "Tutorial";
+    [SerializeField] private string tutorialSceneKeyword = "Tutorial";  // 씬 이름에 이 글자가 있으면 튜토리얼로 판단
 
     // ── 내부 ────────────────────────────────────────────────────────────────
     private HoldButton attackHold;
@@ -281,7 +281,10 @@ public class GameHud : MonoBehaviour
         if (mode == null) return;
         // scoreUI 를 비워 둔 씬에서도 점수 글자는 갱신되도록 (기존: scoreUI 가 null 이면 영영 갱신 안 됨)
         if (scoreUI != null && !scoreUI.activeInHierarchy) return;
-        int red = mode.ScoreOf(NetTeam.Red), blue = mode.ScoreOf(NetTeam.Blue);
+        // 파랑 칸 = 우리 팀, 빨강 칸 = 상대 팀 (내 팀을 아직 모르면 1팀을 우리 팀처럼 표시)
+        NetTeam myTeam = TeamView.LocalTeam;
+        if (myTeam == NetTeam.None) myTeam = NetTeam.Red;
+        int red = mode.ScoreOf(TeamView.OtherTeam(myTeam)), blue = mode.ScoreOf(myTeam);
         if (red == lastRed && blue == lastBlue) return;
         lastRed = red; lastBlue = blue;
         if (redTeamScoreText != null) redTeamScoreText.text = string.Format(redScoreFormat, red);
@@ -634,10 +637,12 @@ public class GameHud : MonoBehaviour
         }
         else if (myTeamNotWinImage != null) myTeamNotWinImage.SetActive(!isWin);
 
+        // 파랑 리스트 = 우리 팀, 빨강 리스트 = 상대 팀 (점수판과 같은 규칙)
+        NetTeam ourTeam = myTeam != NetTeam.None ? myTeam : NetTeam.Red;
         ClearChildren(redResultContent);
         ClearChildren(blueResultContent);
-        PopulateTeam(NetTeam.Red, redResultContent);
-        PopulateTeam(NetTeam.Blue, blueResultContent);
+        PopulateTeam(ourTeam, blueResultContent);
+        PopulateTeam(TeamView.OtherTeam(ourTeam), redResultContent);
 
         // 보상: 확정 전이면 0G, 확정되면 갱신
         var reporter = ResultReporter.Instance;
@@ -669,6 +674,7 @@ public class GameHud : MonoBehaviour
             if (item == null) continue;
             Sprite icon = catalog != null ? catalog.GetIcon(p.CharacterId) : null;
             item.Setup(icon, p.Nickname, state.GetKills(p.SessionId), state.GetDeaths(p.SessionId));
+            item.SetNicknameColor(TeamView.ColorOf(p));      // 나 노랑 / 같은 팀 파랑 / 상대 팀 빨강
         }
     }
 
@@ -683,19 +689,25 @@ public class GameHud : MonoBehaviour
     // ═════════════════════════════════════════════════════════════════════════
     #region 연결 상태 알림
 
+    // 알림 속 닉네임도 관계 색으로 (같은 팀 파랑 / 상대 팀 빨강)
+    private static string ColoredNick(NetPlayer p)
+    {
+        return TeamView.Colorize(p.Nickname, TeamView.ColorOf(p));
+    }
+
     private void HandleRemoteDisconnected(NetPlayer p)
     {
-        if (p != null) ShowAlert(string.Format(opponentDisconnectedFormat, p.Nickname));
+        if (p != null) ShowAlert(string.Format(opponentDisconnectedFormat, ColoredNick(p)));
     }
 
     private void HandleRemoteReconnected(NetPlayer p)
     {
-        if (p != null) ShowAlert(string.Format(opponentReconnectedFormat, p.Nickname));
+        if (p != null) ShowAlert(string.Format(opponentReconnectedFormat, ColoredNick(p)));
     }
 
     private void HandleRemoteForfeited(NetPlayer p)
     {
-        if (p != null) ShowAlert(string.Format(opponentForfeitedFormat, p.Nickname));
+        if (p != null) ShowAlert(string.Format(opponentForfeitedFormat, ColoredNick(p)));
     }
 
     private void HandleLocalReconnectFailed(ReconnectFailReason reason)

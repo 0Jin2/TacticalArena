@@ -4,11 +4,13 @@ using UnityEngine.UI;
 // 뒤끝 팀데스매치 캐릭터 선택 버튼
 public class BackendTDMCharacterButton : MonoBehaviour
 {
-    [SerializeField] private CharacterInfo characterInfo;
-    [SerializeField] private Button button;
-    [SerializeField] private Image iconImage;
-    [SerializeField] private GameObject lockIcon;
-    [SerializeField] private GameObject selectedFrame;
+    [Header("UI 요소")]
+    [Header("캐릭터 데이터")]
+    [SerializeField] private CharacterInfo characterInfo;  // 이 버튼이 고르는 캐릭터 (CharacterInfo 에셋)
+    [SerializeField] private Button button;                // 클릭할 Button
+    [SerializeField] private Image iconImage;              // 캐릭터 아이콘 Image
+    [SerializeField] private GameObject lockIcon;          // 미보유 캐릭터일 때 켜지는 자물쇠
+    [SerializeField] private GameObject selectedFrame;     // 선택됐을 때 켜지는 테두리
 
     private BackendTDMManager manager;
 

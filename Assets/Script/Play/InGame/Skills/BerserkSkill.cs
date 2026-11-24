@@ -11,8 +11,8 @@ public class BerserkSkill : SkillBase
 {
     [Header("광폭화")]
     public GameObject berserkEffectObject;      // 효과 오브젝트 (평소 꺼 두기)
-    public float duration = 5f;
-    [Range(0f, 0.95f)] public float attackSpeedBoost = 0.5f;
+    public float duration = 5f;                               // 광폭화 지속 시간(초)
+    [Range(0f, 0.95f)] public float attackSpeedBoost = 0.5f;  // 공격 간격 감소 비율 (0.5 = 간격 절반 = 2배 빠름)
 
     private const byte PhaseEffect = 1;         // [켜짐? bool]
 

@@ -23,13 +23,13 @@ using UnityEngine.UI;
 public class TeamMemberItem : MonoBehaviour
 {
     [Header("UI 요소")]
-    public TMP_Text nicknameText;
-    public GameObject readyIndicator;
+    public TMP_Text nicknameText;                   // 닉네임 글자
+    public GameObject readyIndicator;               // 준비 완료 표시
     public GameObject disconnectIndicator;          // 연결끊김 표시 UI
 
     [Header("비주얼 표시")]
-    public Transform characterVisualRoot;
-    public GameObject currentCharacterVisualImage;
+    public Transform characterVisualRoot;           // 고른 캐릭터 UI 프리팹이 생길 부모
+    public GameObject currentCharacterVisualImage;  // (선택) 처음에 보이는 기본 이미지
 
     private GameObject currentCharacterVisual;
     private string shownVisualKey;                  // 지금 보여 주는 캐릭터 (같으면 다시 만들지 않음)
@@ -81,6 +81,13 @@ public class TeamMemberItem : MonoBehaviour
             nicknameText.text = nickname;
             shownNickname = nickname;
         }
+    }
+
+    /// <summary>닉네임 색 (나 노랑 / 같은 팀 파랑). 같은 색이면 다시 칠하지 않는다.</summary>
+    public void SetNicknameColor(Color color)
+    {
+        Validate();
+        if (nicknameText != null && nicknameText.color != color) nicknameText.color = color;
     }
 
     /// <summary>칸을 처음 상태로. 기본 이미지는 건드리지 않는다 (만들어졌을 때 그대로 보이게)</summary>

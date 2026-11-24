@@ -26,17 +26,17 @@ public class ResultReporter : MonoBehaviour
 
     [Header("보상")]
     [Tooltip("끄면 이 스크립트가 골드를 직접 지급하지 않습니다. (보상 표시만 하고 지급은 다른 곳에서 할 때)")]
-    public bool grantGold = true;
+    public bool grantGold = true;  // 켜면 경기 결과 골드를 지급
 
     [Header("뒤끝 서버 보고")]
     [Tooltip("결과 단계가 시작된 뒤 이 시간(초)이 지나면 호스트가 MatchEnd 를 보냅니다. (다른 유저가 결과 패킷을 받을 시간을 주기 위함)")]
-    public float matchEndDelaySeconds = 1.5f;
-    public bool reportMatchEnd = true;
+    public float matchEndDelaySeconds = 1.5f;  // 결과 단계 시작 후 서버에 결과를 보내기까지 대기 시간(초)
+    public bool reportMatchEnd = true;         // 켜면 뒤끝 서버에 경기 종료를 보고
 
     [Header("로비 복귀")]
-    public bool returnToLobbyAutomatically = true;
+    public bool returnToLobbyAutomatically = true;  // 켜면 결과 화면이 끝나면 자동으로 로비 이동
     [Tooltip("비워 두면 ModeConfig.lobbySceneName 을 사용")]
-    public string lobbySceneOverride = "";
+    public string lobbySceneOverride = "";          // 돌아갈 로비 씬 이름 (비우면 ModeConfig 값 사용)
 
     /// <summary>내 보상 골드 (결과 단계 시작 때 확정, 그 전에는 0)</summary>
     public int LocalReward { get; private set; }

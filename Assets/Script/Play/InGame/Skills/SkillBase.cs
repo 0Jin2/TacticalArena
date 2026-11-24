@@ -20,11 +20,11 @@ public abstract class SkillBase : MonoBehaviour
     public const byte PhaseStart = 0;       // 스킬 시작 (효과음). 파생 클래스의 단계 번호는 1부터 쓴다.
 
     [Header("스킬 공통")]
-    public Sprite skillIcon;
-    public AudioClip skillStartClip;
-    public AudioMixerGroup skillMixer;
+    public Sprite skillIcon;             // 스킬 버튼에 표시할 아이콘
+    public AudioClip skillStartClip;     // 스킬 시작 효과음
+    public AudioMixerGroup skillMixer;   // 스킬 효과음 믹서 그룹
     [Tooltip("0 이면 CharacterStatData.skillCooldown 을 사용한다.")]
-    public float cooldownOverride = 0f;
+    public float cooldownOverride = 0f;  // 쿨타임 직접 지정(초). 0 = 스탯(CharacterStatData) 값 사용
 
     public PlayerEntity Entity { get; private set; }
     /// <summary>스킬이 진행 중인가 (주인 기기에서만 의미 있음)</summary>

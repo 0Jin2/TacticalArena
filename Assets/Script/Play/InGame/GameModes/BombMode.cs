@@ -30,40 +30,40 @@ public class BombMode : GameModeBase
     public enum RoundEndReason : byte { None = 0, Eliminated = 1, TimeOut = 2, Exploded = 3, Defused = 4 }
 
     [Header("라운드 규칙")]
-    public int totalRounds = 5;
+    public int totalRounds = 5;                       // 전체 라운드 수 (5 = 5판 3선승)
     [Tooltip("1라운드에 폭탄을 설치하는 팀")]
-    public NetTeam firstInstallerTeam = NetTeam.Red;
-    public float roundSeconds = 300f;
+    public NetTeam firstInstallerTeam = NetTeam.Red;  // 1라운드에 폭탄을 설치하는 팀
+    public float roundSeconds = 300f;                 // 한 라운드 제한 시간(초)
     [Tooltip("폭탄 설치 후 폭발까지의 시간")]
-    public float bombCountdownSeconds = 60f;
-    public float plantSeconds = 6f;
-    public float defuseSeconds = 6f;
+    public float bombCountdownSeconds = 60f;          // 설치 후 폭발까지 시간(초)
+    public float plantSeconds = 6f;                   // 폭탄 설치에 걸리는 시간(초)
+    public float defuseSeconds = 6f;                  // 폭탄 해제에 걸리는 시간(초)
     [Tooltip("라운드가 끝나고 다음 라운드가 시작되기까지의 대기 시간")]
-    public float betweenRoundsSeconds = 2f;
+    public float betweenRoundsSeconds = 2f;           // 라운드 사이 대기 시간(초)
     [Tooltip("라운드 시작 시 모든 캐릭터를 시작 위치로 되살린다. (1라운드는 이미 시작 위치이므로 제외)")]
-    public bool respawnAtRoundStart = true;
+    public bool respawnAtRoundStart = true;           // 켜면 라운드 시작 때 모두 시작 위치에서 부활
 
     [Header("판정 보정")]
     [Tooltip("호스트가 보는 상대 위치는 약간 늦습니다. interactRange 에 이 배율을 곱한 거리까지는 허용")]
-    public float hostRangeTolerance = 1.4f;
+    public float hostRangeTolerance = 1.4f;          // 호스트 거리 판정 여유 배율 (네트워크 지연 보정)
     [Tooltip("한쪽 팀에 아무도 없으면 전멸 판정을 건너뜁니다. (혼자 테스트용)")]
-    public bool skipEliminationForEmptyTeam = true;
+    public bool skipEliminationForEmptyTeam = true;  // 켜면 한 팀이 비어 있을 때 전멸 판정 생략 (혼자 테스트용)
 
     [Header("HUD")]
     [Tooltip("라운드 승수 점수판을 보여 줄지. (기존에도 줌인 후 점수판에 라운드 승수가 표시됨)")]
-    public bool showScoreBoard = true;
-    public string roundFormat = "{0} / {1}";
+    public bool showScoreBoard = true;        // 라운드 승수 점수판 표시
+    public string roundFormat = "{0} / {1}";  // 라운드 표시 형식 ({0} = 현재, {1} = 전체)
 
     [Header("씬 오브젝트")]
     [Tooltip("비워 두면 씬의 BombSite 를 이름순으로 자동 수집")]
-    public BombSite[] sites;
+    public BombSite[] sites;  // 폭탄 설치 지점 목록 (비우면 씬에서 자동 수집)
 
     [Header("안내 문구 (비우면 표시 안 함)")]
     public string msgBombPlanted = "폭탄이 설치되었습니다.";     // 해제팀에게만 + 방향 화살표
-    public string msgRoundWin = "라운드 승리!";
-    public string msgRoundLose = "라운드 패배";
-    public string msgPlantLabel = "설치 중.";
-    public string msgDefuseLabel = "해제 중.";
+    public string msgRoundWin = "라운드 승리!";                  // 라운드를 이겼을 때 문구
+    public string msgRoundLose = "라운드 패배";                  // 라운드를 졌을 때 문구
+    public string msgPlantLabel = "설치 중.";                    // 설치 중 문구
+    public string msgDefuseLabel = "해제 중.";                   // 해제 중 문구
 
     // ── 패킷 종류 ───────────────────────────────────────────────────────────
     private const byte ReqInteract = 1;          // [site byte][isPlant bool]

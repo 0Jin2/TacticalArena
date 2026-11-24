@@ -25,29 +25,29 @@ using UnityEngine;
 public class NetProjectile : MonoBehaviour
 {
     [Header("총알 수치")]
-    public float speed = 10f;
-    public float lifeTime = 2f;
-    public int damage = 10;
+    public float speed = 10f;    // 총알 속도
+    public float lifeTime = 2f;  // 총알이 사라지기까지 시간(초). 길수록 멀리 날아감
+    public int damage = 10;      // 한 발 피해량
 
     [Header("충돌 규칙")]
     [Tooltip("땅/벽에 부딪히면 멈추고 사라진다. 끄면 맵을 통과한다. (FALL 넉백탄)")]
-    public bool stopOnWorld = true;
+    public bool stopOnWorld = true;  // 켜면 땅/벽에 맞으면 사라짐
 
     [Header("넉백 (FALL 모드 등)")]
-    public bool applyKnockback = false;
-    public float knockbackForce = 25f;
-    public float knockbackUpBias = 0.4f;
-    public float knockbackLockSeconds = 0.2f;
+    public bool applyKnockback = false;            // 켜면 맞은 캐릭터를 밀어냄 (FALL 넉백탄)
+    public float knockbackForce = 25f;             // 밀어내는 힘
+    public float knockbackUpBias = 0.4f;           // 밀 때 위쪽으로 띄우는 비율 (0 = 수평)
+    public float knockbackLockSeconds = 0.2f;      // 밀려나는 동안 조작이 막히는 시간(초)
     [Tooltip("true: 총알이 가던 방향으로 밀어낸다 / false: 반대쪽으로 끌어당긴다")]
-    public bool knockAlongBulletDirection = true;
+    public bool knockAlongBulletDirection = true;  // 켜면 총알 방향으로 밀고, 끄면 반대로 당김
 
     [Header("히트 이펙트 (자식 오브젝트 연결)")]
-    public SpriteRenderer bulletSprite;
-    public GameObject fxHitPlayer;
-    public GameObject fxHitBarrier;
-    public GameObject fxHitWorld;
+    public SpriteRenderer bulletSprite;  // 총알 그림 (자식 SpriteRenderer)
+    public GameObject fxHitPlayer;       // 캐릭터에 맞았을 때 켤 이펙트 (자식 오브젝트)
+    public GameObject fxHitBarrier;      // 방벽에 맞았을 때 켤 이펙트 (자식 오브젝트)
+    public GameObject fxHitWorld;        // 땅/벽에 맞았을 때 켤 이펙트 (자식 오브젝트)
     [Tooltip("이펙트 애니메이션이 끝나기를 기다리는 최대 시간")]
-    public float effectTimeout = 10f;
+    public float effectTimeout = 10f;    // 이펙트가 끝나기를 기다리는 최대 시간(초)
 
     public uint OwnerSession { get; private set; }
     /// <summary>이 총알의 주인이 "이 기기"인가 → 맞았는지 판정하고 Damage 를 보내는 쪽</summary>

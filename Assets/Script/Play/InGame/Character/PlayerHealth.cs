@@ -17,27 +17,27 @@ using UnityEngine.Audio;
 public class PlayerHealth : MonoBehaviour, IDamageTarget
 {
     [Header("피격 연출")]
-    public AudioClip hitClip;
-    public AudioMixerGroup hitMixer;
-    public Color flashColor = new Color(1f, 0.4f, 0.4f, 1f);
-    public float flashSeconds = 0.3f;
+    public AudioClip hitClip;                                 // 맞았을 때 효과음
+    public AudioMixerGroup hitMixer;                          // 피격 효과음 믹서 그룹
+    public Color flashColor = new Color(1f, 0.4f, 0.4f, 1f);  // 맞았을 때 캐릭터가 번쩍이는 색
+    public float flashSeconds = 0.3f;                         // 피격 색이 유지되는 시간(초)
 
     [Header("부활 무적 연출")]
-    public float blinkInterval = 0.2f;
-    [Range(0f, 1f)] public float blinkAlpha = 0.5f;
+    public float blinkInterval = 0.2f;               // 부활 무적 중 깜빡이는 간격(초)
+    [Range(0f, 1f)] public float blinkAlpha = 0.5f;  // 무적 중 깜빡일 때 투명도 (0 = 투명, 1 = 불투명)
 
     [Header("사망 처리")]
     [Tooltip("사망 후 땅에 닿으면 물리/충돌을 끈다.")]
-    public bool disablePhysicsAfterLanding = true;
-    public float landingWaitTimeout = 5f;
+    public bool disablePhysicsAfterLanding = true;  // 켜면 죽은 뒤 땅에 닿으면 물리/충돌을 끔
+    public float landingWaitTimeout = 5f;           // 죽은 뒤 땅에 닿기를 기다리는 최대 시간(초)
 
     [Header("킬 인정")]
     [Tooltip("가해자 없는 사망(낙사)일 때, 이 시간(초) 안에 마지막으로 때린 사람이 있으면 그 사람의 킬로 인정. 0 = 인정 안 함")]
-    public float lastAttackerCreditSeconds = 0f;
+    public float lastAttackerCreditSeconds = 0f;  // 낙사 때 이 시간(초) 안에 때린 사람에게 킬 인정 (0 = 안 함)
 
     [Header("테스트")]
     [Tooltip("켜면 체력이 깎이지 않는다 (에디터 테스트용)")]
-    public bool godMode;
+    public bool godMode;  // 켜면 체력이 깎이지 않음 (테스트용, 출시 전 꼭 끄기)
 
     // ── 상태 ────────────────────────────────────────────────────────────────
     public int CurrentHP { get; private set; }

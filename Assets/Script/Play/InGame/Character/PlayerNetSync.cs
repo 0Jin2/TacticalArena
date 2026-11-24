@@ -13,18 +13,18 @@ using UnityEngine;
 public class PlayerNetSync : MonoBehaviour
 {
     [Header("전송 (내 캐릭터)")]
-    [Range(5f, 30f)] public float sendRate = 15f;
+    [Range(5f, 30f)] public float sendRate = 15f;  // 1초에 내 위치를 보내는 횟수 (높을수록 부드럽지만 데이터를 많이 씀)
     [Tooltip("움직임이 없을 때 전송 간격(초)")]
-    public float idleSendInterval = 0.25f;
-    public float movedEpsilon = 0.01f;
+    public float idleSendInterval = 0.25f;         // 가만히 있을 때 전송 간격(초)
+    public float movedEpsilon = 0.01f;             // 이 거리보다 적게 움직이면 "안 움직임"으로 봄
 
     [Header("보간 (남의 캐릭터)")]
     [Tooltip("클수록 목표 위치에 빨리 붙는다")]
-    public float smoothing = 18f;
+    public float smoothing = 18f;          // 다른 유저 캐릭터가 목표 위치를 따라가는 속도
     [Tooltip("목표와 이 거리 이상 벌어지면 순간이동")]
-    public float snapDistance = 4f;
+    public float snapDistance = 4f;        // 이 거리 이상 벌어지면 즉시 순간이동
     [Tooltip("패킷이 늦을 때 속도로 예측해 줄 최대 시간(초)")]
-    public float maxExtrapolation = 0.2f;
+    public float maxExtrapolation = 0.2f;  // 패킷이 늦을 때 예측 이동해 주는 최대 시간(초)
 
     private const byte FlagGrounded = 1;
     private const byte FlagShooting = 2;

@@ -23,19 +23,19 @@ public class FlagMode : GameModeBase
 
     [Header("표시 문구")]
     [Tooltip("{0} 자리에 목표 점수가 들어갑니다.")]
-    public string goalFormat = "목표 점수 : {0}";
+    public string goalFormat = "목표 점수 : {0}";  // 목표 표시 문구 ({0} = 목표 점수)
 
     [Header("안내 문구 (비워 두면 표시하지 않음)")]
     public string msgFlagStolen = "깃발을 뺏겼습니다!";           // 내 팀 깃발을 적이 가져감
     public string msgFlagTaken = "적 깃발을 탈취했습니다!";        // 우리 팀이 적 깃발을 가져옴
-    public string msgScored = "득점 성공!";
-    public string msgEnemyScored = "상대가 득점했습니다!";
+    public string msgScored = "득점 성공!";                        // 우리 팀이 득점했을 때 문구
+    public string msgEnemyScored = "상대가 득점했습니다!";         // 상대 팀이 득점했을 때 문구
     [Tooltip("깃발 운반자가 죽거나 이탈해서 깃발이 제자리로 돌아갔을 때 (기존에는 없던 안내, 기본 꺼짐)")]
-    public string msgFlagReturned = "";
+    public string msgFlagReturned = "";                            // 깃발이 제자리로 돌아갔을 때 문구 (비우면 표시 안 함)
 
     [Header("요청 간격")]
     [Tooltip("같은 요청을 이 시간 안에 다시 보내지 않습니다. (존 안에 서 있는 동안 패킷 폭주 방지)")]
-    public float requestIntervalSeconds = 0.5f;
+    public float requestIntervalSeconds = 0.5f;  // 같은 요청을 다시 보내기까지의 최소 간격(초)
 
     // ── 패킷 종류 ───────────────────────────────────────────────────────────
     private const byte ReqPickup = 1;       // [flagOwnerTeam byte]

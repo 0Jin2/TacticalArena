@@ -11,8 +11,8 @@ public class SpeedUpSkill : SkillBase
 {
     [Header("스피드업")]
     public GameObject speedEffectObject;        // 효과 오브젝트 (평소 꺼 두기)
-    public float speedMultiplier = 1.6f;
-    public float duration = 7f;
+    public float speedMultiplier = 1.6f;        // 이동 속도 배율 (1.6 = 60% 빨라짐)
+    public float duration = 7f;                 // 스피드업 지속 시간(초)
 
     private const byte PhaseEffect = 1;         // [켜짐? bool]
 

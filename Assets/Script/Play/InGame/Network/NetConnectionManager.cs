@@ -66,25 +66,25 @@ public class NetConnectionManager : MonoBehaviour
 {
     [Header("재접속 (초)")]
     [Tooltip("재접속 제한 시간. 내 쪽(재접속 시도)과 남의 쪽(이탈 확정 유예) 모두에 쓰인다.")]
-    public float reconnectTimeLimit = 30f;
+    public float reconnectTimeLimit = 30f;  // 재접속 제한 시간(초). 경기 시작 때 ModeConfig 값으로 덮어씀
     [Tooltip("끊김 직후 SDK 자동 재접속을 기다리는 시간")]
-    public float autoReconnectWait = 6f;
-    public float retryInterval = 2f;
-    public float joinTimeout = 10f;
-    public float snapshotTimeout = 3f;
-    public int snapshotRetries = 3;
+    public float autoReconnectWait = 6f;    // 끊긴 직후 뒤끝 자동 재접속을 기다리는 시간(초)
+    public float retryInterval = 2f;        // 재접속 실패 시 다시 시도하기까지 간격(초)
+    public float joinTimeout = 10f;         // 게임 서버 재입장 응답을 기다리는 최대 시간(초)
+    public float snapshotTimeout = 3f;      // 호스트에게 현재 경기 상태를 받을 때 기다리는 시간(초)
+    public int snapshotRetries = 3;         // 경기 상태 요청 재시도 횟수
 
     [Header("연결 감시")]
     [Tooltip("연결 확인(Ping) 주기. 0이면 끈다. SDK의 30초 감지보다 빨리 알아채기 위함.")]
-    public float livenessInterval = 5f;
-    public float probeTimeout = 3f;
+    public float livenessInterval = 5f;  // 연결 확인(Ping) 주기(초). 0 = 끔
+    public float probeTimeout = 3f;      // Ping 응답을 기다리는 시간(초)
     [Tooltip("연속 몇 번 응답이 없으면 끊김으로 판단할지 (일시적 프레임 끊김 오판 방지)")]
-    public int probeFailThreshold = 2;
+    public int probeFailThreshold = 2;   // 연속 몇 번 응답이 없으면 끊김으로 판단할지
 
     [Header("호스트 이탈 / 인원")]
-    public HostLossPolicy hostLossPolicy = HostLossPolicy.ContinueWithNewHost;
+    public HostLossPolicy hostLossPolicy = HostLossPolicy.ContinueWithNewHost;  // 호스트가 나갔을 때 처리. 경기 시작 때 ModeConfig 값으로 덮어씀
     [Tooltip("팀당 최소 생존 인원. 이보다 적어지면 매치를 중단한다.")]
-    public int minPlayersPerTeam = 1;
+    public int minPlayersPerTeam = 1;                                           // 팀 최소 인원 (미만이면 경기 중단). 경기 시작 때 ModeConfig 값으로 덮어씀
 
     // ── 이벤트 (구독자가 화면/판정/결과를 처리) ───────────────────────────────
     public event Action<NetConnectionState> OnStateChanged;

@@ -16,14 +16,14 @@ public class NetKillZone : MonoBehaviour
 {
     [Header("대상 필터")]
     [Tooltip("true 면 Player 레이어만 처리합니다.")]
-    [SerializeField] private bool onlyPlayerLayer = true;
+    [SerializeField] private bool onlyPlayerLayer = true;  // 켜면 Player 레이어만 죽임
 
     [Tooltip("같은 대상에게 이 시간 안에는 다시 처리하지 않습니다.")]
-    [SerializeField] private float perTargetCooldown = 0.2f;
+    [SerializeField] private float perTargetCooldown = 0.2f;  // 같은 대상을 다시 처리하기까지 대기 시간(초)
 
     [Header("킬 인정")]
     [Tooltip("이 시간(초) 안에 나를 공격한 사람이 있으면 그 사람의 킬로 인정합니다. 0 이면 인정 안 함(기존 동작)")]
-    [SerializeField] private float creditWindowSeconds = 5f;
+    [SerializeField] private float creditWindowSeconds = 5f;  // 이 시간(초) 안에 나를 때린 사람에게 킬 인정 (0 = 인정 안 함)
 
     private readonly Dictionary<PlayerEntity, float> lastHitTime = new Dictionary<PlayerEntity, float>();
 

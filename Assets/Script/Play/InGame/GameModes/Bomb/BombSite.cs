@@ -17,25 +17,25 @@ public class BombSite : MonoBehaviour
 {
     [Header("기준점 / 상호작용")]
     [Tooltip("거리 판정의 기준 위치. 비워 두면 이 오브젝트의 위치")]
-    public Transform worldAnchor;
+    public Transform worldAnchor;       // 거리 판정 기준 위치 (비우면 이 오브젝트 위치)
     [Tooltip("이 반경 안에서만 설치/해제할 수 있습니다.")]
-    public float interactRange = 2.0f;
+    public float interactRange = 2.0f;  // 설치/해제할 수 있는 반경
 
     [Header("폭탄 비주얼")]
     [Tooltip("설치되면 켜지는 폭탄 오브젝트")]
-    public GameObject bombVisual;
+    public GameObject bombVisual;                            // 설치되면 켜지는 폭탄 오브젝트
     [Range(0f, 1f)] public float eligibleAlpha = 0.5f;       // 설치 가능 위치에 서 있을 때(미리보기) 반투명
-    [Range(0f, 1f)] public float defaultAlpha = 1.0f;
+    [Range(0f, 1f)] public float defaultAlpha = 1.0f;        // 평소 폭탄 투명도 (1 = 불투명)
 
     [Header("진행도 표시 (월드 캔버스, 선택)")]
-    [SerializeField] private Canvas progressCanvas;
-    [SerializeField] private Image progressFill;
-    [SerializeField] private TMP_Text progressLabel;
-    public string plantLabelFormat = "설치 중... ({0}%)";
-    public string defuseLabelFormat = "해제 중... ({0}%)";
+    [SerializeField] private Canvas progressCanvas;         // (선택) 진행도를 띄울 월드 캔버스
+    [SerializeField] private Image progressFill;            // (선택) 진행도 채움 이미지
+    [SerializeField] private TMP_Text progressLabel;        // (선택) 진행도 글자
+    public string plantLabelFormat = "설치 중... ({0}%)";   // 설치 중 문구 ({0} = 진행률 %)
+    public string defuseLabelFormat = "해제 중... ({0}%)";  // 해제 중 문구 ({0} = 진행률 %)
 
     [Header("인덱스 (BombMode 가 지정)")]
-    public int siteIndex = -1;
+    public int siteIndex = -1;  // 사이트 번호 (BombMode 가 자동으로 지정하니 건드리지 않기)
 
     public bool IsActive { get; private set; }
     public bool IsPlantedHere { get; private set; }

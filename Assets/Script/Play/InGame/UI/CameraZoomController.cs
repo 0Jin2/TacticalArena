@@ -18,19 +18,19 @@ public class CameraZoomController : MonoBehaviour
     public static CameraZoomController Instance { get; private set; }
 
     [Header("Cinemachine 설정")]
-    [SerializeField] private CinemachineCamera virtualCamera;
-    [SerializeField] private float zoomSpeed = 1.5f;
+    [SerializeField] private CinemachineCamera virtualCamera;  // 씬의 CinemachineCamera
+    [SerializeField] private float zoomSpeed = 1.5f;           // 줌인 속도
     [Tooltip("줌인이 끝났을 때의 렌즈(Orthographic Size) 값. 작을수록 캐릭터가 크게 보입니다.")]
-    [SerializeField] private float zoomTargetSize = 0.5f;
+    [SerializeField] private float zoomTargetSize = 0.5f;      // 줌인 후 카메라 크기 (작을수록 캐릭터가 크게 보임)
 
     [Header("화면 경계 (선택)")]
-    [SerializeField] private CinemachineConfiner2D confiner;
-    [SerializeField] private Collider2D confinerBounds;
+    [SerializeField] private CinemachineConfiner2D confiner;  // (선택) 카메라 이동 제한 컴포넌트 (CinemachineConfiner2D)
+    [SerializeField] private Collider2D confinerBounds;       // (선택) 카메라가 벗어나면 안 되는 영역 콜라이더
 
     [Header("튜토리얼")]
     [Tooltip("튜토리얼 미완료일 때 줌인 후 켜 줄 오브젝트. 비워 두면 이름이 TutorialUI 인 오브젝트를 찾습니다.")]
-    [SerializeField] private GameObject tutorialUI;
-    [SerializeField] private string tutorialSceneKeyword = "Tutorial";
+    [SerializeField] private GameObject tutorialUI;                     // 튜토리얼 미완료일 때 줌인 후 켤 UI
+    [SerializeField] private string tutorialSceneKeyword = "Tutorial";  // 씬 이름에 이 글자가 있으면 튜토리얼로 판단
 
     /// <summary>줌인이 끝났을 때 (내 캐릭터 기준으로 UI 를 켤 시점)</summary>
     public event Action OnZoomInCompleted;

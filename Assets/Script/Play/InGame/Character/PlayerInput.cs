@@ -10,8 +10,8 @@ using UnityEngine;
 public class PlayerInput : MonoBehaviour
 {
     [Header("입력 설정")]
-    [Range(0f, 0.9f)] public float deadZone = 0.2f;
-    public bool useKeyboardInEditor = true;
+    [Range(0f, 0.9f)] public float deadZone = 0.2f;  // 조이스틱을 이만큼 이상 밀어야 입력으로 인정 (0~0.9)
+    public bool useKeyboardInEditor = true;          // 켜면 에디터에서 키보드로 조작 가능
 
     public Vector2 MoveInput { get; private set; }
     public bool AttackHeld { get; private set; }

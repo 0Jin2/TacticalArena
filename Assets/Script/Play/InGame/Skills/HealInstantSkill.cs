@@ -10,9 +10,9 @@ public class HealInstantSkill : SkillBase
 {
     [Header("회복")]
     public GameObject healEffectPrefab;       // 회복 이펙트 (애니메이션 끝에 스스로 사라지게: AnimationEventDestroy)
-    public Transform effectSpawnPoint;
-    public int totalHealAmount = 100;
-    public float healDuration = 1f;
+    public Transform effectSpawnPoint;        // 회복 이펙트가 생길 위치
+    public int totalHealAmount = 100;         // 총 회복량
+    public float healDuration = 1f;           // 회복량이 나눠 들어가는 시간(초)
 
     private const byte PhaseEffect = 1;
 

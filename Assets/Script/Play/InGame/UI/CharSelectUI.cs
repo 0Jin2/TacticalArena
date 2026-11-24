@@ -23,11 +23,14 @@ using UnityEngine.UI;
 //   - 잠긴 캐릭터는 선택 불가 (튜토리얼 제외)
 //
 //  버튼 규칙
+//   - 캐릭터 버튼은 항상 터치를 받는다. 고를 수 없는 캐릭터는 어둡게 보이고, 누르면 이유를 알림으로 띄운다.
 //   - 캐릭터 미선택 + 준비 누름 : "캐릭터를 선택해 주세요" 알림, 준비 완료 안 됨
-//   - 캐릭터 선택 + 준비 누름   : 모든 캐릭터 버튼 interactable 꺼짐, 버튼 글자는 "준비 취소"
-//   - 준비 취소                 : 내가 고른 캐릭터만 빼고 다시 켜짐 (캐릭터 변경 가능)
-//   - 선택 시간 종료 / 시작 전 카운트다운 : 모든 버튼 꺼짐
-//   - 보유하지 않은 캐릭터       : 잠금 아이콘 + 항상 꺼짐
+//   - 캐릭터 선택 + 준비 누름   : 내가 고른 캐릭터까지 모두 어둡게, 버튼 글자는 "준비 취소"
+//   - 준비 취소                 : 다시 밝아짐 (캐릭터 변경 가능)
+//   - 선택 시간 종료 / 시작 전 카운트다운 : 내가 고른 캐릭터 말고 모두 어둡게
+//   - 보유하지 않은 캐릭터       : 잠금 아이콘 + 어둡게 → 누르면 "캐릭터를 보유하고 있지 않습니다."
+//   - 랭크전(Point 매치)        : 같은 팀원이 고른 캐릭터는 어둡게 → 누르면 "팀원이 캐릭터를 이미 사용중입니다."
+//                                 (일반전 MMR 은 중복 선택 가능. 규칙은 MatchFlow 인스펙터에서 바꿀 수 있음)
 //
 //  배치: 기존 CharacterSelectionManager 가 붙어 있던 오브젝트
 // ─────────────────────────────────────────────────────────────────────────────
@@ -36,57 +39,63 @@ public class CharSelectUI : MonoBehaviour
 {
     public static CharSelectUI Instance { get; private set; }
 
-    [Header("UI")]
-    public GameObject selectionPanel;
-    public TMP_Text countdownText;
-    public TMP_Text myTeamText;
-    public Button readyButton;
+    [Header("캐릭터 선택 화면 UI")]
+    public GameObject selectionPanel;  // 캐릭터 선택 화면 전체 패널
+    public TMP_Text countdownText;     // 선택 남은 시간 글자
+    public TMP_Text myTeamText;        // 내 팀 이름 글자 ("1팀" / "2팀", 우리 팀 색 = 파랑)
+    public Button readyButton;         // 준비 버튼 (캐릭터를 고르기 전에는 눌리지 않음)
     [Tooltip("준비 버튼 안의 글자. 비워 두면 준비 버튼 자식에서 자동으로 찾습니다. (TMP 글자와 기본 Text 모두 지원)")]
-    public TMP_Text readyButtonText;
-    public Transform redTeamPanel, blueTeamPanel;
-    public GameObject redTeamItemPrefab;
-    public GameObject blueTeamItemPrefab;
-    public GameObject myTeamItemPrefab;
-    public CharacterButton[] characterButtons;
+    public TMP_Text readyButtonText;   // 준비 버튼 안의 글자 (비우면 자동으로 찾음)
+
+    [Header("팀원 목록")]
+    public Transform redTeamPanel, blueTeamPanel;  // 레드 / 블루 팀원 칸이 생길 부모
+    public GameObject redTeamItemPrefab;           // 레드팀 팀원 칸 프리팹 (TeamMemberItem)
+    public GameObject blueTeamItemPrefab;          // 블루팀 팀원 칸 프리팹 (TeamMemberItem)
+    public GameObject myTeamItemPrefab;            // 내 칸 프리팹 (TeamMemberItem)
+
+    [Header("캐릭터 버튼")]
+    public CharacterButton[] characterButtons;  // 캐릭터 선택 버튼들 (각 버튼에 CharacterButton)
 
     [Header("게임 시작 대기 (캐릭터 선택이 끝난 뒤 마지막 카운트다운)")]
     [Tooltip("Countdown 단계에서만 켜지는 오브젝트. 이때 selectionPanel 은 꺼집니다. 비워 두면 예전처럼 selectionPanel 을 유지합니다.")]
-    public GameObject startWaitPanel;
+    public GameObject startWaitPanel;         // 선택이 끝난 뒤 시작 카운트다운 때 켜질 패널
     [Tooltip("시작 대기 카운트다운 숫자. 선택 시간 숫자(countdownText)와 다른 글자를 연결하세요.")]
-    public TMP_Text startWaitCountdownText;
+    public TMP_Text startWaitCountdownText;   // 시작 카운트다운 숫자 글자
     [Tooltip("카운트다운이 0 이 된 뒤 패널을 닫기까지 기다리는 시간(초). 패널이 닫히는 연출이 있으면 그 길이로 맞추세요. 패널이 닫힌 직후 캐릭터가 생성되고 줌인합니다.")]
-    public float startWaitCloseDelay = 0.5f;
+    public float startWaitCloseDelay = 0.5f;  // 카운트다운 0 이후 패널을 닫기까지 대기 시간(초)
 
     [Header("단계별 화면 (선택)")]
     [Tooltip("Loading 단계에서만 켜지는 화면")]
-    public GameObject loadingPanel;
+    public GameObject loadingPanel;  // 로딩 단계에만 켜지는 화면
     [Tooltip("씬에 들어오는 순간부터 Intro 단계가 끝날 때까지 켜져 있는 화면. (캐릭터 선택으로 넘어가면 꺼짐)")]
-    public GameObject introPanel;
+    public GameObject introPanel;    // 인트로 단계에만 켜지는 화면
 
     [Header("준비 버튼 글자")]
-    public string readyLabel = "준비";
-    public string readyCancelLabel = "준비 취소";
+    public string readyLabel = "준비";             // 준비 전 버튼 글자
+    public string readyCancelLabel = "준비 취소";  // 준비한 뒤 버튼 글자
 
-    [Header("알림 (캐릭터를 고르지 않고 준비를 눌렀을 때)")]
-    [Tooltip("(선택) 알림으로 켰다 끌 오브젝트. 비워 두면 화면 가운데에 자동으로 글자를 띄웁니다.")]
-    public GameObject noCharacterNotice;
+    [Header("알림 (선택할 수 없는 캐릭터를 눌렀을 때 / 캐릭터를 고르지 않고 준비를 눌렀을 때)")]
+    [Tooltip("(선택) 알림으로 켰다 끌 오브젝트. 아래 모든 알림이 이 오브젝트를 같이 씁니다. 비워 두면 화면 가운데에 자동으로 글자를 띄웁니다.")]
+    public GameObject noCharacterNotice;                           // (선택) 알림 오브젝트 (모든 알림 공용)
     [Tooltip("(선택) 알림 오브젝트 안의 글자. 비워 두면 알림 오브젝트 자식에서 자동으로 찾습니다.")]
-    public TMP_Text noCharacterNoticeText;
-    public string noCharacterMessage = "캐릭터를 선택해 주세요.";
-    public float noticeSeconds = 1.5f;
+    public TMP_Text noCharacterNoticeText;                         // (선택) 알림 오브젝트 안의 글자
+    public string noCharacterMessage = "캐릭터를 선택해 주세요.";  // 캐릭터를 안 고르고 준비를 눌렀을 때 문구
+    public string notOwnedMessage = "캐릭터를 보유하고 있지 않습니다.";                                // 보유하지 않은 캐릭터를 눌렀을 때 문구
+    public string teammateUsingMessage = "팀원이 캐릭터를 이미 사용중입니다.";                         // 랭크전에서 팀원이 쓰는 캐릭터를 눌렀을 때 문구
+    public string readyLockedMessage = "준비 완료 상태입니다. 준비를 취소하면 캐릭터를 바꿀 수 있습니다.";  // 준비 완료 상태에서 다른 캐릭터를 눌렀을 때 문구
+    public string timeOverMessage = "캐릭터 선택 시간이 끝났습니다.";                                  // 선택 시간이 끝난 뒤 눌렀을 때 문구
+    public float noticeSeconds = 1.5f;                             // 알림 표시 시간(초)
 
-    [Header("내 팀 표시")]
-    public string redTeamName = "레드팀";
-    public string blueTeamName = "블루팀";
-    public Color redTeamColor = new Color(1f, 0.3f, 0.3f);
-    public Color blueTeamColor = new Color(0.3f, 0.5f, 1f);
+    [Header("내 팀 표시 (이름/색은 Resources/TeamColorSettings 에서 바꿈)")]
+    [Tooltip("켜면 보이는 내 팀 패널(RedTeamBox/BlueTeamBox)의 배경을 '우리 팀 패널 색'(어두운 파랑)으로 칠합니다.")]
+    public bool tintMyTeamPanel = true;  // 켜면 내 팀 패널 배경을 우리 팀 색(파랑)으로 칠함
 
     [Header("기타")]
     [Tooltip("캐릭터 목록. 비워 두면 PlayerSpawner 의 목록을 사용")]
-    public CharacterCatalog catalogOverride;
-    [SerializeField] private string tutorialSceneKeyword = "Tutorial";
+    public CharacterCatalog catalogOverride;                            // (선택) 캐릭터 목록. 비우면 PlayerSpawner 의 목록 사용
+    [SerializeField] private string tutorialSceneKeyword = "Tutorial";  // 씬 이름에 이 글자가 있으면 튜토리얼로 판단
     [Tooltip("잠금 상태를 다시 확인하는 간격(초). 보유 캐릭터 데이터가 늦게 도착해도 반영되게 함")]
-    [SerializeField] private float lockRefreshInterval = 1f;
+    [SerializeField] private float lockRefreshInterval = 1f;            // 캐릭터 잠금 상태를 다시 확인하는 간격(초)
 
     private MatchFlow flow;
     private InGameNet net;
@@ -96,6 +105,7 @@ public class CharSelectUI : MonoBehaviour
     private Text readyLegacyText;           // readyButtonText 가 없을 때 쓰는 기본 UI Text
     private int shownReadyState = -1;       // 마지막으로 표시한 준비 글자 상태 (-1 = 아직 없음)
     private float noticeUntil;              // 이 시각까지 알림 표시
+    private string noticeMessage;           // 지금 띄우는 알림 문구
     private float nextItemCheckAt;
     private float closeStartedAt = -1f;     // 카운트다운이 끝나 패널을 닫기 시작한 시각
     private GUIStyle noticeStyle;
@@ -159,6 +169,7 @@ public class CharSelectUI : MonoBehaviour
 
         flow.OnPhaseChanged += HandlePhaseChanged;
         flow.OnCharacterPicked += HandleCharacterPicked;
+        flow.OnLocalPickRejected += HandleLocalPickRejected;
         net.PlayersChanged += SyncItems;
         flow.autoPickProvider = PickRandomAvailable;
         subscribed = true;
@@ -174,6 +185,7 @@ public class CharSelectUI : MonoBehaviour
             {
                 flow.OnPhaseChanged -= HandlePhaseChanged;
                 flow.OnCharacterPicked -= HandleCharacterPicked;
+                flow.OnLocalPickRejected -= HandleLocalPickRejected;
                 if (flow.autoPickProvider == (System.Func<string>)PickRandomAvailable) flow.autoPickProvider = null;
             }
             if (net != null) net.PlayersChanged -= SyncItems;
@@ -331,10 +343,12 @@ public class CharSelectUI : MonoBehaviour
     }
 
     /// <summary>
-    /// 캐릭터 버튼 상태 규칙
-    ///   잠긴(미보유) 캐릭터      : 항상 꺼짐 (잠금 아이콘)
-    ///   준비 중 / 선택 시간 종료 / 마지막 카운트다운 : 모두 꺼짐
-    ///   그 외(준비 전, 준비 취소 후) : 내가 고른 캐릭터만 빼고 모두 켜짐
+    /// 캐릭터 버튼 상태 규칙 (버튼은 항상 터치를 받고, 고를 수 없으면 어둡게 + 누르면 알림)
+    ///   잠긴(미보유) 캐릭터      : 어둡게 + 잠금 아이콘 (버튼이 직접 판단)
+    ///   준비 완료               : 내가 고른 캐릭터까지 모두 어둡게 (선택 표시는 밝게 유지)
+    ///   선택 시간 종료 / 마지막 카운트다운 (준비 전) : 내가 고른 캐릭터 말고 모두 어둡게
+    ///   랭크전에서 팀원이 고른 캐릭터 : 어둡게
+    ///   내가 고른 캐릭터(준비 전)  : 밝게 + 선택 표시
     /// </summary>
     private void UpdateCharacterButtons(string mySelectedId, bool myReady, bool finalLock)
     {
@@ -346,8 +360,12 @@ public class CharSelectUI : MonoBehaviour
             bool isMyPick = !string.IsNullOrEmpty(mySelectedId) && btn.CharacterId == mySelectedId;
             btn.SetSelectedMark(isMyPick);
 
-            if (btn.IsLocked || myReady || finalLock) { btn.SetInteractable(false); continue; }
-            btn.SetInteractable(!isMyPick);
+            var reason = CharacterBlockReason.None;
+            if (myReady) reason = finalLock ? CharacterBlockReason.TimeOver : CharacterBlockReason.ReadyLocked;   // 준비 완료: 전부 어둡게
+            else if (isMyPick) reason = CharacterBlockReason.None;
+            else if (finalLock) reason = CharacterBlockReason.TimeOver;
+            else if (flow != null && flow.IsTakenByTeammate(btn.CharacterId)) reason = CharacterBlockReason.TeammateUsing;
+            btn.SetBlock(reason);
         }
     }
 
@@ -360,7 +378,27 @@ public class CharSelectUI : MonoBehaviour
     public void Select(string characterId)
     {
         if (flow == null || string.IsNullOrEmpty(characterId)) return;
+        var me = net != null ? net.LocalPlayer : null;
+        if (me != null && me.CharacterId == characterId) return;     // 이미 고른 캐릭터
         flow.SelectCharacter(characterId);
+    }
+
+    /// <summary>[CharacterButton] 고를 수 없는 캐릭터를 눌렀을 때 이유를 알림으로 띄운다.</summary>
+    public void ShowBlockedNotice(CharacterBlockReason reason)
+    {
+        switch (reason)
+        {
+            case CharacterBlockReason.NotOwned: ShowNotice(notOwnedMessage); break;
+            case CharacterBlockReason.TeammateUsing: ShowNotice(teammateUsingMessage); break;
+            case CharacterBlockReason.ReadyLocked: ShowNotice(readyLockedMessage); break;
+            case CharacterBlockReason.TimeOver: ShowNotice(timeOverMessage); break;
+        }
+    }
+
+    /// <summary>[MatchFlow] 내가 고른 캐릭터를 팀원이 한발 먼저 골라서 거절됐다 (랭크전, 동시에 눌렀을 때)</summary>
+    private void HandleLocalPickRejected(string characterId)
+    {
+        ShowNotice(teammateUsingMessage);
     }
 
     /// <summary>[준비 버튼] 준비/준비 취소. 캐릭터를 고르지 않았으면 알림만 띄우고 준비는 되지 않는다.</summary>
@@ -382,6 +420,8 @@ public class CharSelectUI : MonoBehaviour
     // ── 알림 ────────────────────────────────────────────────────────────────
     private void ShowNotice(string message)
     {
+        if (string.IsNullOrEmpty(message)) return;
+        noticeMessage = message;
         noticeUntil = Time.unscaledTime + Mathf.Max(0.3f, noticeSeconds);
         if (noCharacterNotice != null)
         {
@@ -411,10 +451,10 @@ public class CharSelectUI : MonoBehaviour
         noticeStyle.fontSize = Mathf.Max(18, Screen.height / 28);
 
         float w = Screen.width * 0.6f, h = Screen.height * 0.12f;
-        GUI.Box(new Rect((Screen.width - w) * 0.5f, Screen.height * 0.4f, w, h), noCharacterMessage, noticeStyle);
+        GUI.Box(new Rect((Screen.width - w) * 0.5f, Screen.height * 0.4f, w, h), noticeMessage ?? noCharacterMessage, noticeStyle);
     }
 
-    /// <summary>시간 안에 못 고른 내 캐릭터를 정한다. 잠기지 않은 캐릭터 중 무작위</summary>
+    /// <summary>시간 안에 못 고른 내 캐릭터를 정한다. 잠기지 않은 캐릭터 중 무작위 (랭크전이면 팀원이 쓰는 캐릭터도 제외)</summary>
     private string PickRandomAvailable()
     {
         var candidates = new List<string>();
@@ -424,7 +464,7 @@ public class CharSelectUI : MonoBehaviour
             {
                 if (b == null || b.characterDef == null) continue;
                 b.RefreshLock(IsTutorial);
-                if (!b.IsLocked) candidates.Add(b.CharacterId);
+                if (!b.IsLocked && !IsTakenByTeammate(b.CharacterId)) candidates.Add(b.CharacterId);
             }
         }
         if (candidates.Count > 0) return candidates[Random.Range(0, candidates.Count)];
@@ -432,7 +472,8 @@ public class CharSelectUI : MonoBehaviour
         var catalog = GetCatalog();
         if (catalog != null)
         {
-            string id = catalog.RandomId(cid => !IsTutorial && UserCharacterDataManager.Instance != null && UserCharacterDataManager.Instance.IsCharacterLocked(cid));
+            string id = catalog.RandomId(cid => IsTakenByTeammate(cid)
+                || (!IsTutorial && UserCharacterDataManager.Instance != null && UserCharacterDataManager.Instance.IsCharacterLocked(cid)));
             if (!string.IsNullOrEmpty(id)) return id;
         }
         return flow != null && flow.Config != null ? flow.Config.defaultCharacterId : string.Empty;
@@ -442,6 +483,12 @@ public class CharSelectUI : MonoBehaviour
 
     // ═════════════════════════════════════════════════════════════════════════
     #region 팀원 칸
+
+    /// <summary>랭크전에서 내 팀원이 이미 쓰는 캐릭터인가 (일반전이면 항상 false)</summary>
+    private bool IsTakenByTeammate(string characterId)
+    {
+        return flow != null && flow.IsTakenByTeammate(characterId);
+    }
 
     private CharacterCatalog GetCatalog()
     {
@@ -555,8 +602,9 @@ public class CharSelectUI : MonoBehaviour
         TeamMemberItem item;
         if (!items.TryGetValue(player.SessionId, out item) || item == null) return;
 
-        // 닉네임은 매번 확인한다 (명단 정보가 늦게 바뀌어도 따라가도록)
+        // 닉네임은 매번 확인한다 (명단 정보가 늦게 바뀌어도 따라가도록). 색: 나 노랑 / 같은 팀 파랑
         item.SetNickname(player.Nickname);
+        item.SetNicknameColor(TeamView.ColorOf(player));
         item.SetReady(flow != null && flow.IsConfirmed(player.SessionId));
         item.SetDisconnected(!player.IsOnline);
 
@@ -615,7 +663,7 @@ public class CharSelectUI : MonoBehaviour
         if (!teamTextSet) ApplyMyTeamVisibility();
     }
 
-    /// <summary>내 팀 패널만 보이게 하고 팀 이름/색을 표시</summary>
+    /// <summary>내 팀 패널만 보이게 하고 팀 이름("1팀"/"2팀")을 우리 팀 색(파랑)으로 표시</summary>
     private void ApplyMyTeamVisibility()
     {
         var me = net != null ? net.LocalPlayer : null;
@@ -625,10 +673,18 @@ public class CharSelectUI : MonoBehaviour
         if (redTeamPanel != null) redTeamPanel.gameObject.SetActive(red);
         if (blueTeamPanel != null) blueTeamPanel.gameObject.SetActive(!red);
 
+        // 보이는 패널(내 팀)의 배경을 우리 팀 색으로
+        if (tintMyTeamPanel)
+        {
+            var shown = red ? redTeamPanel : blueTeamPanel;
+            var panelImage = shown != null ? shown.GetComponent<Image>() : null;
+            if (panelImage != null) panelImage.color = TeamView.Settings.allyPanelColor;
+        }
+
         if (myTeamText != null && !IsTutorialPractice)
         {
-            myTeamText.text = red ? redTeamName : blueTeamName;
-            myTeamText.color = red ? redTeamColor : blueTeamColor;
+            myTeamText.text = TeamView.TeamName(me.Team);
+            myTeamText.color = TeamView.Settings.allyColor;
         }
         teamTextSet = true;
     }

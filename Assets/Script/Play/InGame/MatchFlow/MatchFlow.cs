@@ -29,15 +29,27 @@ using UnityEngine.SceneManagement;
 
 public enum MatchPhase : byte { Loading = 0, Intro = 1, CharSelect = 2, Countdown = 3, Playing = 4, Result = 5 }
 
+/// <summary>같은 팀원끼리 같은 캐릭터를 고를 수 있는지</summary>
+public enum TeamDuplicatePickRule
+{
+    [InspectorName("매치 방식 따름 (랭크전만 중복 금지)")] FollowMatchType = 0,
+    [InspectorName("항상 중복 허용")] AlwaysAllow = 1,
+    [InspectorName("항상 중복 금지")] AlwaysBlock = 2,
+}
+
 public class MatchFlow : MonoBehaviour, INetStateProvider
 {
     public static MatchFlow Instance { get; private set; }
 
     [Header("설정")]
-    [SerializeField] private ModeConfig config;
+    [SerializeField] private ModeConfig config;             // 이 씬의 모드 규칙 에셋 (ModeConfig)
     [Tooltip("로비를 거치지 않고 이 씬만 실행했을 때 1인 테스트로 자동 시작")]
-    [SerializeField] private bool allowOfflineTest = true;
-    [SerializeField] private bool showDebugOverlay;
+    [SerializeField] private bool allowOfflineTest = true;  // 켜면 로비 없이 이 씬만 실행해도 혼자 테스트 가능
+    [SerializeField] private bool showDebugOverlay;         // 켜면 화면에 진행 단계 / 네트워크 정보 표시 (테스트용)
+
+    [Header("캐릭터 중복 선택 규칙")]
+    [Tooltip("같은 팀원끼리 같은 캐릭터를 고를 수 있는지.\n매치 방식 따름 = 랭크전(Point 매치 / RANK 모드)만 중복 금지, 일반전(MMR)은 중복 허용")]
+    [SerializeField] private TeamDuplicatePickRule teamDuplicateRule = TeamDuplicatePickRule.FollowMatchType;  // 팀원 중복 선택 규칙 (기본: 랭크전만 금지)
 
     private const float PickGraceSeconds = 1.5f;      // 선택 시간이 끝난 뒤 다른 유저의 선택 패킷을 기다려 주는 시간
     private const float ResendIntervalSeconds = 1f;   // 호스트가 같은 단계 전환을 재전송하는 최소 간격
@@ -55,12 +67,27 @@ public class MatchFlow : MonoBehaviour, INetStateProvider
     /// <summary>캐릭터 생성 + 줌인 구간이 시작됐는가 (Countdown 단계 안)</summary>
     public bool SpawnStageStarted { get { return spawnStageStarted; } }
 
+    /// <summary>이번 판에서 팀원끼리 같은 캐릭터를 고를 수 없는가 (랭크전이면 true)</summary>
+    public bool BlocksTeamDuplicates
+    {
+        get
+        {
+            switch (teamDuplicateRule)
+            {
+                case TeamDuplicatePickRule.AlwaysAllow: return false;
+                case TeamDuplicatePickRule.AlwaysBlock: return true;
+                default: return net != null && net.IsRankMatch;
+            }
+        }
+    }
+
     // ── 이벤트 (UI/모드 스크립트가 구독) ─────────────────────────────────────
     public event Action<MatchPhase, bool> OnPhaseChanged;   // (새 단계, 재접속 복구로 바뀐 것인가)
     public event Action OnTimeUp;                           // 호스트에서만: 본 게임 시간 종료. 모드가 EndMatch()를 호출해야 함
     public event Action<NetPlayer> OnCharacterPicked;       // 누군가 캐릭터를 골랐다/바꿨다
     public event Action OnMatchFinished;                    // 결과 화면 시간 종료 (→ 로비 복귀 시점, ResultReporter가 처리)
     public event Action OnSpawnStage;                       // 카운트다운이 끝나 캐릭터를 만들고 줌인할 시점 (PlayerSpawner 가 구독)
+    public event Action<string> OnLocalPickRejected;        // 내 선택이 거절됐다 (랭크전에서 팀원이 먼저 같은 캐릭터를 고름). 값 = 거절된 캐릭터 ID
 
     /// <summary>시간 안에 못 고른 내 캐릭터를 정할 때 호출됨. 지정 안 하면 ModeConfig.defaultCharacterId 사용.</summary>
     public Func<string> autoPickProvider;
@@ -74,6 +101,8 @@ public class MatchFlow : MonoBehaviour, INetStateProvider
     private bool started;
     private bool waitingForRestore;              // 앱 재시작 복귀: 스냅샷을 받기 전에는 호스트 판단 금지
     private bool timeUpRaised, finished, autoPicked;
+    private int autoPickRetries;                 // 자동 선택이 팀원과 겹쳐 거절됐을 때 다시 고른 횟수
+    private const int MaxAutoPickRetries = 5;
     private bool spawnStageStarted;              // Countdown 단계에서 캐릭터 생성/줌인 구간이 시작됐는가
     private double spawnStageAt;
     private bool zoomReportSent;
@@ -320,6 +349,7 @@ public class MatchFlow : MonoBehaviour, INetStateProvider
         // Playing / CharSelect 는 0(무제한)을 허용한다. (BOMB 본 게임, 튜토리얼 캐릭터 선택)
         if (next != MatchPhase.Playing && next != MatchPhase.CharSelect) duration = Mathf.Max(0.1f, duration);
         ushort nextSerial = (ushort)(serial + 1);
+        string[] finalPicks = next == MatchPhase.Countdown ? BuildFinalPicks(net.Players) : null;
 
         net.Send(NetPacketType.PhaseChange, w =>
         {
@@ -331,13 +361,13 @@ public class MatchFlow : MonoBehaviour, INetStateProvider
             if (next == MatchPhase.Countdown)
             {
                 // 캐릭터 최종 확정 목록: 못 고른 사람은 기본 캐릭터로 채워서 모두가 똑같이 알게 한다.
+                // (랭크전이면 팀 안에서 겹치지 않게 채운다 → BuildFinalPicks)
                 var players = net.Players;
                 w.WriteByte((byte)players.Count);
                 for (int i = 0; i < players.Count; i++)
                 {
-                    string id = string.IsNullOrEmpty(players[i].CharacterId) ? config.defaultCharacterId : players[i].CharacterId;
                     w.WriteUInt(players[i].SessionId);
-                    w.WriteString(id ?? string.Empty);
+                    w.WriteString(finalPicks[i] ?? string.Empty);
                 }
             }
             else w.WriteByte(0);
@@ -351,6 +381,83 @@ public class MatchFlow : MonoBehaviour, INetStateProvider
         HostSend(MatchPhase.Result, config.resultSeconds, winner, true);
     }
 
+    /// <summary>
+    /// 최종 캐릭터 목록을 만든다. (호스트가 Countdown 으로 넘어갈 때)
+    ///   1) 이미 고른 캐릭터를 먼저 자리 잡는다.
+    ///   2) 못 고른 사람은 기본 캐릭터로 채운다. 랭크전이면 팀 안에서 겹치지 않는 캐릭터로 채운다.
+    /// </summary>
+    private string[] BuildFinalPicks(IReadOnlyList<NetPlayer> players)
+    {
+        var result = new string[players.Count];
+        bool unique = BlocksTeamDuplicates;
+        var usedByTeam = new Dictionary<NetTeam, HashSet<string>>();
+
+        for (int i = 0; i < players.Count; i++)
+        {
+            string id = players[i].CharacterId;
+            if (string.IsNullOrEmpty(id)) continue;
+            if (unique && !UsedSet(usedByTeam, players[i].Team).Add(id)) continue;   // (만약 겹쳐 있으면) 2단계에서 다시 정한다
+            result[i] = id;
+        }
+
+        for (int i = 0; i < players.Count; i++)
+        {
+            if (result[i] != null) continue;
+            string id = config.defaultCharacterId;
+            if (unique)
+            {
+                var used = UsedSet(usedByTeam, players[i].Team);
+                if (string.IsNullOrEmpty(id) || used.Contains(id))
+                {
+                    string free = FirstFreeCharacter(used);
+                    if (!string.IsNullOrEmpty(free)) id = free;
+                }
+                if (!string.IsNullOrEmpty(id)) used.Add(id);
+            }
+            result[i] = id ?? string.Empty;
+        }
+        return result;
+    }
+
+    private static HashSet<string> UsedSet(Dictionary<NetTeam, HashSet<string>> map, NetTeam team)
+    {
+        HashSet<string> set;
+        if (!map.TryGetValue(team, out set)) { set = new HashSet<string>(); map[team] = set; }
+        return set;
+    }
+
+    /// <summary>캐릭터 목록 순서대로 보면서 아직 팀에서 안 쓰는 캐릭터 ID 를 찾는다. 없으면 null</summary>
+    private static string FirstFreeCharacter(HashSet<string> used)
+    {
+        var catalog = PlayerSpawner.Instance != null ? PlayerSpawner.Instance.catalog : null;
+        if (catalog == null || catalog.characters == null) return null;
+        foreach (var def in catalog.characters)
+        {
+            if (def == null || string.IsNullOrEmpty(def.characterId)) continue;
+            if (!used.Contains(def.characterId)) return def.characterId;
+        }
+        return null;
+    }
+
+    /// <summary>[캐릭터 선택 UI] 이 캐릭터를 내 팀원이 이미 쓰고 있는가 (랭크전이 아니면 항상 false)</summary>
+    public bool IsTakenByTeammate(string characterId)
+    {
+        if (!BlocksTeamDuplicates || net == null) return false;
+        return IsTakenByTeammate(net.LocalPlayer, characterId);
+    }
+
+    /// <summary>player 의 팀원(자기 자신 제외) 중에 characterId 를 고른 사람이 있는가. 끊긴 팀원도 자리를 유지한다(이탈 확정 제외).</summary>
+    private bool IsTakenByTeammate(NetPlayer player, string characterId)
+    {
+        if (player == null || string.IsNullOrEmpty(characterId) || player.Team == NetTeam.None) return false;
+        foreach (var other in net.Players)
+        {
+            if (other == null || other.SessionId == player.SessionId || other.IsForfeited) continue;
+            if (other.Team == player.Team && other.CharacterId == characterId) return true;
+        }
+        return false;
+    }
+
     /// <summary>[캐릭터 선택 UI] 캐릭터를 고른다. 확정 전에는 몇 번이든 바꿀 수 있다.</summary>
     public void SelectCharacter(string characterId)
     {
@@ -358,6 +465,11 @@ public class MatchFlow : MonoBehaviour, INetStateProvider
         if (Phase != MatchPhase.CharSelect || me == null || string.IsNullOrEmpty(characterId)) return;
         if (confirmed.Contains(me.SessionId)) return;           // 준비 중에는 변경 불가
         if (HasTimeLimit && Expired) return;
+        if (BlocksTeamDuplicates && IsTakenByTeammate(me, characterId))
+        {
+            if (OnLocalPickRejected != null) OnLocalPickRejected(characterId);   // 랭크전: 팀원이 이미 쓰는 캐릭터
+            return;
+        }
         SendSelect(characterId);
     }
 
@@ -422,8 +534,32 @@ public class MatchFlow : MonoBehaviour, INetStateProvider
 
         string id = packet.OpenReader().ReadString();
         if (string.IsNullOrEmpty(id)) return;
+
+        // 랭크전: 팀원이 먼저 고른 캐릭터면 무시한다.
+        // 모든 기기가 서버에서 같은 순서로 패킷을 받으므로, 동시에 눌러도 모두 "먼저 도착한 사람"을 똑같이 인정한다.
+        if (BlocksTeamDuplicates && IsTakenByTeammate(player, id))
+        {
+            if (player.IsLocal) HandleLocalPickRejected(id);
+            return;
+        }
+
         player.CharacterId = id;
         if (OnCharacterPicked != null) OnCharacterPicked(player);
+    }
+
+    /// <summary>내 선택이 팀원과 겹쳐 거절됐을 때: 직접 고른 거면 알림, 시간 종료 자동 선택이면 다른 캐릭터로 다시 고른다.</summary>
+    private void HandleLocalPickRejected(string characterId)
+    {
+        if (autoPicked)
+        {
+            if (Phase == MatchPhase.CharSelect && autoPickRetries < MaxAutoPickRetries)
+            {
+                autoPickRetries++;
+                AutoPickForLocal();
+            }
+            return;
+        }
+        if (OnLocalPickRejected != null) OnLocalPickRejected(characterId);
     }
 
     private void HandleCharacterReady(NetPacket packet)
@@ -477,6 +613,7 @@ public class MatchFlow : MonoBehaviour, INetStateProvider
         timeUpRaised = false;
         finished = false;
         autoPicked = false;
+        autoPickRetries = 0;
         if (phase == MatchPhase.CharSelect) zoomReady.Clear();
         zoomReportSent = false;
         spawnStageStarted = false;

@@ -9,8 +9,9 @@ using UnityEngine;
 [RequireComponent(typeof(Collider2D))]
 public class FlagGoalZone : MonoBehaviour
 {
+    [Header("골 지점 설정")]
     [Tooltip("이 골 지점으로 득점하는 팀")]
-    public NetTeam goalTeam = NetTeam.Red;
+    public NetTeam goalTeam = NetTeam.Red;  // 이 골 지점으로 득점하는 팀
 
     private void Reset()
     {

@@ -15,16 +15,16 @@ using UnityEngine;
 public class PlayerAnimator : MonoBehaviour
 {
     [Header("대상 Animator (비우면 자신/자식에서 자동 검색)")]
-    public Animator animator;
+    public Animator animator;  // 캐릭터 Animator (비우면 자동으로 찾음)
 
     [Header("파라미터 이름 (Animator Controller 와 같아야 함)")]
-    public string moveXParam = "moveX";
-    public string groundedParam = "grounded";
-    public string verticalVelocityParam = "verticalVelocity";
-    public string shootParam = "shoot";
-    public string jumpTrigger = "jump";
-    public string dieTrigger = "die";
-    public string respawnTrigger = "respawn";
+    public string moveXParam = "moveX";                        // 좌우 이동 값 파라미터 이름 (Float)
+    public string groundedParam = "grounded";                  // 땅에 서 있는지 파라미터 이름 (Bool)
+    public string verticalVelocityParam = "verticalVelocity";  // 위아래 속도 파라미터 이름 (Float, 점프/낙하 구분)
+    public string shootParam = "shoot";                        // 사격 중인지 파라미터 이름 (Bool)
+    public string jumpTrigger = "jump";                        // 점프 트리거 이름 (Trigger)
+    public string dieTrigger = "die";                          // 사망 트리거 이름 (Trigger)
+    public string respawnTrigger = "respawn";                  // 부활 트리거 이름 (Trigger)
 
     private readonly HashSet<string> existing = new HashSet<string>();
     private float baseSpeed = 1f;

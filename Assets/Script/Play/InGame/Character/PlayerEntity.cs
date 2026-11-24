@@ -16,7 +16,7 @@ using UnityEngine;
 public class PlayerEntity : MonoBehaviour
 {
     [Header("캐릭터 수치 (CharacterStatData 에셋)")]
-    public CharacterStatData stat;
+    public CharacterStatData stat;  // 이 캐릭터의 스탯 에셋 (체력 / 속도 / 탄창 등)
 
     // ── 전체 목록 ───────────────────────────────────────────────────────────
     public static readonly List<PlayerEntity> All = new List<PlayerEntity>();

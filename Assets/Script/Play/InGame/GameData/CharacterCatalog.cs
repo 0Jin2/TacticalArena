@@ -9,7 +9,8 @@ using UnityEngine;
 [CreateAssetMenu(fileName = "CharacterCatalog", menuName = "TAA/Character Catalog")]
 public class CharacterCatalog : ScriptableObject
 {
-    public List<CharacterDef> characters = new List<CharacterDef>();
+    [Header("캐릭터 목록")]
+    public List<CharacterDef> characters = new List<CharacterDef>();  // 게임에 나오는 모든 캐릭터(CharacterDef 에셋) 목록
 
     private Dictionary<string, CharacterDef> byId;
 

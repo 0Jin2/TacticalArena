@@ -19,11 +19,11 @@ public class TdmMode : GameModeBase
 {
     [Header("표시 문구")]
     [Tooltip("{0} 자리에 목표 점수가 들어갑니다.")]
-    public string goalFormat = "목표 처치 : {0}킬";
+    public string goalFormat = "목표 처치 : {0}킬";  // 목표 표시 문구 ({0} = 목표 킬 수)
 
     [Header("테스트")]
     [Tooltip("켜면 목표 점수에 도달해도 경기를 끝내지 않습니다. (혼자 연습/튜토리얼용)")]
-    public bool disableGoalCheck = false;
+    public bool disableGoalCheck = false;  // 켜면 목표 킬에 도달해도 안 끝남 (혼자 테스트용)
 
     public int ScoreGoal { get { return Config != null ? Config.scoreLimit : 0; } }
 

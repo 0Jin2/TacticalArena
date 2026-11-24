@@ -10,14 +10,10 @@ using UnityEngine.UI;
 public class ResultMemberItem : MonoBehaviour
 {
     [Header("UI")]
-    public Image characterIconImage;
-    public TMP_Text nicknameText;
-    public TMP_Text killText;
-    public TMP_Text deathText;
-
-    [Tooltip("(선택) 내 줄이면 이 색으로 닉네임 표시")]
-    public bool highlightLocal = true;
-    public Color localColor = Color.yellow;
+    public Image characterIconImage;  // 캐릭터 아이콘
+    public TMP_Text nicknameText;     // 닉네임 글자
+    public TMP_Text killText;         // 킬 수 글자
+    public TMP_Text deathText;        // 데스 수 글자
 
     public void Setup(Sprite icon, string nickname, int kills, int deaths)
     {
@@ -27,9 +23,9 @@ public class ResultMemberItem : MonoBehaviour
         if (deathText != null) deathText.text = deaths.ToString();
     }
 
-    /// <summary>내 줄 강조 (GameHud 가 필요하면 호출)</summary>
-    public void SetLocal(bool isLocal)
+    /// <summary>닉네임 색 (GameHud 가 호출: 나 노랑 / 같은 팀 파랑 / 상대 팀 빨강. 색은 Resources/TeamColorSettings)</summary>
+    public void SetNicknameColor(Color color)
     {
-        if (highlightLocal && isLocal && nicknameText != null) nicknameText.color = localColor;
+        if (nicknameText != null) nicknameText.color = color;
     }
 }

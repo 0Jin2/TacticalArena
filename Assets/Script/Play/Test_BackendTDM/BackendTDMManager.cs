@@ -45,54 +45,54 @@ public class BackendTDMManager : MonoBehaviour
     private const string MSG_READY = "READY";
     private const string MSG_COUNTDOWN_START = "COUNTDOWN";
 
-    [Header("Timing")]
-    [SerializeField] private float selectionDuration = 30f;
-    [SerializeField] private float countdownDuration = 5f;
+    [Header("진행 시간 (초)")]
+    [SerializeField] private float selectionDuration = 30f;    // 캐릭터 선택 시간(초)
+    [SerializeField] private float countdownDuration = 5f;     // 시작 카운트다운 시간(초)
     [Tooltip("모든 참가자의 씬 로드를 기다리는 최대 시간")]
-    [SerializeField] private float waitPlayersTimeout = 10f;
+    [SerializeField] private float waitPlayersTimeout = 10f;   // 모든 유저의 씬 로딩을 기다리는 최대 시간(초)
     [Tooltip("선택 시간이 끝난 뒤 자동 선택 메시지를 기다리는 시간")]
-    [SerializeField] private float selectionGraceTime = 1.5f;
+    [SerializeField] private float selectionGraceTime = 1.5f;  // 선택 종료 후 자동 선택 메시지를 기다리는 시간(초)
 
     [Header("Intro (팀데스매치 모드 안내)")]
-    [SerializeField] private GameObject introPanel;
-    [SerializeField] private CanvasGroup introCanvasGroup;
-    [SerializeField] private RectTransform introTitle;
+    [SerializeField] private GameObject introPanel;                       // 인트로 패널
+    [SerializeField] private CanvasGroup introCanvasGroup;                // 인트로 페이드 연출용 CanvasGroup
+    [SerializeField] private RectTransform introTitle;                    // 인트로 제목 (크기 연출 대상)
     [Tooltip("지정 시 인트로를 이 애니메이터로 재생한다. 비워두면 코드 연출을 사용한다.")]
-    [SerializeField] private Animator introAnimator;
-    [SerializeField] private string introAnimatorStateName = "TDMIntro";
-    [SerializeField] private float introDuration = 2.5f;
+    [SerializeField] private Animator introAnimator;                      // (선택) 인트로 애니메이터
+    [SerializeField] private string introAnimatorStateName = "TDMIntro";  // 재생할 인트로 애니메이션 상태 이름
+    [SerializeField] private float introDuration = 2.5f;                  // 인트로 길이(초)
 
-    [Header("Character Selection UI")]
-    [SerializeField] private GameObject selectionPanel;
-    [SerializeField] private TMP_Text selectionTimerText;
-    [SerializeField] private TMP_Text myTeamText;
-    [SerializeField] private TMP_Text redTeamListText;
-    [SerializeField] private TMP_Text blueTeamListText;
-    [SerializeField] private TMP_Text selectedCharacterText;
-    [SerializeField] private Button readyButton;
-    [SerializeField] private BackendTDMCharacterButton[] characterButtons;
+    [Header("캐릭터 선택 UI")]
+    [SerializeField] private GameObject selectionPanel;                     // 캐릭터 선택 패널
+    [SerializeField] private TMP_Text selectionTimerText;                   // 선택 남은 시간 글자
+    [SerializeField] private TMP_Text myTeamText;                           // 내 팀 글자
+    [SerializeField] private TMP_Text redTeamListText;                      // 레드팀 명단 글자
+    [SerializeField] private TMP_Text blueTeamListText;                     // 블루팀 명단 글자
+    [SerializeField] private TMP_Text selectedCharacterText;                // 내가 고른 캐릭터 이름 글자
+    [SerializeField] private Button readyButton;                            // 준비 버튼
+    [SerializeField] private BackendTDMCharacterButton[] characterButtons;  // 캐릭터 선택 버튼들
 
-    [Header("Countdown UI")]
-    [SerializeField] private GameObject countdownPanel;
-    [SerializeField] private TMP_Text countdownText;
+    [Header("카운트다운 UI")]
+    [SerializeField] private GameObject countdownPanel;  // 카운트다운 패널
+    [SerializeField] private TMP_Text countdownText;     // 카운트다운 숫자 글자
 
-    [Header("Gameplay")]
-    [SerializeField] private GameObject gameplayUIRoot;
-    [SerializeField] private CinemachineCamera virtualCamera;
-    [SerializeField] private Transform[] redTeamSpawnPoints;
-    [SerializeField] private Transform[] blueTeamSpawnPoints;
-    [SerializeField] private CharacterInfo[] characterInfos;
-    [SerializeField] private string defaultCharacterId = "ChulWoo";
+    [Header("게임 플레이 (카메라 / 스폰 / 캐릭터)")]
+    [SerializeField] private GameObject gameplayUIRoot;              // 게임 중 UI 묶음 (게임 시작 후 켜짐)
+    [SerializeField] private CinemachineCamera virtualCamera;        // 내 캐릭터를 따라갈 CinemachineCamera
+    [SerializeField] private Transform[] redTeamSpawnPoints;         // 레드팀 시작 위치들
+    [SerializeField] private Transform[] blueTeamSpawnPoints;        // 블루팀 시작 위치들
+    [SerializeField] private CharacterInfo[] characterInfos;         // 캐릭터 정보 목록 (CharacterInfo 에셋)
+    [SerializeField] private string defaultCharacterId = "ChulWoo";  // 시간 안에 못 고른 유저에게 줄 기본 캐릭터 ID
     [Tooltip("캐릭터 리디자인(rigging-test) 임시 캐릭터. 지정하면 선택한 캐릭터와 관계없이 모두 이 캐릭터로 생성한다.")]
-    [SerializeField] private GameObject tempCharacterPrefab;
-    [SerializeField] private float nameTagHeight = 0.62f;
+    [SerializeField] private GameObject tempCharacterPrefab;         // (테스트) 지정하면 모든 유저를 이 캐릭터로 생성
+    [SerializeField] private float nameTagHeight = 0.62f;            // 이름표를 머리 위로 띄우는 높이
 
-    [Header("Editor Test")]
+    [Header("에디터 테스트")]
     [Tooltip("에디터에서 이 씬을 바로 실행하면 로비 없이 자동으로 매칭한 뒤 씬을 다시 불러온다.")]
-    [SerializeField] private bool autoMatchWhenOpenedDirectly = true;
-    [SerializeField] private string testMatchCardInDate = "2026-10-29T11:23:09.812Z";
+    [SerializeField] private bool autoMatchWhenOpenedDirectly = true;                  // 켜면 에디터에서 이 씬을 바로 실행했을 때 자동 매칭
+    [SerializeField] private string testMatchCardInDate = "2026-10-29T11:23:09.812Z";  // 에디터 자동 매칭에 쓸 매치 카드 inDate (뒤끝 콘솔에서 복사)
     [Tooltip("이 시간 동안 상대가 없으면 매칭을 취소하고 혼자 진행한다 (1p 시나리오용)")]
-    [SerializeField] private float soloStartTimeout = 8f;
+    [SerializeField] private float soloStartTimeout = 8f;                              // 이 시간(초) 동안 상대가 없으면 혼자 시작
 
     public event Action OnGameStarted;
 

@@ -24,31 +24,31 @@ public interface IAttackOverride
 public class PlayerCombat : MonoBehaviour
 {
     [Header("발사")]
-    public NetProjectile projectilePrefab;
-    public Transform projectileSpawnPoint;
+    public NetProjectile projectilePrefab;  // 기본 공격 총알 프리팹 (NetProjectile)
+    public Transform projectileSpawnPoint;  // 총알이 나갈 위치 (총구)
     [Tooltip("버튼을 누른 뒤 실제로 총알이 나가기까지의 지연(초)")]
-    public float fireDelay = 0.01f;
+    public float fireDelay = 0.01f;         // 버튼을 누른 뒤 총알이 나가기까지 지연(초)
 
     [Header("총구 이펙트")]
-    public GameObject muzzleFlashPrefab;
-    public float muzzleFlashLifetime = 1f;
+    public GameObject muzzleFlashPrefab;     // 총구 불꽃 이펙트 프리팹
+    public float muzzleFlashLifetime = 1f;   // 총구 불꽃이 남아 있는 시간(초)
     [Tooltip("오른쪽을 볼 때의 이펙트 회전각. 왼쪽을 볼 때는 부호가 반대로 적용된다.")]
-    public float muzzleAngleRight = -90f;
+    public float muzzleAngleRight = -90f;    // 오른쪽을 볼 때 총구 이펙트 회전 각도
     [Tooltip("총구 이펙트 프리팹이 맞춰져 있는 캐릭터 배율. 캐릭터 배율이 이 값과 다르면 같은 비율로 키우거나 줄인다. (FALL용 _FD = 3, 일반 = 0.5)")]
-    public float muzzleReferenceScale = 3f;
+    public float muzzleReferenceScale = 3f;  // 총구 이펙트 기준 캐릭터 크기 (FALL = 3, 일반 = 0.5)
 
     [Header("발사 효과음")]
-    public AudioClip shootClip;
-    public AudioMixerGroup shootMixer;
+    public AudioClip shootClip;         // 발사 효과음
+    public AudioMixerGroup shootMixer;  // 발사 효과음 믹서 그룹
 
     [Header("재장전 효과음")]
     public AudioClip reloadClip;            // 탄을 1발 넣는 소리 (샷건 셸 등)
     public AudioClip rackClip;              // 마지막 슬라이드/펌프 소리
-    public AudioMixerGroup reloadMixer;
-    public AudioMixerGroup rackMixer;
+    public AudioMixerGroup reloadMixer;     // 장전 소리 믹서 그룹
+    public AudioMixerGroup rackMixer;       // 슬라이드/펌프 소리 믹서 그룹
     [Tooltip("0 = 부족한 탄 수만큼 반복. 1 이상이면 그 횟수만큼 반복")]
-    public int reloadRepeatOverride = 0;
-    public int reloadRepeatMax = 30;
+    public int reloadRepeatOverride = 0;    // 장전 소리 반복 횟수 (0 = 부족한 탄 수만큼)
+    public int reloadRepeatMax = 30;        // 장전 소리 최대 반복 횟수
 
     // ── 상태 ────────────────────────────────────────────────────────────────
     public int Ammo { get; private set; }

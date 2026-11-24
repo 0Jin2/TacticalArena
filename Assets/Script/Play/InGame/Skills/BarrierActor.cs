@@ -17,19 +17,19 @@ public class BarrierActor : MonoBehaviour, IDamageTarget
 {
     [Header("방벽 수치")]
     [Tooltip("방벽 체력. (기존 방벽 프리팹의 Health → CharacterStatData.maxHP 값과 같게 맞추세요)")]
-    public int maxHp = 100;
+    public int maxHp = 100;  // 방벽 체력
 
     [Header("피격 효과음")]
-    public AudioClip hitClip;
-    public AudioMixerGroup hitMixer;
+    public AudioClip hitClip;         // 방벽이 맞았을 때 효과음
+    public AudioMixerGroup hitMixer;  // 피격 효과음 믹서 그룹
 
     [Header("애니메이터")]
-    public Animator animator;
-    public string spawnStateName = "Spawn";
-    public string idleParam = "idle";
-    public string dieParam = "die";
+    public Animator animator;                // 방벽 Animator
+    public string spawnStateName = "Spawn";  // 등장 애니메이션 상태 이름
+    public string idleParam = "idle";        // 대기 상태 Bool 파라미터 이름
+    public string dieParam = "die";          // 파괴 Bool 파라미터 이름
     [Tooltip("파괴 애니메이션 길이를 알 수 없을 때 기다리는 시간")]
-    public float fallbackDieSeconds = 0.5f;
+    public float fallbackDieSeconds = 0.5f;  // 파괴 애니메이션 길이를 모를 때 기다리는 시간(초)
 
     public int CurrentHp { get; private set; }
 

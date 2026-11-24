@@ -12,12 +12,12 @@ using UnityEngine;
 public class PlayerEffects : MonoBehaviour
 {
     [Header("발 먼지")]
-    public GameObject footDustEffectPrefab;
-    public Transform footDustSocket;
+    public GameObject footDustEffectPrefab;  // 달릴 때 발밑 먼지 이펙트 프리팹
+    public Transform footDustSocket;         // 발 먼지가 생길 위치
 
     [Header("착지 먼지")]
-    public GameObject landingDustEffectPrefab;
-    public Transform landingEffectPoint;
+    public GameObject landingDustEffectPrefab;  // 착지할 때 먼지 이펙트 프리팹
+    public Transform landingEffectPoint;        // 착지 먼지가 생길 위치
 
     private PlayerEntity entity;
     private bool wasGrounded = true;

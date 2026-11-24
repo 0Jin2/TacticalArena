@@ -13,9 +13,9 @@ using UnityEngine;
 public class ShieldSummonSkill : SkillBase
 {
     [Header("방벽")]
-    public BarrierActor barrierPrefab;
-    public Transform spawnPoint;
-    public float barrierDuration = 3f;
+    public BarrierActor barrierPrefab;  // 소환할 방벽 프리팹 (BarrierActor)
+    public Transform spawnPoint;        // 방벽이 생길 위치
+    public float barrierDuration = 3f;  // 방벽 유지 시간(초)
 
     private const byte PhaseSpawn = 1;      // [슬롯 byte][위치 vec2][회전Z float][방향 byte][지속 float]
     private const byte PhaseBreak = 2;      // [슬롯 byte]

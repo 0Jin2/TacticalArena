@@ -10,11 +10,11 @@ using UnityEngine;
 public class TeamHealZoneSkill : SkillBase
 {
     [Header("회복 구역")]
-    public HealZoneActor healZonePrefab;
-    public Transform spawnPoint;
-    public float zoneDuration = 5f;
-    public float healInterval = 1f;
-    public int healAmount = 10;
+    public HealZoneActor healZonePrefab;  // 설치할 회복 구역 프리팹 (HealZoneActor)
+    public Transform spawnPoint;          // 회복 구역이 생길 위치
+    public float zoneDuration = 5f;       // 회복 구역 유지 시간(초)
+    public float healInterval = 1f;       // 회복 간격(초)
+    public int healAmount = 10;           // 한 번에 회복하는 양
 
     private const byte PhaseSpawn = 1;      // [위치 vec2][크기 vec2][지속 float][간격 float][회복량 int]
 

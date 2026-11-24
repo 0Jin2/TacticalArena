@@ -10,11 +10,13 @@ using UnityEngine;
 [RequireComponent(typeof(Collider2D))]
 public class FlagPickupZone : MonoBehaviour
 {
+    [Header("깃발 자리 설정")]
     [Tooltip("이 자리에 놓인 깃발의 주인 팀")]
-    public NetTeam ownerTeam = NetTeam.Red;
+    public NetTeam ownerTeam = NetTeam.Red;  // 이 자리에 놓인 깃발의 주인 팀
 
+    [Header("탈취 판정")]
     [Tooltip("자리에 이만큼 머물러야 탈취를 요청합니다. (너무 짧으면 스쳐 지나가도 탈취됨)")]
-    public float minStaySeconds = 0.05f;
+    public float minStaySeconds = 0.05f;  // 이 시간(초) 이상 머물러야 탈취 (너무 짧으면 스쳐도 탈취)
 
     private float stayStart = -1f;
 

@@ -11,8 +11,9 @@ using UnityEngine.EventSystems;
 
 public class HoldButton : MonoBehaviour, IPointerDownHandler, IPointerUpHandler, IPointerExitHandler
 {
+    [Header("누름 판정")]
     [Tooltip("손가락이 버튼 밖으로 나가면 누름을 해제할지")]
-    public bool releaseOnExit = false;
+    public bool releaseOnExit = false;  // 켜면 손가락이 버튼 밖으로 나갈 때 누름 해제
 
     public bool IsHeld { get; private set; }
     public event Action Pressed;

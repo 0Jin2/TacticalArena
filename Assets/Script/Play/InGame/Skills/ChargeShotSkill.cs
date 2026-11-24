@@ -12,13 +12,13 @@ public class ChargeShotSkill : SkillBase, IAttackOverride
 {
     [Header("차지샷")]
     public GameObject chargeEffectObject;               // 충전 이펙트 (평소 꺼 두기)
-    public NetProjectile chargeProjectilePrefab;
+    public NetProjectile chargeProjectilePrefab;         // 차지 발사 때 나갈 총알 프리팹
     [Tooltip("비우면 기본 공격의 발사 위치를 사용한다.")]
-    public Transform projectileSpawnPoint;
+    public Transform projectileSpawnPoint;               // (선택) 차지 총알 발사 위치 (비우면 기본 총구)
     public float keepSeconds = 3f;                       // 충전 상태 유지 시간
-    public float fireDelay = 0.01f;
+    public float fireDelay = 0.01f;                      // 버튼을 누른 뒤 발사까지 지연(초)
     [Tooltip("충전 중 이동 불가. (기존 동작은 처음에 한 번 멈추기만 하고 이동 가능)")]
-    public bool lockMovementWhileCharging = false;
+    public bool lockMovementWhileCharging = false;       // 켜면 충전 중 이동 불가
 
     private const byte PhaseCharge = 1;     // [충전 중? bool]
     private const byte PhaseShoot = 2;      // [발사 위치 vec2][방향 byte]

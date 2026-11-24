@@ -9,8 +9,9 @@ public class MyStatusUIManager : MonoBehaviour
 {
     public static MyStatusUIManager Instance { get; private set; }
 
+    [Header("기타")]
     [Tooltip("캐릭터 아이콘을 찾을 목록. 비워 두면 PlayerSpawner 의 목록을 사용")]
-    public CharacterCatalog catalogOverride;
+    public CharacterCatalog catalogOverride;  // (선택) 아이콘을 찾을 캐릭터 목록. 비우면 PlayerSpawner 의 목록 사용
 
     private void Awake()
     {

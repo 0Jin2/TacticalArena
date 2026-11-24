@@ -48,6 +48,7 @@ public class NetActiveMatchInfo
     public string sceneName;
     public string cardInDate;
     public long savedAtUnix;
+    public int matchType;          // 매치 카드 방식 (BackEnd.Tcp.MatchType: Point = 랭크전, MMR = 일반)
 }
 
 public class InGameNet : MonoBehaviour
@@ -69,13 +70,20 @@ public class InGameNet : MonoBehaviour
 
     [Header("Debug (QA용)")]
     [Tooltip("켜면 서버에서 오는 모든 릴레이 패킷을 버린다. 네트워크 불량(에코 끊김) 상황을 흉내낸다.")]
-    public bool debugDropIncoming;
+    public bool debugDropIncoming;  // 켜면 받는 패킷을 모두 버림 (네트워크 끊김 테스트용, 출시 전 끄기)
     [Tooltip("켜면 송수신/큐/예산 로그를 자세히 출력한다.")]
-    public bool verboseLog;
+    public bool verboseLog;         // 켜면 송수신 로그를 자세히 출력
 
     // ── 매치 컨텍스트 ────────────────────────────────────────────────────────
     public NetConnectionManager Connection { get; private set; }
     public BACKEND_MATCH.TacticalMatchMode Mode { get; private set; }
+    /// <summary>매칭된 매치 카드의 방식. Point = 랭크전, MMR = 일반전</summary>
+    public MatchType MatchCardType { get; private set; }
+    /// <summary>랭크전인가: 매치 카드가 Point 방식이거나 로비에서 RANK 모드로 매칭했을 때</summary>
+    public bool IsRankMatch
+    {
+        get { return MatchCardType == MatchType.Point || Mode == BACKEND_MATCH.TacticalMatchMode.RANK; }
+    }
     public string SceneName { get; private set; }
     public string RoomToken { get; private set; }
     public string MatchCardInDate { get; private set; }
@@ -206,12 +214,13 @@ public class InGameNet : MonoBehaviour
     /// 참가자 명단/닉네임을 받아 팀을 배정하고 컨텍스트를 만든다.
     /// </summary>
     public void PrepareFromMatch(IEnumerable<MatchUserGameRecord> records, BACKEND_MATCH.TacticalMatchMode mode,
-                                 string sceneName, string roomToken, string cardInDate)
+                                 string sceneName, string roomToken, string cardInDate, MatchType matchType = MatchType.MMR)
     {
         ResetForNewMatch();
         RegisterBackendEvents();
 
         Mode = mode;
+        MatchCardType = matchType;
         SceneName = sceneName;
         RoomToken = roomToken;
         MatchCardInDate = cardInDate;
@@ -223,7 +232,7 @@ public class InGameNet : MonoBehaviour
         SaveActiveMatch();
         Connection.OnMatchPrepared();
 
-        NetLog.Info("매치 준비 완료. 모드=" + mode + ", 씬=" + sceneName + ", 인원=" + players.Count + ", 내 세션=" + LocalSessionId + ", 호스트=" + IsHost);
+        NetLog.Info("매치 준비 완료. 모드=" + mode + ", 매치방식=" + matchType + ", 씬=" + sceneName + ", 인원=" + players.Count + ", 내 세션=" + LocalSessionId + ", 호스트=" + IsHost);
     }
 
     /// <summary>로비 없이 씬만 실행했을 때의 1인 테스트. 송신은 자기 자신에게 즉시 되돌려준다(에코 흉내).</summary>
@@ -233,6 +242,7 @@ public class InGameNet : MonoBehaviour
         IsOfflineTest = true;
         HasActiveMatch = true;
         Mode = mode;
+        MatchCardType = MatchType.MMR;
         SceneName = sceneName;
         LocalSessionId = 1;
         HostSessionId = 1;
@@ -251,6 +261,7 @@ public class InGameNet : MonoBehaviour
         RegisterBackendEvents();
 
         Mode = (BACKEND_MATCH.TacticalMatchMode)info.mode;
+        MatchCardType = (MatchType)info.matchType;
         SceneName = info.sceneName;
         RoomToken = info.roomToken;
         MatchCardInDate = info.cardInDate;
@@ -271,6 +282,7 @@ public class InGameNet : MonoBehaviour
         IsOfflineTest = false;
         IsResumedMatch = false;
         HasActiveMatch = false;
+        MatchCardType = MatchType.MMR;
         HostSessionId = 0;
         LocalSessionId = 0;
         budgetWindowSecond = -1;
@@ -768,7 +780,8 @@ public class InGameNet : MonoBehaviour
                 mode = (int)Mode,
                 sceneName = SceneName,
                 cardInDate = MatchCardInDate,
-                savedAtUnix = (long)NetClock.Now
+                savedAtUnix = (long)NetClock.Now,
+                matchType = (int)MatchCardType
             };
             PlayerPrefs.SetString(ActiveMatchPrefKey, JsonUtility.ToJson(info));
             PlayerPrefs.Save();

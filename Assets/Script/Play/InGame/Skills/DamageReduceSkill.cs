@@ -9,10 +9,10 @@ using UnityEngine;
 public class DamageReduceSkill : SkillBase
 {
     [Header("피해 감소")]
-    public GameObject reduceEffectPrefab;
-    public Transform effectSpawnPoint;
+    public GameObject reduceEffectPrefab;                  // 피해 감소 이펙트 프리팹
+    public Transform effectSpawnPoint;                     // 이펙트가 생길 위치
     [Range(0f, 1f)] public float reducePercent = 0.5f;     // 0.5 = 50% 감소
-    public float duration = 3f;
+    public float duration = 3f;                            // 피해 감소 지속 시간(초)
 
     private const byte PhaseEffect = 1;     // [켜짐? bool]
 

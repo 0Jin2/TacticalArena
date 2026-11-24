@@ -13,11 +13,14 @@ public class MatchStatusUIManager : MonoBehaviour
 {
     public static MatchStatusUIManager Instance { get; private set; }
 
-    public Transform redTeamParent;
-    public Transform blueTeamParent;
-    public GameObject matchStatusItemPrefab;
+    [Header("목록 부모 / 프리팹 (파랑 = 항상 우리 팀, 빨강 = 항상 상대 팀)")]
+    public Transform redTeamParent;           // 빨강 칸 부모 = 상대 팀 상태 칸이 생길 곳 (RED_STATUS)
+    public Transform blueTeamParent;          // 파랑 칸 부모 = 우리 팀 상태 칸이 생길 곳 (BLUE_STATUS)
+    public GameObject matchStatusItemPrefab;  // 상태 칸 프리팹 (MatchStatusItem)
+
+    [Header("기타")]
     [Tooltip("캐릭터 아이콘을 찾을 목록. 비워 두면 PlayerSpawner 의 목록을 사용")]
-    public CharacterCatalog catalogOverride;
+    public CharacterCatalog catalogOverride;  // (선택) 아이콘을 찾을 캐릭터 목록. 비우면 PlayerSpawner 의 목록 사용
 
     private readonly Dictionary<uint, MatchStatusItem> items = new Dictionary<uint, MatchStatusItem>();
     private MatchState state;
@@ -49,10 +52,14 @@ public class MatchStatusUIManager : MonoBehaviour
         var catalog = catalogOverride != null ? catalogOverride
             : (PlayerSpawner.Instance != null ? PlayerSpawner.Instance.catalog : null);
 
+        // 파랑 칸 = 우리 팀, 빨강 칸 = 상대 팀 (내 팀을 아직 모르면 1팀을 우리 팀처럼 둔다)
+        NetTeam myTeam = TeamView.LocalTeam;
+        if (myTeam == NetTeam.None) myTeam = NetTeam.Red;
+
         foreach (var player in net.Players)
         {
             if (player.IsForfeited) continue;
-            var parent = player.Team == NetTeam.Red ? redTeamParent : blueTeamParent;
+            var parent = player.Team == myTeam ? blueTeamParent : redTeamParent;
             if (parent == null) continue;
 
             var go = Instantiate(matchStatusItemPrefab, parent);

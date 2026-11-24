@@ -12,8 +12,8 @@ public class PlayerAudio : MonoBehaviour
 {
     [Header("재생 설정")]
     [Tooltip("믹서를 지정하지 않은 소리가 사용할 기본 믹서 (비워도 됨)")]
-    public AudioMixerGroup defaultMixer;
-    [Range(0f, 1f)] public float volume = 1f;
+    public AudioMixerGroup defaultMixer;       // 믹서를 따로 정하지 않은 소리가 쓸 기본 믹서 그룹 (비워도 됨)
+    [Range(0f, 1f)] public float volume = 1f;  // 이 캐릭터 효과음 전체 볼륨 (0~1)
 
     private AudioSource defaultSource;
     private readonly Dictionary<AudioMixerGroup, AudioSource> mixedSources = new Dictionary<AudioMixerGroup, AudioSource>();

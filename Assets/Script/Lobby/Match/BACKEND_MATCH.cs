@@ -37,34 +37,34 @@ public class BACKEND_MATCH : MonoBehaviour
     private static BACKEND_MATCH instance;
     public static BACKEND_MATCH Instance => instance;
 
-    [Header("Match UI")]
-    [SerializeField] private Button playButton;
-    [SerializeField] private TMP_Text playButtonLabel;
+    [Header("매칭 UI (로비 화면의 매칭 버튼 / 상태 표시)")]
+    [SerializeField] private Button playButton;               // 매칭 시작/취소 버튼
+    [SerializeField] private TMP_Text playButtonLabel;        // 매칭 버튼 안의 글자 (상황에 따라 "게임 시작"/"매칭 취소" 등으로 바뀜)
     [Tooltip("The selected mode text must be exactly CLASSIC, ARCADE, or RANK (case-insensitive).")]
-    [SerializeField] private TMP_Text selectedMatchModeText;
-    [SerializeField] private GameObject matchStatusPanel;
-    [SerializeField] private TMP_Text matchStatusTitleText;
-    [SerializeField] private TMP_Text matchPlayerCountText;
-    [SerializeField] private TMP_Text matchProgressText;
+    [SerializeField] private TMP_Text selectedMatchModeText;  // 지금 고른 모드 글자 (CLASSIC / ARCADE / RANK 중 하나여야 함)
+    [SerializeField] private GameObject matchStatusPanel;     // 매칭 중일 때 켜지는 상태 패널
+    [SerializeField] private TMP_Text matchStatusTitleText;   // 매칭 상태 패널의 제목 글자
+    [SerializeField] private TMP_Text matchPlayerCountText;   // 모인 인원 수 글자 (예: 3 / 8)
+    [SerializeField] private TMP_Text matchProgressText;      // 매칭 진행 상황 글자 (대기 시간 등)
 
-    [Header("Match Card inDate - copy from BACKND Console")]
-    [SerializeField] private string classicMatchCardInDate;
-    [SerializeField] private string arcadeMatchCardInDate;
-    [SerializeField] private string rankMatchCardInDate;
+    [Header("매치 카드 inDate (뒤끝 콘솔에서 복사해 붙여 넣기)")]
+    [SerializeField] private string classicMatchCardInDate;  // 클래식 매치 카드 inDate (뒤끝 콘솔 > 매치 카드에서 복사)
+    [SerializeField] private string arcadeMatchCardInDate;   // 아케이드 매치 카드 inDate (뒤끝 콘솔에서 복사)
+    [SerializeField] private string rankMatchCardInDate;     // 랭크 매치 카드 inDate (뒤끝 콘솔에서 복사)
 
-    [Header("Random Map Scene Names - every matched client needs the same ordered list")]
-    [SerializeField] private List<string> classicMapSceneNames = new List<string>();
-    [SerializeField] private List<string> arcadeMapSceneNames = new List<string>();
-    [SerializeField] private List<string> rankMapSceneNames = new List<string>();
+    [Header("모드별 맵 씬 이름 (모든 유저가 같은 순서로 넣어야 함)")]
+    [SerializeField] private List<string> classicMapSceneNames = new List<string>();  // 클래식으로 매칭됐을 때 열릴 씬 이름 목록 (씬 파일 이름과 똑같이)
+    [SerializeField] private List<string> arcadeMapSceneNames = new List<string>();   // 아케이드로 매칭됐을 때 열릴 씬 이름 목록
+    [SerializeField] private List<string> rankMapSceneNames = new List<string>();     // 랭크로 매칭됐을 때 열릴 씬 이름 목록
 
     [Header("Scene Loading (모두 로딩이 끝나면 같이 입장)")]
     [Tooltip("(선택) 인게임 씬을 불러오는 동안 켜 둘 패널 오브젝트(처음엔 꺼 두세요). 비워 두면 검은 화면 + LOADING 글자를 자동으로 만들어 보여 줍니다.")]
-    [SerializeField] private GameObject loadingPanel;
+    [SerializeField] private GameObject loadingPanel;           // (선택) 인게임 씬을 불러오는 동안 보여 줄 로딩 패널
     [Tooltip("내 로딩이 끝난 뒤 다른 유저를 기다리는 최대 시간(초). 넘으면 기다리지 않고 입장합니다.")]
-    [SerializeField] private float sceneLoadSyncTimeout = 30f;
+    [SerializeField] private float sceneLoadSyncTimeout = 30f;  // 내 로딩이 끝난 뒤 다른 유저를 기다리는 최대 시간(초)
 
-    [Header("Diagnostics")]
-    [SerializeField] private bool logVerboseMatchEvents = true;
+    [Header("디버그 로그")]
+    [SerializeField] private bool logVerboseMatchEvents = true;  // 켜면 매칭 과정 로그를 자세히 출력 (문제를 찾을 때만 켜기)
 
     private bool isPrimaryInstance;
     private bool backendInitializationStarted;
@@ -849,7 +849,9 @@ public class BACKEND_MATCH : MonoBehaviour
         Debug.Log("[BACKEND_MATCH] Loading shared deterministic map. RoomToken=" + roomToken +
                   ", inDate=" + matchedCardInDate + ", mode=" + selectedMode + ", index=" + sceneIndex + ", scene=" + chosenScene);
         // 참가자 명단(세션ID/닉네임) 수집 + 레드/블루 팀 배정을 마친 뒤 씬을 이동한다. (씬이 바뀌어도 InGameNet은 유지)
-        InGameNet.Ensure().PrepareFromMatch(joinedGameRecords.Values, selectedMode, chosenScene, roomToken, matchedCardInDate);
+        // 매치 카드 방식(Point = 랭크전 / MMR = 일반)도 함께 넘긴다. 캐릭터 선택에서 팀원 중복 선택 금지 여부를 정할 때 쓴다.
+        MatchType matchedCardType = selectedMatchCard != null ? selectedMatchCard.matchType : MatchType.MMR;
+        InGameNet.Ensure().PrepareFromMatch(joinedGameRecords.Values, selectedMode, chosenScene, roomToken, matchedCardInDate, matchedCardType);
 
         // 씬을 미리 불러 두고, 모든 참가자가 불러오기를 끝냈을 때 같이 이동한다. (먼저 들어가서 기다리는 유저가 생기지 않게)
         StartCoroutine(Co_LoadMatchSceneTogether(chosenScene));

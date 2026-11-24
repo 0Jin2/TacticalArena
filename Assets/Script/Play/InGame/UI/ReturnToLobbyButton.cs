@@ -9,7 +9,8 @@ using UnityEngine.SceneManagement;
 
 public class ReturnToLobbyButton : MonoBehaviour
 {
-    [SerializeField] private string lobbySceneName = "LobbyPage";
+    [Header("이동할 씬")]
+    [SerializeField] private string lobbySceneName = "LobbyPage";  // 버튼을 누르면 이동할 로비 씬 이름
 
     public void OnClickReturnToLobby()
     {

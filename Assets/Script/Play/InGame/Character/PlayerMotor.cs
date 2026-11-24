@@ -18,23 +18,23 @@ public class PlayerMotor : MonoBehaviour
 {
     [Header("지면 판정")]
     [Tooltip("땅으로 취급할 레이어. 비어 있으면 'Ground' 레이어를 사용한다.")]
-    public LayerMask groundLayers;
-    public Vector2 groundCheckSize = new Vector2(0.5f, 0.1f);
-    public float groundCheckDistance = 0.1f;
+    public LayerMask groundLayers;                             // 땅으로 인정할 레이어 (비우면 Ground)
+    public Vector2 groundCheckSize = new Vector2(0.5f, 0.1f);  // 발밑 땅 검사 상자 크기
+    public float groundCheckDistance = 0.1f;                   // 발밑 땅 검사 거리
 
     [Header("아래 점프 (조이스틱을 아래로 + 점프)")]
-    [Range(-1f, 0f)] public float dropStickThreshold = -0.5f;
-    public float dropRayDistance = 0.2f;
-    public float dropThroughSeconds = 0.4f;
+    [Range(-1f, 0f)] public float dropStickThreshold = -0.5f;  // 조이스틱을 이 값보다 아래로 내려야 아래 점프 (-1 = 끝까지)
+    public float dropRayDistance = 0.2f;                       // 아래 점프할 발판을 찾는 거리
+    public float dropThroughSeconds = 0.4f;                    // 발판을 통과하는 동안 충돌을 꺼 두는 시간(초)
     [Tooltip("이 태그와 Ground 레이어를 모두 가진 발판만 통과할 수 있다.")]
-    public string dropGroundTag = "Ground";
+    public string dropGroundTag = "Ground";                    // 아래로 통과할 수 있는 발판의 태그
 
     [Header("입력")]
-    [Range(0f, 0.9f)] public float moveDeadZone = 0.2f;
+    [Range(0f, 0.9f)] public float moveDeadZone = 0.2f;  // 이 값보다 작게 민 조이스틱은 이동으로 치지 않음
 
     [Header("점프 효과음")]
-    public AudioClip jumpClip;
-    public AudioMixerGroup jumpMixer;
+    public AudioClip jumpClip;         // 점프 효과음
+    public AudioMixerGroup jumpMixer;  // 점프 효과음 믹서 그룹
 
     // ── 스킬이 건드리는 임시 배율 (1 = 기본) ────────────────────────────────
     public float SpeedMultiplier { get; set; }

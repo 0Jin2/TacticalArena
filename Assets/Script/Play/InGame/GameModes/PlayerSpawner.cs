@@ -19,20 +19,20 @@ public class PlayerSpawner : MonoBehaviour, INetStateProvider
     public static PlayerSpawner Instance { get; private set; }
 
     [Header("캐릭터 목록")]
-    public CharacterCatalog catalog;
+    public CharacterCatalog catalog;  // 캐릭터 목록 에셋 (CharacterCatalog)
 
     [Header("스폰 포인트 (팀별)")]
-    public Transform[] redSpawnPoints;
-    public Transform[] blueSpawnPoints;
+    public Transform[] redSpawnPoints;   // 레드팀 시작/부활 위치들 (Red_1~4)
+    public Transform[] blueSpawnPoints;  // 블루팀 시작/부활 위치들 (Blue_1~4)
     [Tooltip("스폰했을 때 바라보는 방향 (+1 오른쪽, -1 왼쪽)")]
-    public float redFacing = 1f;
-    public float blueFacing = -1f;
+    public float redFacing = 1f;         // 레드팀이 처음 바라보는 방향 (1 = 오른쪽, -1 = 왼쪽)
+    public float blueFacing = -1f;       // 블루팀이 처음 바라보는 방향 (1 = 오른쪽, -1 = 왼쪽)
 
     [Header("생성 위치 부모 (선택)")]
-    public Transform avatarRoot;
+    public Transform avatarRoot;  // (선택) 생성된 캐릭터를 넣어 둘 부모 오브젝트
 
     [Header("카메라")]
-    public bool followLocalCamera = true;
+    public bool followLocalCamera = true;  // 켜면 카메라가 내 캐릭터를 따라감
 
     public bool AvatarsSpawned { get; private set; }
     public PlayerEntity LocalEntity { get { return PlayerEntity.Local; } }

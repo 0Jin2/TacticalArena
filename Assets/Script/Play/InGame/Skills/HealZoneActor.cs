@@ -17,9 +17,9 @@ public class HealZoneActor : MonoBehaviour
 {
     [Header("회복 대상")]
     [Tooltip("true 면 아군 방벽 같은 설치물도 회복한다. (기존 동작 아님)")]
-    public bool healDeployables = false;
+    public bool healDeployables = false;  // 켜면 아군 방벽 같은 설치물도 회복
     [Tooltip("회복 대상을 찾을 레이어. 비우면 모든 레이어")]
-    public LayerMask targetLayers = ~0;
+    public LayerMask targetLayers = ~0;   // 회복 대상을 찾을 레이어
 
     public uint OwnerSession { get; private set; }
     public float Duration { get; private set; }

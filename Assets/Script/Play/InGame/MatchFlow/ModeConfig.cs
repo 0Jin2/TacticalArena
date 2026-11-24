@@ -14,8 +14,8 @@ public enum GameModeType { TDM, BOMB, FLAG, FALL, TUTORIAL }
 public class ModeConfig : ScriptableObject
 {
     [Header("기본 정보")]
-    public GameModeType modeType = GameModeType.TDM;
-    public string displayName = "팀 데스매치";
+    public GameModeType modeType = GameModeType.TDM;  // 이 설정을 쓰는 게임 모드 (TDM / BOMB / FLAG / FALL / TUTORIAL)
+    public string displayName = "팀 데스매치";        // 화면에 보여 줄 모드 이름
     public int teamSize = 4;                        // 한 팀 인원 (4 = 4vs4)
 
     [Header("진행 시간 (초)")]
@@ -40,17 +40,17 @@ public class ModeConfig : ScriptableObject
     public bool respawnEnabled = true;              // BOMB은 라운드 중 부활 없음 → false
 
     [Header("보상 (같은 팀 안에서 킬 많고 데스 적은 순서 1~4위)")]
-    public bool distributeRewards = true;
-    public int[] winGoldByRank = new int[4] { 100, 80, 60, 40 };
-    public int[] loseGoldByRank = new int[4] { 50, 40, 30, 20 };
-    public int[] drawGoldByRank = new int[4] { 60, 50, 40, 30 };
+    public bool distributeRewards = true;                         // 켜면 경기 후 골드 보상 지급
+    public int[] winGoldByRank = new int[4] { 100, 80, 60, 40 };  // 이긴 팀의 팀 내 1~4위 골드
+    public int[] loseGoldByRank = new int[4] { 50, 40, 30, 20 };  // 진 팀의 팀 내 1~4위 골드
+    public int[] drawGoldByRank = new int[4] { 60, 50, 40, 30 };  // 무승부일 때 1~4위 골드
 
     [Header("씬 이동")]
-    public string lobbySceneName = "LobbyPage";
+    public string lobbySceneName = "LobbyPage";  // 경기 후 돌아갈 로비 씬 이름
 
     [Header("연결 끊김 / 재접속")]
     public float reconnectTimeLimit = 30f;          // 끊긴 유저를 기다려 주는 시간
-    public HostLossPolicy hostLossPolicy = HostLossPolicy.ContinueWithNewHost;
+    public HostLossPolicy hostLossPolicy = HostLossPolicy.ContinueWithNewHost;  // 방장(호스트)이 나갔을 때: 새 호스트로 계속 / 즉시 종료
     public int minPlayersPerTeam = 1;               // 한 팀이 이 인원보다 적어지면 매치 중단
 
     private void OnValidate()

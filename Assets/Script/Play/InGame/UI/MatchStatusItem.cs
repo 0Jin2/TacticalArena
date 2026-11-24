@@ -9,20 +9,18 @@ using UnityEngine.UI;
 
 public class MatchStatusItem : MonoBehaviour
 {
-    public TMP_Text nicknameText;
-    public Image characterIconImage;
-    public TMP_Text killText;
-    public TMP_Text deathText;
-    public GameObject deadOverlay;
+    [Header("UI 요소")]
+    public TMP_Text nicknameText;      // 닉네임 글자
+    public Image characterIconImage;   // 캐릭터 아이콘
+    public TMP_Text killText;          // 킬 수 글자
+    public TMP_Text deathText;         // 데스 수 글자
+    public GameObject deadOverlay;     // 죽었을 때 덮이는 표시
     [Tooltip("(선택) 연결이 끊긴 유저일 때 켜지는 표시")]
-    public GameObject offlineOverlay;
-
-    [Header("색상")]
-    public Color localColor = Color.yellow;
-    public Color otherColor = Color.white;
+    public GameObject offlineOverlay;  // (선택) 연결이 끊긴 유저 표시
 
     public uint SessionId { get; private set; }
 
+    /// <summary>칸 초기화. 닉네임 색: 나 노랑 / 같은 팀 파랑 / 상대 팀 빨강 (색은 Resources/TeamColorSettings)</summary>
     public void Initialize(NetPlayer player, Sprite icon, bool isLocal)
     {
         SessionId = player.SessionId;
@@ -30,7 +28,7 @@ public class MatchStatusItem : MonoBehaviour
         if (nicknameText != null)
         {
             nicknameText.text = player.Nickname;
-            nicknameText.color = isLocal ? localColor : otherColor;
+            nicknameText.color = TeamView.ColorOf(isLocal, player.Team);
         }
         if (characterIconImage != null) characterIconImage.sprite = icon;
         if (killText != null) killText.text = "0";

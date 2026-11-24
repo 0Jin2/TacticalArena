@@ -3,22 +3,17 @@ using UnityEngine;
 
 // ─────────────────────────────────────────────────────────────────────────────
 // PlayerNameTag : 캐릭터 머리 위 닉네임 (기존 NameTagUI 대체)
-//   색상: 나 = 노랑 / 우리 팀 = 초록 / 상대 팀 = 빨강
+//   색상: 나 = 노랑 / 같은 팀 = 파랑 / 상대 팀 = 빨강  (색은 Resources/TeamColorSettings 에서 바꿈)
 //   연결이 끊긴 유저는 닉네임 뒤에 표시를 붙인다.
 // ─────────────────────────────────────────────────────────────────────────────
 
 public class PlayerNameTag : MonoBehaviour
 {
     [Header("연결")]
-    public TMP_Text text;
-
-    [Header("색상")]
-    public Color mineColor = Color.yellow;
-    public Color allyColor = Color.green;
-    public Color enemyColor = Color.red;
+    public TMP_Text text;  // 이름을 표시할 TMP 글자
 
     [Header("연결 끊김 표시")]
-    public string offlineSuffix = " (재접속 중)";
+    public string offlineSuffix = " (재접속 중)";  // 연결이 끊긴 유저 이름 뒤에 붙일 글자
 
     private PlayerEntity entity;
     private float initialScaleX = 1f;
@@ -48,16 +43,11 @@ public class PlayerNameTag : MonoBehaviour
     {
         if (text == null || entity == null || !entity.IsInitialized) return;
 
-        var net = InGameNet.Instance;
-        var local = net != null ? net.LocalPlayer : null;
-
         string nick = entity.Nickname;
         if (entity.Info != null && !entity.Info.IsOnline) nick += offlineSuffix;
         text.text = nick;
 
-        if (entity.IsMine) text.color = mineColor;
-        else if (local != null && local.Team == entity.Team) text.color = allyColor;
-        else text.color = enemyColor;
+        text.color = TeamView.ColorOf(entity.IsMine, entity.Team);   // 나 노랑 / 같은 팀 파랑 / 상대 팀 빨강
     }
 
     private void LateUpdate()

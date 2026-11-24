@@ -19,7 +19,8 @@ public class MatchState : MonoBehaviour, INetStateProvider
 
     public sealed class PlayerStat { public int Kills; public int Deaths; public bool Dead; }
 
-    [SerializeField] private ScoreRule scoreRule = ScoreRule.KillBased;
+    [Header("점수 규칙")]
+    [SerializeField] private ScoreRule scoreRule = ScoreRule.KillBased;  // KillBased = 킬마다 팀 1점 (TDM·FALL·튜토리얼) / Manual = 모드가 직접 점수 (FLAG·BOMB)
 
     public ScoreRule Rule { get { return scoreRule; } }
     public int RedScore { get; private set; }
