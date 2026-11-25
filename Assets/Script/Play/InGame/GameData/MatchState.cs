@@ -15,12 +15,12 @@ public class MatchState : MonoBehaviour, INetStateProvider
 {
     public static MatchState Instance { get; private set; }
 
-    public enum ScoreRule : byte { KillBased = 0, Manual = 1 }   // KillBased: 킬 1회 = 팀 1점 / Manual: 모드가 호스트로 AddScore
+    public enum ScoreRule : byte { KillBased = 0, Manual = 1 }   // KillBased: 킬 1회 = 팀 1점 (자멸은 상대 팀 1점) / Manual: 모드가 호스트로 AddScore
 
     public sealed class PlayerStat { public int Kills; public int Deaths; public bool Dead; }
 
     [Header("점수 규칙")]
-    [SerializeField] private ScoreRule scoreRule = ScoreRule.KillBased;  // KillBased = 킬마다 팀 1점 (TDM·FALL·튜토리얼) / Manual = 모드가 직접 점수 (FLAG·BOMB)
+    [SerializeField] private ScoreRule scoreRule = ScoreRule.KillBased;  // KillBased = 킬마다 팀 1점, 자멸(낙사 등)은 상대 팀 1점 (TDM·FALL·튜토리얼) / Manual = 모드가 직접 점수 (FLAG·BOMB)
 
     public ScoreRule Rule { get { return scoreRule; } }
     public int RedScore { get; private set; }
@@ -29,6 +29,7 @@ public class MatchState : MonoBehaviour, INetStateProvider
     public event Action<int, int> OnScoreChanged;        // (red, blue)
     public event Action<uint> OnStatChanged;              // 킬/데스/생존이 바뀐 유저
     public event Action<uint, uint> OnPlayerDied;         // (피해자, 가해자) 통계 반영 후
+    public event Action<uint, uint, DeathCause> OnKillLog; // (피해자, 가해자, 원인) 킬로그 표시용. 가해자 0 = 자멸(낙사/함정/폭발 등)
     public event Action<uint> OnPlayerRevived;            // 부활한 유저
 
     private readonly Dictionary<uint, PlayerStat> stats = new Dictionary<uint, PlayerStat>();
@@ -165,12 +166,13 @@ public class MatchState : MonoBehaviour, INetStateProvider
     // ═════════════════════════════════════════════════════════════════════════
     #region 패킷
 
-    // PlayerDied: [피해자 uint][가해자 uint]
+    // PlayerDied: [피해자 uint][가해자 uint][(원인 byte)]
     private void HandlePlayerDied(NetPacket packet)
     {
         var r = packet.OpenReader();
         uint victim = r.ReadUInt();
         uint killer = r.ReadUInt();
+        var cause = r.Remaining >= 1 ? (DeathCause)r.ReadByte() : DeathCause.Unknown;   // 예전 버전 패킷엔 없음
 
         var victimStat = GetStat(victim);
         if (victimStat.Dead) return;                        // 중복 방지
@@ -187,9 +189,21 @@ public class MatchState : MonoBehaviour, INetStateProvider
             }
             OnStatChanged?.Invoke(killer);
         }
+        else if (scoreRule == ScoreRule.KillBased)
+        {
+            // 자멸 (낙사/함정/폭발 등 가해자가 없는 죽음) → 죽은 사람의 상대 팀에 1점
+            var victimInfo = net.GetPlayer(victim);
+            if (victimInfo != null) AddScoreLocal(EnemyOf(victimInfo.Team), 1);
+        }
 
         OnStatChanged?.Invoke(victim);
         OnPlayerDied?.Invoke(victim, killer);
+        OnKillLog?.Invoke(victim, killer == victim ? 0u : killer, cause);
+    }
+
+    private static NetTeam EnemyOf(NetTeam team)
+    {
+        return team == NetTeam.Red ? NetTeam.Blue : team == NetTeam.Blue ? NetTeam.Red : NetTeam.None;
     }
 
     // PlayerSpawn: 보낸 유저가 (재)스폰했다

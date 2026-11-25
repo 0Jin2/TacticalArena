@@ -25,6 +25,10 @@ public class NetKillZone : MonoBehaviour
     [Tooltip("이 시간(초) 안에 나를 공격한 사람이 있으면 그 사람의 킬로 인정합니다. 0 이면 인정 안 함(기존 동작)")]
     [SerializeField] private float creditWindowSeconds = 5f;  // 이 시간(초) 안에 나를 때린 사람에게 킬 인정 (0 = 인정 안 함)
 
+    [Header("킬로그")]
+    [Tooltip("이 지역에서 죽었을 때 킬로그에 표시할 사망 원인. Fall = 낙사 / Hazard = 함정(가시 등) / Explosion = 폭발")]
+    [SerializeField] private DeathCause deathCause = DeathCause.Fall;  // 킬로그에 띄울 사망 원인 (Fall 낙사 / Hazard 함정 / Explosion 폭발)
+
     private readonly Dictionary<PlayerEntity, float> lastHitTime = new Dictionary<PlayerEntity, float>();
 
     private void Reset()
@@ -59,6 +63,6 @@ public class NetKillZone : MonoBehaviour
         if (flow != null && flow.Phase != MatchPhase.Playing) return;
 
         uint attacker = creditWindowSeconds > 0f ? health.GetRecentAttacker(creditWindowSeconds) : 0u;
-        health.Kill(attacker);
+        health.Kill(attacker, deathCause);
     }
 }

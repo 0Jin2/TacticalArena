@@ -2,6 +2,7 @@ using System.Collections.Generic;
 using TMPro;
 using UnityEngine;
 using UnityEngine.SceneManagement;
+using UnityEngine.Serialization;
 using UnityEngine.UI;
 
 // ─────────────────────────────────────────────────────────────────────────────
@@ -16,7 +17,7 @@ using UnityEngine.UI;
 //    Loading / Intro 단계 : (선택) 로딩 화면, 인트로 화면 켜기
 //
 //  기존과 같은 점
-//   - 내 팀 패널만 보이고, 내 팀 이름/색이 표시됨
+//   - 내 팀 패널에 나와 같은 팀원만 표시되고, 내 팀 이름(우리 팀 색)이 표시됨
 //   - 준비를 누르면 캐릭터 변경 불가. 준비를 다시 누르면 취소 (마지막 1초 이후엔 불가)
 //   - 선택 시간 안에 못 고르면 자동 선택 (※ 기존은 잠긴 캐릭터도 뽑힐 수 있었음 → 지금은 잠긴 캐릭터 제외)
 //   - 튜토리얼 연습방(미완료): 카운트다운/팀 문구 숨김, 준비를 누르면 패널이 바로 닫힘
@@ -47,11 +48,12 @@ public class CharSelectUI : MonoBehaviour
     [Tooltip("준비 버튼 안의 글자. 비워 두면 준비 버튼 자식에서 자동으로 찾습니다. (TMP 글자와 기본 Text 모두 지원)")]
     public TMP_Text readyButtonText;   // 준비 버튼 안의 글자 (비우면 자동으로 찾음)
 
-    [Header("팀원 목록")]
-    public Transform redTeamPanel, blueTeamPanel;  // 레드 / 블루 팀원 칸이 생길 부모
-    public GameObject redTeamItemPrefab;           // 레드팀 팀원 칸 프리팹 (TeamMemberItem)
-    public GameObject blueTeamItemPrefab;          // 블루팀 팀원 칸 프리팹 (TeamMemberItem)
-    public GameObject myTeamItemPrefab;            // 내 칸 프리팹 (TeamMemberItem)
+    [Header("팀원 목록 (내 팀원만 표시)")]
+    [FormerlySerializedAs("blueTeamPanel")]
+    public Transform myTeamPanel;          // 내 팀원 칸이 생길 부모 (내 칸 포함)
+    public GameObject myTeamItemPrefab;    // 내 칸 프리팹 (TeamMemberItem)
+    [FormerlySerializedAs("blueTeamItemPrefab")]
+    public GameObject allyItemPrefab;      // 아군(같은 팀원) 칸 프리팹 (TeamMemberItem)
 
     [Header("캐릭터 버튼")]
     public CharacterButton[] characterButtons;  // 캐릭터 선택 버튼들 (각 버튼에 CharacterButton)
@@ -85,10 +87,6 @@ public class CharSelectUI : MonoBehaviour
     public string readyLockedMessage = "준비 완료 상태입니다. 준비를 취소하면 캐릭터를 바꿀 수 있습니다.";  // 준비 완료 상태에서 다른 캐릭터를 눌렀을 때 문구
     public string timeOverMessage = "캐릭터 선택 시간이 끝났습니다.";                                  // 선택 시간이 끝난 뒤 눌렀을 때 문구
     public float noticeSeconds = 1.5f;                             // 알림 표시 시간(초)
-
-    [Header("내 팀 표시 (이름/색은 Resources/TeamColorSettings 에서 바꿈)")]
-    [Tooltip("켜면 보이는 내 팀 패널(RedTeamBox/BlueTeamBox)의 배경을 '우리 팀 패널 색'(어두운 파랑)으로 칠합니다.")]
-    public bool tintMyTeamPanel = true;  // 켜면 내 팀 패널 배경을 우리 팀 색(파랑)으로 칠함
 
     [Header("기타")]
     [Tooltip("캐릭터 목록. 비워 두면 PlayerSpawner 의 목록을 사용")]
@@ -499,8 +497,16 @@ public class CharSelectUI : MonoBehaviour
     private int CountDisplayablePlayers()
     {
         int n = 0;
-        foreach (var p in net.Players) if (!p.IsForfeited && p.Team != NetTeam.None) n++;
+        foreach (var p in net.Players) if (IsShownInList(p)) n++;
         return n;
+    }
+
+    // 팀원 목록에 보여 줄 유저인가: 나와 같은 팀만 (이탈자 제외). 내 팀을 아직 모르면 아무도 표시하지 않는다.
+    private bool IsShownInList(NetPlayer p)
+    {
+        if (p == null || p.IsForfeited || p.Team == NetTeam.None) return false;
+        var me = net != null ? net.LocalPlayer : null;
+        return me != null && me.Team != NetTeam.None && p.Team == me.Team;
     }
 
     /// <summary>명단과 칸을 맞춘다 (추가/제거). 칸 하나가 실패해도 나머지 유저 칸은 계속 만든다.</summary>
@@ -508,12 +514,12 @@ public class CharSelectUI : MonoBehaviour
     {
         if (net == null) return;
 
-        // 사라진/이탈한 유저 칸, 그리고 이미 파괴된(null) 칸 제거
+        // 사라진/이탈한/다른 팀 유저 칸, 그리고 이미 파괴된(null) 칸 제거
         var remove = new List<uint>();
         foreach (var kv in items)
         {
             var p = net.GetPlayer(kv.Key);
-            if (kv.Value == null || p == null || p.IsForfeited) remove.Add(kv.Key);
+            if (kv.Value == null || !IsShownInList(p)) remove.Add(kv.Key);
         }
         foreach (var id in remove)
         {
@@ -524,7 +530,7 @@ public class CharSelectUI : MonoBehaviour
 
         foreach (var p in net.Players)
         {
-            if (p.IsForfeited || p.Team == NetTeam.None) continue;
+            if (!IsShownInList(p)) continue;                 // 내 팀원만 칸을 만든다
             if (items.ContainsKey(p.SessionId)) continue;
             try { AddItem(p); }
             catch (System.Exception e) { NetLog.Error("CharSelectUI: '" + p.Nickname + "' 팀원 칸 생성 실패: " + e.Message); }
@@ -541,14 +547,12 @@ public class CharSelectUI : MonoBehaviour
 
     private void AddItem(NetPlayer player)
     {
-        bool red = player.Team == NetTeam.Red;
-        Transform parent = red ? redTeamPanel : blueTeamPanel;
-        GameObject prefab = (player.IsLocal && myTeamItemPrefab != null) ? myTeamItemPrefab
-            : (red ? redTeamItemPrefab : blueTeamItemPrefab);
+        Transform parent = myTeamPanel;
+        GameObject prefab = (player.IsLocal && myTeamItemPrefab != null) ? myTeamItemPrefab : allyItemPrefab;
         if (parent == null || prefab == null)
         {
-            WarnOnce("noprefab" + player.Team + player.IsLocal,
-                "CharSelectUI: 팀원 칸 프리팹 또는 팀 패널이 비어 있습니다. (" + (red ? "Red" : "Blue") + (player.IsLocal ? " / 내 칸" : "") + ") 인스펙터를 확인하세요.");
+            WarnOnce("noprefab" + player.IsLocal,
+                "CharSelectUI: 팀원 칸 프리팹 또는 내 팀 패널이 비어 있습니다. (" + (player.IsLocal ? "내 칸" : "아군 칸") + ") 인스펙터를 확인하세요.");
             return;
         }
 
@@ -663,23 +667,13 @@ public class CharSelectUI : MonoBehaviour
         if (!teamTextSet) ApplyMyTeamVisibility();
     }
 
-    /// <summary>내 팀 패널만 보이게 하고 팀 이름("1팀"/"2팀")을 우리 팀 색(파랑)으로 표시</summary>
+    /// <summary>내 팀 패널을 켜고 팀 이름("1팀"/"2팀")을 우리 팀 색(파랑)으로 표시</summary>
     private void ApplyMyTeamVisibility()
     {
         var me = net != null ? net.LocalPlayer : null;
         if (me == null || me.Team == NetTeam.None) return;
 
-        bool red = me.Team == NetTeam.Red;
-        if (redTeamPanel != null) redTeamPanel.gameObject.SetActive(red);
-        if (blueTeamPanel != null) blueTeamPanel.gameObject.SetActive(!red);
-
-        // 보이는 패널(내 팀)의 배경을 우리 팀 색으로
-        if (tintMyTeamPanel)
-        {
-            var shown = red ? redTeamPanel : blueTeamPanel;
-            var panelImage = shown != null ? shown.GetComponent<Image>() : null;
-            if (panelImage != null) panelImage.color = TeamView.Settings.allyPanelColor;
-        }
+        if (myTeamPanel != null) myTeamPanel.gameObject.SetActive(true);
 
         if (myTeamText != null && !IsTutorialPractice)
         {

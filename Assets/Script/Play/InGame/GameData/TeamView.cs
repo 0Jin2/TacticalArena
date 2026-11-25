@@ -102,12 +102,6 @@ public static class TeamView
     /// <summary>팀 색: 우리 팀 파랑 / 상대 팀 빨강</summary>
     public static Color TeamColor(NetTeam team) { return ColorOf(RelationOfTeam(team)); }
 
-    /// <summary>팀 패널 배경 색: 우리 팀 어두운 파랑 / 상대 팀 어두운 빨강</summary>
-    public static Color PanelColor(NetTeam team)
-    {
-        return RelationOfTeam(team) == TeamRelation.Enemy ? Settings.enemyPanelColor : Settings.allyPanelColor;
-    }
-
     // ── 이름 ────────────────────────────────────────────────────────────────
     /// <summary>"1팀" / "2팀" (Red = 1팀, Blue = 2팀)</summary>
     public static string TeamName(NetTeam team)

@@ -6,7 +6,7 @@ using UnityEngine;
 //  패킷 → 받는 곳
 //   PlayerState  → 보낸 사람의 캐릭터 PlayerNetSync.ApplyState
 //   PlayerSpawn  → 보낸 사람의 캐릭터 ApplyRemoteSpawn
-//   PlayerDied   → 죽은 캐릭터 PlayerHealth.RemoteDie        (킬/데스 집계는 MatchState 가 따로 처리)
+//   PlayerDied   → 죽은 캐릭터 PlayerHealth.RemoteDie        (킬/데스 집계·킬로그는 MatchState 가 따로 처리)
 //   Fire         → 보낸 사람의 캐릭터 PlayerCombat.OnRemoteFire
 //   Damage       → DamageRegistry 에서 찾은 대상.ReceiveDamage
 //   Knockback    → 대상 캐릭터(내 것일 때만) PlayerMotor.ApplyKnockback
@@ -84,7 +84,7 @@ public class CombatRouter : MonoBehaviour
         e.Combat.OnRemoteFire(p.OpenReader());
     }
 
-    // [가해자 uint][대상 주인 uint][슬롯 byte][양 int][플래그 byte]
+    // [가해자 uint][대상 주인 uint][슬롯 byte][양 int][플래그 byte][(원인 byte)]
     private void OnDamage(NetPacket p)
     {
         var r = p.OpenReader();
@@ -94,6 +94,7 @@ public class CombatRouter : MonoBehaviour
         byte slot = r.ReadByte();
         info.Amount = r.ReadInt();
         info.Flags = (DamageFlags)r.ReadByte();
+        info.Cause = r.Remaining >= 1 ? (DeathCause)r.ReadByte() : DeathCause.Unknown;   // 예전 버전 패킷엔 없음
 
         var target = DamageRegistry.Find(owner, slot);
         if (target == null) return;

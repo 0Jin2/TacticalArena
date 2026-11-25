@@ -24,10 +24,6 @@ public class TeamColorSettings : ScriptableObject
     public Color enemyColor = new Color(1f, 0.35f, 0.35f, 1f);   // 상대 팀 (빨강)
     public Color unknownColor = Color.white;                     // 팀을 아직 모를 때 (예외 상황)
 
-    [Header("패널 배경 색 (캐릭터 선택 화면의 내 팀 패널 등)")]
-    public Color allyPanelColor = new Color(0.09f, 0.15f, 0.25f, 0.85f);   // 우리 팀 패널 배경 (어두운 파랑)
-    public Color enemyPanelColor = new Color(0.25f, 0.09f, 0.09f, 0.85f);  // 상대 팀 패널 배경 (어두운 빨강)
-
     [Header("팀 이름")]
     public string team1Name = "1팀";  // 1팀 이름 (내부 이름 Red)
     public string team2Name = "2팀";  // 2팀 이름 (내부 이름 Blue)

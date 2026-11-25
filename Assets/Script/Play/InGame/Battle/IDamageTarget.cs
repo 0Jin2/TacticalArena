@@ -25,11 +25,23 @@ public enum DamageFlags : byte
     Silent = 4,     // 피격 연출(소리/깜빡임) 없음
 }
 
+/// <summary>죽은 원인. 킬로그에 어떤 아이콘을 띄울지 정하는 데 쓴다.</summary>
+public enum DeathCause : byte
+{
+    Unknown = 0,    // 알 수 없음 (예전 버전 패킷 등)
+    Weapon = 1,     // 기본 공격 총알
+    Skill = 2,      // 스킬 (차지샷 등)
+    Fall = 3,       // 낙사 (맵 밖으로 떨어짐)
+    Hazard = 4,     // 함정 (가시 등)
+    Explosion = 5,  // 폭발
+}
+
 public struct DamageInfo
 {
     public uint Attacker;           // 가해자 세션 (0 = 없음)
     public int Amount;
     public DamageFlags Flags;
+    public DeathCause Cause;        // 이 피해로 죽으면 킬로그에 표시할 원인
 
     public bool IsHeal { get { return (Flags & DamageFlags.Heal) != 0; } }
     public bool IsTrue { get { return (Flags & DamageFlags.True) != 0; } }
@@ -79,7 +91,8 @@ public static class DamageRegistry
     }
 
     /// <summary>방 전체에 "이 대상에게 피해/회복" 패킷을 보낸다. 유실되면 안 되므로 critical.</summary>
-    public static bool Send(IDamageTarget target, uint attacker, int amount, DamageFlags flags = DamageFlags.None)
+    /// <param name="cause">이 피해로 죽었을 때 킬로그에 표시할 원인 (기본 = 총알)</param>
+    public static bool Send(IDamageTarget target, uint attacker, int amount, DamageFlags flags = DamageFlags.None, DeathCause cause = DeathCause.Weapon)
     {
         var net = InGameNet.Instance;
         if (net == null || target == null) return false;
@@ -93,6 +106,7 @@ public static class DamageRegistry
             w.WriteByte(slot);
             w.WriteInt(amount);
             w.WriteByte((byte)flags);
+            w.WriteByte((byte)cause);       // 뒤에 덧붙인 값 (예전 버전은 이 값이 없음)
         }, true);
     }
 }

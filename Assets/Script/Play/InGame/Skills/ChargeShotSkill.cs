@@ -96,6 +96,7 @@ public class ChargeShotSkill : SkillBase, IAttackOverride
         if (chargeProjectilePrefab == null) { NetLog.Warn("ChargeShotSkill: chargeProjectilePrefab 이 비어 있습니다."); return; }
         Vector2 dir = Vector2.right * facing;
         var bullet = Instantiate(chargeProjectilePrefab, origin, Quaternion.FromToRotation(Vector3.right, (Vector3)dir));
+        bullet.killCause = DeathCause.Skill;   // 차지샷으로 죽이면 킬로그에 스킬 아이콘 표시
         bullet.Launch(Entity.SessionId, dir);
     }
 

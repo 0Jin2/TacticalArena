@@ -95,6 +95,25 @@ public class GameHud : MonoBehaviour
     [SerializeField] private TMP_Text alertText;    // 알림 글자
     public float alertSeconds = 2f;                 // 알림 표시 시간(초)
 
+    [Header("킬로그")]
+    [Tooltip("킬로그 줄이 생성될 부모. VerticalLayoutGroup 을 붙여 두면 위에서부터 차례로 쌓인다.")]
+    public Transform killFeedParent;                // 킬로그 줄이 생성될 부모 (VerticalLayoutGroup 권장)
+    [Tooltip("내가 킬했을 때 쓰는 프리팹 (가해자 아이콘·닉네임 / 무기·스킬 아이콘 / 피해자 아이콘·닉네임)")]
+    public KillFeedItem myKillItemPrefab;           // 킬 프리팹: 내가 킬했을 때
+    [Tooltip("같은 팀원이 킬했을 때 쓰는 프리팹 (칸 구성은 위와 같음)")]
+    public KillFeedItem allyKillItemPrefab;         // 킬 프리팹: 같은 팀이 킬했을 때
+    [Tooltip("적 팀이 킬했을 때 쓰는 프리팹 (칸 구성은 위와 같음)")]
+    public KillFeedItem enemyKillItemPrefab;        // 킬 프리팹: 적 팀이 킬했을 때
+    [Tooltip("낙사/함정/폭발 등 스스로 죽었을 때 쓰는 프리팹 (죽은 유저의 캐릭터 아이콘 + 닉네임 + 사인 아이콘)")]
+    public KillFeedItem selfDeathItemPrefab;        // 자멸 프리팹 (낙사/함정/폭발 등, FALL 모드 포함)
+    public int maxKillFeedItems = 4;                // 동시에 보이는 최대 줄 수 (넘치면 가장 오래된 줄 삭제)
+    [Tooltip("0 이면 시간이 지나도 사라지지 않고, 최대 개수를 넘칠 때만 삭제된다.")]
+    public float killFeedSeconds = 0f;              // 이 시간(초)이 지나면 줄 자동 삭제 (0 = 자동 삭제 안 함)
+    public Sprite fallDeathIcon;                    // 자멸 프리팹 사인 아이콘: 낙사
+    public Sprite hazardDeathIcon;                  // 자멸 프리팹 사인 아이콘: 함정 (가시 등)
+    public Sprite explosionDeathIcon;               // 자멸 프리팹 사인 아이콘: 폭발
+    public Sprite defaultDeathIcon;                 // 자멸 프리팹 사인 아이콘: 그 밖 (위 칸이 비어 있을 때도 사용)
+
     [Header("연결 상태 알림 (선택)")]
     [Tooltip("내 연결이 끊겨 재접속 중일 때 켜지는 배너")]
     [SerializeField] private GameObject reconnectBanner;                           // 내 연결이 끊겨 재접속 중일 때 켜지는 배너
@@ -123,6 +142,8 @@ public class GameHud : MonoBehaviour
     private MatchFlow flow;
     private bool failHandled;
     private bool reconnectBannerShowing;
+    private MatchState subscribedState;
+    private readonly List<KillFeedItem> killFeed = new List<KillFeedItem>();   // 0번 = 가장 최근 줄
 
     // ═════════════════════════════════════════════════════════════════════════
     #region 수명
@@ -175,6 +196,8 @@ public class GameHud : MonoBehaviour
             conn.OnRemoteForfeited += HandleRemoteForfeited;
             conn.OnLocalReconnectFailed += HandleLocalReconnectFailed;
         }
+
+        TrySubscribeKillLog();
     }
 
     private void OnDestroy()
@@ -187,6 +210,7 @@ public class GameHud : MonoBehaviour
 
         if (subscribedMode != null) subscribedMode.OnAlert -= ShowAlert;
         if (subscribedReporter != null) subscribedReporter.OnRewardResolved -= HandleRewardResolved;
+        if (subscribedState != null) subscribedState.OnKillLog -= HandleKillLog;
 
         if (subscribedConnection != null)
         {
@@ -248,6 +272,9 @@ public class GameHud : MonoBehaviour
         // 내 캐릭터가 생기거나 바뀌면 연결
         var local = PlayerEntity.Local;
         if (local != bound) Bind(local);
+
+        // MatchState 가 늦게 준비되는 경우 대비: 킬로그 연결
+        if (subscribedState == null) TrySubscribeKillLog();
 
         // 줌 컨트롤러가 없는 씬 대비: 캐릭터가 준비되면 바로 UI 표시
         if (!gameplayShown && CameraZoomController.Instance == null && local != null && local.IsInitialized
@@ -604,6 +631,116 @@ public class GameHud : MonoBehaviour
         if (seconds > 0f) yield return new WaitForSeconds(seconds);
         alertRoutine = null;
         if (alertRoot != null) alertRoot.SetActive(false);
+    }
+
+    #endregion
+
+    // ═════════════════════════════════════════════════════════════════════════
+    #region 킬로그
+
+    private void TrySubscribeKillLog()
+    {
+        if (subscribedState != null) return;
+        var state = MatchState.Instance;
+        if (state == null) return;
+        subscribedState = state;
+        state.OnKillLog += HandleKillLog;
+    }
+
+    // MatchState 가 사망을 집계한 직후 모든 기기에서 호출된다. (killer 0 = 자멸)
+    private void HandleKillLog(uint victim, uint killer, DeathCause cause)
+    {
+        if (killFeedParent == null) return;
+        var net = InGameNet.Instance;
+        if (net == null) return;
+
+        var victimInfo = net.GetPlayer(victim);
+        if (victimInfo == null) return;
+        var killerInfo = killer != 0 ? net.GetPlayer(killer) : null;
+
+        var victimDef = FindDef(victimInfo.CharacterId);
+        Sprite victimSprite = victimDef != null ? victimDef.icon : null;
+
+        KillFeedItem item;
+        if (killerInfo != null)
+        {
+            // 다른 유저에게 죽음 → 가해자가 나 / 같은 팀 / 적 팀 인지에 따라 다른 킬 프리팹
+            var prefab = KillPrefabFor(killerInfo);
+            if (prefab == null) return;
+            item = Instantiate(prefab, killFeedParent);
+            var killerDef = FindDef(killerInfo.CharacterId);
+            item.SetKill(killerDef != null ? killerDef.icon : null, killerInfo.Nickname, TeamView.ColorOf(killerInfo),
+                         MiddleIcon(killerDef, cause),
+                         victimSprite, victimInfo.Nickname, TeamView.ColorOf(victimInfo));
+        }
+        else
+        {
+            // 낙사/함정/폭발 등 자멸 → 자멸 프리팹 (죽은 유저의 캐릭터 아이콘 + 닉네임 + 사인 아이콘)
+            if (selfDeathItemPrefab == null) return;
+            item = Instantiate(selfDeathItemPrefab, killFeedParent);
+            item.SetSelfDeath(victimSprite, victimInfo.Nickname, TeamView.ColorOf(victimInfo), DeathIcon(cause));
+        }
+
+        // 가장 최근 줄을 맨 위로
+        item.transform.SetAsFirstSibling();
+        killFeed.Insert(0, item);
+
+        // 최대 개수를 넘으면 가장 오래된 줄(맨 아래)부터 삭제
+        int max = Mathf.Max(1, maxKillFeedItems);
+        while (killFeed.Count > max)
+        {
+            var oldest = killFeed[killFeed.Count - 1];
+            killFeed.RemoveAt(killFeed.Count - 1);
+            if (oldest != null) Destroy(oldest.gameObject);
+        }
+
+        if (killFeedSeconds > 0f) StartCoroutine(Co_RemoveKillFeedAfter(item, killFeedSeconds));
+    }
+
+    private IEnumerator Co_RemoveKillFeedAfter(KillFeedItem item, float seconds)
+    {
+        yield return new WaitForSeconds(seconds);
+        if (!killFeed.Remove(item)) yield break;    // 이미 넘쳐서 삭제된 줄
+        if (item != null) Destroy(item.gameObject);
+    }
+
+    // 가해자와 나의 관계로 킬 프리팹 고르기: 나 = 내 킬 / 같은 팀 = 아군 킬 / 그 밖 = 적 팀 킬
+    private KillFeedItem KillPrefabFor(NetPlayer killer)
+    {
+        switch (TeamView.RelationOf(killer))
+        {
+            case TeamRelation.Self: return myKillItemPrefab;
+            case TeamRelation.Ally: return allyKillItemPrefab;
+            default: return enemyKillItemPrefab;
+        }
+    }
+
+    private CharacterDef FindDef(string characterId)
+    {
+        var catalog = catalogOverride != null ? catalogOverride
+            : (PlayerSpawner.Instance != null ? PlayerSpawner.Instance.catalog : null);
+        return catalog != null ? catalog.Get(characterId) : null;
+    }
+
+    // 가운데 아이콘: 스킬 킬 = 스킬 아이콘 (비어 있으면 무기 아이콘) / 그 밖 (총알, 밀어서 떨어뜨린 킬 등) = 무기 아이콘
+    private static Sprite MiddleIcon(CharacterDef def, DeathCause cause)
+    {
+        if (def == null) return null;
+        if (cause == DeathCause.Skill && def.skillIcon != null) return def.skillIcon;
+        return def.weaponIcon;
+    }
+
+    // 자멸 사인 아이콘: 원인별 아이콘 (비어 있으면 defaultDeathIcon)
+    private Sprite DeathIcon(DeathCause cause)
+    {
+        Sprite icon = null;
+        switch (cause)
+        {
+            case DeathCause.Fall: icon = fallDeathIcon; break;
+            case DeathCause.Hazard: icon = hazardDeathIcon; break;
+            case DeathCause.Explosion: icon = explosionDeathIcon; break;
+        }
+        return icon != null ? icon : defaultDeathIcon;
     }
 
     #endregion

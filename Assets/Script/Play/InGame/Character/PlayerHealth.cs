@@ -153,7 +153,7 @@ public class PlayerHealth : MonoBehaviour, IDamageTarget
         RaiseChanged();
         if (entity.Sync != null) entity.Sync.SendNow();
 
-        if (CurrentHP == 0) Die(info.Attacker);
+        if (CurrentHP == 0) Die(info.Attacker, info.Cause);
     }
 
     /// <summary>[주인 기기] 체력 회복. 최대 체력을 넘지 않는다.</summary>
@@ -167,12 +167,13 @@ public class PlayerHealth : MonoBehaviour, IDamageTarget
     }
 
     /// <summary>[주인 기기] 즉사 (낙사 지역 등). 무적/방어 무시.</summary>
-    public void Kill(uint attacker)
+    /// <param name="cause">킬로그에 표시할 사망 원인 (낙사/함정/폭발 등)</param>
+    public void Kill(uint attacker, DeathCause cause = DeathCause.Unknown)
     {
         if (entity == null || !entity.IsMine || IsDead) return;
         CurrentHP = 0;
         RaiseChanged();
-        Die(attacker);
+        Die(attacker, cause);
     }
 
     private void RaiseChanged()
@@ -209,7 +210,7 @@ public class PlayerHealth : MonoBehaviour, IDamageTarget
         return 0;
     }
 
-    private void Die(uint attacker)
+    private void Die(uint attacker, DeathCause cause)
     {
         if (IsDead) return;
         uint killer = ResolveKiller(attacker);
@@ -217,11 +218,12 @@ public class PlayerHealth : MonoBehaviour, IDamageTarget
         EnterDeadState(killer);
 
         // 모든 기기(내 기기 포함)가 같은 순서로 킬/데스를 집계하도록 알린다.
+        // [피해자 uint][가해자 uint][원인 byte]  ← 원인은 킬로그 아이콘용으로 뒤에 덧붙인 값
         var net = InGameNet.Instance;
         if (net != null)
         {
             uint victim = OwnerSession;
-            net.Send(NetPacketType.PlayerDied, w => { w.WriteUInt(victim); w.WriteUInt(killer); }, true);
+            net.Send(NetPacketType.PlayerDied, w => { w.WriteUInt(victim); w.WriteUInt(killer); w.WriteByte((byte)cause); }, true);
         }
         if (entity.Sync != null) entity.Sync.SendNow();
     }

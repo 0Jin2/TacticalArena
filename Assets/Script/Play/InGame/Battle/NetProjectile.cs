@@ -29,6 +29,10 @@ public class NetProjectile : MonoBehaviour
     public float lifeTime = 2f;  // 총알이 사라지기까지 시간(초). 길수록 멀리 날아감
     public int damage = 10;      // 한 발 피해량
 
+    [Header("킬로그")]
+    [Tooltip("이 총알로 죽였을 때 킬로그 가운데에 띄울 아이콘 종류. Weapon = 캐릭터의 무기 아이콘 / Skill = 스킬 아이콘")]
+    public DeathCause killCause = DeathCause.Weapon;  // 킬로그 아이콘 종류 (Weapon = 무기 아이콘, Skill = 스킬 아이콘)
+
     [Header("충돌 규칙")]
     [Tooltip("땅/벽에 부딪히면 멈추고 사라진다. 끄면 맵을 통과한다. (FALL 넉백탄)")]
     public bool stopOnWorld = true;  // 켜면 땅/벽에 맞으면 사라짐
@@ -201,7 +205,7 @@ public class NetProjectile : MonoBehaviour
 
     private void DealDamage(IDamageTarget target, Collider2D other)
     {
-        DamageRegistry.Send(target, OwnerSession, damage);
+        DamageRegistry.Send(target, OwnerSession, damage, DamageFlags.None, killCause);
 
         if (applyKnockback && target.Kind == DamageTargetKind.Player)
         {
