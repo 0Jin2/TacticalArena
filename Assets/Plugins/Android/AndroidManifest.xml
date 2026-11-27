@@ -1,17 +1,19 @@
-<?xml version="1.0" encoding="utf-8"?>
-<manifest
-    xmlns:android="http://schemas.android.com/apk/res/android"
-    package="com.unity3d.player"
-    xmlns:tools="http://schemas.android.com/tools">
-	<uses-permission android:name="com.android.vending.BILLING"/>
-    <application>
-        <activity android:name="com.unity3d.player.UnityPlayerActivity"
-                  android:theme="@style/UnityThemeSelector">
-            <intent-filter>
-                <action android:name="android.intent.action.MAIN" />
-                <category android:name="android.intent.category.LAUNCHER" />
-            </intent-filter>
-            <meta-data android:name="unityplayer.UnityActivity" android:value="true" />
-        </activity>
-    </application>
+﻿<?xml version="1.0" encoding="utf-8"?>
+<manifest xmlns:android="http://schemas.android.com/apk/res/android" package="com.unity3d.player" xmlns:tools="http://schemas.android.com/tools">
+  <uses-permission android:name="com.android.vending.BILLING" />
+  <application>
+    <activity android:name="com.unity3d.player.UnityPlayerActivity" android:theme="@style/UnityThemeSelector">
+      <intent-filter>
+        <action android:name="android.intent.action.MAIN" />
+        <category android:name="android.intent.category.LAUNCHER" />
+      </intent-filter>
+      <meta-data android:name="unityplayer.UnityActivity" android:value="true" />
+    </activity>
+    <!-- Play 게임즈가 앱 실행과 동시에 무조건 시작(구글 로그인 배너)하지 않게 막는다. -->
+    <provider android:name="com.google.android.gms.games.provider.PlayGamesInitProvider" tools:node="remove" />
+    <!-- 대신 지난번에 구글로 로그인했던 기기에서만 앱 시작 때 Play 게임즈를 시작한다. (TaaPlayGamesInitProvider.java) -->
+    <provider android:name="com.loopstudio.taa.login.TaaPlayGamesInitProvider" android:authorities="com.loopstudio.TacticalArena.taaplaygamesinit" android:exported="false" />
+    <!-- 구글 버튼으로 Play 게임즈를 처음 시작할 때 화면을 인식시키는 투명 화면 (TaaResumeKickActivity.java) -->
+    <activity android:name="com.loopstudio.taa.login.TaaResumeKickActivity" android:theme="@android:style/Theme.Translucent.NoTitleBar.Fullscreen" android:exported="false" android:noHistory="true" android:excludeFromRecents="true" />
+  </application>
 </manifest>
