@@ -8,6 +8,8 @@ using UnityEngine.Audio;
 //  내 캐릭터  : 입력(PlayerInput)을 읽어 물리(Rigidbody2D)로 움직인다. 결과는 PlayerNetSync 가 전송.
 //  남의 캐릭터: 물리를 끄고(Kinematic) PlayerNetSync 가 받은 위치로만 움직인다.
 //
+//  점프 버퍼 / 코너 보정: 켜고 끄기는 모드 설정(ModeConfig), 세부 수치는 이 스크립트 인스펙터.
+//
 //  수치는 CharacterStatData(moveSpeed, jumpPower, allowDoubleJump)에서 읽고,
 //  스킬이 일시적으로 바꾸는 값은 "배율(SpeedMultiplier 등)"로 따로 둔다.
 //  → 기존 코드처럼 공유 ScriptableObject 를 직접 수정하지 않으므로 에셋이 오염되지 않는다.
@@ -31,6 +33,14 @@ public class PlayerMotor : MonoBehaviour
 
     [Header("입력")]
     [Range(0f, 0.9f)] public float moveDeadZone = 0.2f;  // 이 값보다 작게 민 조이스틱은 이동으로 치지 않음
+
+    [Header("점프 버퍼 (켜고 끄기는 모드 설정 ModeConfig 의 jumpBufferEnabled)")]
+    [Tooltip("공중에서 눌렀지만 뛸 수 없었던 점프를 이 시간(초) 동안 기억했다가, 그 안에 착지하면 바로 점프한다. 0.1초 ≈ 6프레임")]
+    [Range(0f, 0.3f)] public float jumpBufferSeconds = 0.1f;        // 착지 몇 초 전까지 누른 점프를 기억할지 (0.1초 ≈ 6프레임)
+
+    [Header("코너 보정 (켜고 끄기는 모드 설정 ModeConfig 의 cornerCorrectionEnabled)")]
+    [Tooltip("점프 중 옆으로 움직이다 발판 모서리에 걸렸을 때, 발이 발판 윗면보다 이 높이 이하로 낮으면 그만큼 위로 올려 준다. (월드 단위, 캐릭터 키의 약 1/6)")]
+    [Range(0f, 0.2f)] public float cornerCorrectionHeight = 0.05f;  // 이 높이 이하로 걸리면 발판 위로 올려 줌 (월드 단위)
 
     [Header("점프 효과음")]
     public AudioClip jumpClip;         // 점프 효과음
@@ -59,6 +69,11 @@ public class PlayerMotor : MonoBehaviour
     private bool canDoubleJump;
     private bool wasGrounded;
     private float knockbackEndTime;
+    private float bufferedJumpTime = -1f;   // 기억해 둔 점프를 누른 시각 (-1 = 없음)
+
+    // 코너 보정 검사용 (고칠 일 거의 없음)
+    private const float CornerProbeDistance = 0.05f;  // 앞쪽으로 벽을 찾는 거리
+    private const float CornerSkin = 0.01f;           // 발판과 딱 붙지 않게 주는 여유
 
     private void Awake()
     {
@@ -137,6 +152,7 @@ public class PlayerMotor : MonoBehaviour
         }
         IsKnockedBack = false;
         MovementLocked = false;
+        bufferedJumpTime = -1f;
         Facing = facing < 0f ? -1f : 1f;
         ApplyFlip();
     }
@@ -164,6 +180,7 @@ public class PlayerMotor : MonoBehaviour
         {
             // 조작 불가(사망/카운트다운/연결 끊김): 옆으로 미끄러지지 않게 정지
             if (!IsKnockedBack) body.linearVelocity = new Vector2(0f, body.linearVelocity.y);
+            bufferedJumpTime = -1f;
             UpdateAnimator(0f, grounded);
             return;
         }
@@ -175,6 +192,7 @@ public class PlayerMotor : MonoBehaviour
         if (MovementLocked)
         {
             body.linearVelocity = new Vector2(0f, body.linearVelocity.y);
+            bufferedJumpTime = -1f;
             UpdateAnimator(0f, grounded);
             return;
         }
@@ -187,11 +205,75 @@ public class PlayerMotor : MonoBehaviour
 
         UpdateAnimator(dir != 0f ? CurrentMoveSpeed : 0f, grounded);
 
-        if (jumpRequested && !IsKnockedBack)
+        // 코너 보정: 점프 중(공중) 옆으로 가다가 발판 모서리에 살짝 걸리면 위로 올려 준다.
+        if (!grounded && dir != 0f && !IsKnockedBack && IsCornerCorrectionOn()) TryCornerCorrection(dir);
+
+        // 점프 버퍼: 기억해 둔 점프가 있고, 방금 착지했다면(떠오르는 중이 아님) 지금 실행
+        bool fireBufferedJump = !jumpRequested && grounded && body.linearVelocity.y <= 0.01f && HasBufferedJump();
+
+        if ((jumpRequested || fireBufferedJump) && !IsKnockedBack)
         {
+            bufferedJumpTime = -1f;
             if (input.MoveInput.y < dropStickThreshold && TryDropDown()) return;
-            DoJump(grounded);
+
+            bool jumped = DoJump(grounded);
+            // 공중이라 뛰지 못한 점프(2단 점프도 없음)는 잠깐 기억해 둔다.
+            if (!jumped && jumpRequested && IsJumpBufferOn()) bufferedJumpTime = Time.time;
         }
+    }
+
+    // 모드 설정(ModeConfig)의 On/Off. 설정이 없으면(테스트 씬 등) 켠 것으로 본다.
+    private static bool IsJumpBufferOn()
+    {
+        var flow = MatchFlow.Instance;
+        return flow == null || flow.Config == null || flow.Config.jumpBufferEnabled;
+    }
+
+    private static bool IsCornerCorrectionOn()
+    {
+        var flow = MatchFlow.Instance;
+        return flow == null || flow.Config == null || flow.Config.cornerCorrectionEnabled;
+    }
+
+    private bool HasBufferedJump()
+    {
+        if (bufferedJumpTime < 0f || !IsJumpBufferOn()) return false;
+        return Time.time - bufferedJumpTime <= jumpBufferSeconds;
+    }
+
+    /// <summary>
+    /// 코너 보정. 순서:
+    ///  1) 발 높이에서 앞으로 검사 → 발판 옆면(벽)에 막혀 있는가
+    ///  2) 보정 높이 위에서 앞으로 검사 → 거기는 뚫려 있는가 (막혀 있으면 높은 벽이라 보정 안 함)
+    ///  3) 앞쪽 위에서 아래로 검사 → 발판 윗면 높이를 찾아서 그만큼 위로 올린다
+    /// </summary>
+    private void TryCornerCorrection(float dir)
+    {
+        if (bodyCollider == null || cornerCorrectionHeight <= 0f) return;
+
+        Bounds b = bodyCollider.bounds;
+        float feetY = b.min.y;
+        float frontX = dir > 0f ? b.max.x : b.min.x;
+        var forward = new Vector2(dir, 0f);
+
+        // 1) 발 바로 위 높이에서 앞이 막혀 있는가
+        var low = Physics2D.Raycast(new Vector2(frontX, feetY + CornerSkin), forward, CornerProbeDistance, groundLayers);
+        if (low.collider == null || low.collider == droppedGround) return;
+
+        // 2) 보정 높이 위는 뚫려 있는가
+        float checkTop = feetY + cornerCorrectionHeight + CornerSkin;
+        if (Physics2D.Raycast(new Vector2(frontX, checkTop), forward, CornerProbeDistance, groundLayers).collider != null) return;
+
+        // 3) 발판 윗면 높이 찾기
+        var top = Physics2D.Raycast(new Vector2(frontX + dir * CornerProbeDistance, checkTop), Vector2.down,
+                                    cornerCorrectionHeight + CornerSkin, groundLayers);
+        if (top.collider == null || top.collider == droppedGround) return;
+
+        float lift = top.point.y - feetY + CornerSkin;
+        if (lift <= 0f || lift > cornerCorrectionHeight + CornerSkin * 2f) return;
+
+        body.position += new Vector2(0f, lift);
+        if (body.linearVelocity.y < 0f) body.linearVelocity = new Vector2(body.linearVelocity.x, 0f);  // 떨어지던 힘을 없애 발판 위에 바로 선다
     }
 
     private void UpdateAnimator(float moveX, bool grounded)
@@ -199,9 +281,10 @@ public class PlayerMotor : MonoBehaviour
         if (entity.Anim != null) entity.Anim.SetLocomotion(moveX, grounded, body.linearVelocity.y);
     }
 
-    private void DoJump(bool grounded)
+    /// <returns>실제로 점프했으면 true (공중이고 2단 점프도 없으면 false)</returns>
+    private bool DoJump(bool grounded)
     {
-        if (entity.stat == null) return;
+        if (entity.stat == null) return false;
         float power = entity.stat.jumpPower * JumpMultiplier;
 
         if (grounded)
@@ -209,13 +292,16 @@ public class PlayerMotor : MonoBehaviour
             body.linearVelocity = new Vector2(body.linearVelocity.x, power);
             canDoubleJump = entity.stat.allowDoubleJump;
             OnJumped();
+            return true;
         }
-        else if (canDoubleJump)
+        if (canDoubleJump)
         {
             body.linearVelocity = new Vector2(body.linearVelocity.x, power);
             canDoubleJump = false;
             OnJumped();
+            return true;
         }
+        return false;
     }
 
     /// <summary>남의 캐릭터가 점프했다는 CombatEvent 를 받았을 때 효과음만 재생</summary>
@@ -291,6 +377,7 @@ public class PlayerMotor : MonoBehaviour
 
         IsKnockedBack = true;
         knockbackEndTime = Time.time + Mathf.Max(0f, lockSeconds);
+        bufferedJumpTime = -1f;   // 넉백 전에 기억해 둔 점프는 버린다
 
         float xSign = Mathf.Sign(opposite ? -fromBulletToTarget.x : fromBulletToTarget.x);
         if (Mathf.Approximately(xSign, 0f)) xSign = 1f;
@@ -305,6 +392,7 @@ public class PlayerMotor : MonoBehaviour
         RestoreDroppedGround();
         IsKnockedBack = false;
         MovementLocked = false;
+        bufferedJumpTime = -1f;
         SpeedMultiplier = 1f;
         JumpMultiplier = 1f;
     }

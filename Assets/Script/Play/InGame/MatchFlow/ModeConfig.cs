@@ -39,6 +39,10 @@ public class ModeConfig : ScriptableObject
     [Header("부활")]
     public bool respawnEnabled = true;              // BOMB은 라운드 중 부활 없음 → false
 
+    [Header("점프 보조 (모드별 On/Off, 세부 수치는 캐릭터 프리팹의 PlayerMotor)")]
+    public bool jumpBufferEnabled = true;           // 켜면 점프 버퍼: 착지 직전에 누른 점프를 기억했다가 착지하는 순간 실행
+    public bool cornerCorrectionEnabled = true;     // 켜면 코너 보정: 점프 중 발이 발판 윗면보다 살짝 낮게 걸리면 위로 올려 줌
+
     [Header("보상 (같은 팀 안에서 킬 많고 데스 적은 순서 1~4위)")]
     public bool distributeRewards = true;                         // 켜면 경기 후 골드 보상 지급
     public int[] winGoldByRank = new int[4] { 100, 80, 60, 40 };  // 이긴 팀의 팀 내 1~4위 골드
